@@ -4,6 +4,7 @@
 
 <?php
 //  #!/usr/bin/php
+/*
 
 $mydb = new mysqli('127.0.0.1','testUser','12345','testdb');
 
@@ -28,13 +29,14 @@ if (isset ($_GET["password"]))
 }
 
 ?>
+*/
 
 <html>
         <body>
         <form action="authenticate.php">
                 <div>
                 <input type="text" name="uname" value="<?php echo $uname; ?>" >username<br>
-                <input type="text" name="password" value="<?php echo $password; ?>" >password<br>
+                <input type="password" name="password" value="<?php echo $password; ?>" >password<br>
                 </div>
 
                 <div>
@@ -44,7 +46,10 @@ if (isset ($_GET["password"]))
         </body>
 </html>
 
+
 <?php
+
+/*
 if (authenticate($mydb, $uname, $password))
 {
 	echo "Correct Login, Redirecting to next page".PHP_EOL;
@@ -70,5 +75,34 @@ function authenticate($mydb, $uname, $password)
         if ($numrows == 0) {return false;}
         else    {return true;}
 }
+*/
+
+require_once('path.inc');
+require_once('get_host_info.inc');
+require_once('rabbitMQLib.inc');
+
+$client = new rabbitMQClient("testRabbitMQ.ini","testServer");
+if (isset($argv[1]))
+{
+  $msg = $argv[1];
+}
+else
+{
+  $msg = "Default Login Message";
+}
+
+$request = array();
+$request['type'] = "Login";
+$request['username'] = $_GET["uname"];;
+$request['password'] = $_GET["password"];
+$request['message'] = $msg;
+$response = $client->send_request($request);
+//$response = $client->publish($request);
+
+echo "client received response: ".PHP_EOL;
+print_r($response);
+echo "\n\n";
+
+echo $argv[0]." END".PHP_EOL;
 
 ?>
