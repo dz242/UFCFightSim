@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import pika
+import sys
 
 creds = pika.PlainCredentials('dmzUser', 'dzit490-1')
 
@@ -8,7 +9,12 @@ connection = pika.BlockingConnection(pika.ConnectionParameters("192.168.194.219"
 
 channel = connection.channel()
 
-msg = 'Test Message'
+
+if (sys.argv[1] is None):
+    msg = 'Test Message (No argument is set!)'
+else:
+    msg = sys.argv[1]
+
 
 channel.basic_publish(exchange='UFCTest',
                       routing_key='UFCQueue',
