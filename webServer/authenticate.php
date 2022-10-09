@@ -28,9 +28,9 @@ if (isset ($_GET["password"]))
         $password = mysqli_real_escape_string($mydb, $password);
 }
 
-?>
-*/
 
+*/
+?>
 <html>
         <body>
         <form action="authenticate.php">
@@ -93,7 +93,7 @@ else
 
 $request = array();
 $request['type'] = "Login";
-$request['username'] = $_GET["uname"];;
+$request['username'] = $_GET["uname"];
 $request['password'] = $_GET["password"];
 $request['message'] = $msg;
 $response = $client->send_request($request);
