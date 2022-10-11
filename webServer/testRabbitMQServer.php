@@ -5,11 +5,31 @@ require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
 function doLogin($username,$password)
+{	
+	//Osama Login In Here
+$mydb = new mysqli('127.0.0.1','testUser','12345','testdb');
+
+if ($mydb->errno != 0)
 {
-    // lookup username in databas
-    // check password
-    return true;
-    //return false if not valid
+        echo "failed to connect to database: ". $mydb->error . PHP_EOL;
+        exit(0);
+}
+
+//echo "successfully connected to database".PHP_EOL;
+
+$query = "select * from testtable where username='$username' and password='$password' ";
+
+$response = $mydb->query($query);
+        if ($mydb->errno != 0)
+        {       
+                echo "failed to execute query:".PHP_EOL;
+                echo __FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL;
+                exit(0);
+        }
+        $numrows = mysqli_num_rows($response);
+
+        if ($numrows == 0) {return false;}
+        else    {return true;}
 }
 
 function requestProcessor($request)
