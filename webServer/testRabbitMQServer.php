@@ -7,7 +7,7 @@ require_once('rabbitMQLib.inc');
 function doLogin($username,$password)
 {	
 	//Osama Login In Here
-$mydb = new mysqli('127.0.0.1','testUser','12345','testdb');
+$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 
 if ($mydb->errno != 0)
 {
@@ -17,7 +17,7 @@ if ($mydb->errno != 0)
 
 //echo "successfully connected to database".PHP_EOL;
 
-$query = "select * from testtable where username='$username' and password='$password' ";
+$query = "select * from users where username='$username' and password='$password' ";
 
 $response = $mydb->query($query);
         if ($mydb->errno != 0)
@@ -42,13 +42,21 @@ function requestProcessor($request)
   }
   switch ($request['type'])
   {
-    case "login":
-      return doLogin($request['username'],$request['password']);
+  case "Login":
+	  if (doLogin($request['username'],$request['password']))
+	  {
+		  echo "Successful login".PHP_EOL;
+		  return array("returnCode" => '0', 'message'=>"Successful Login");
+	  }
+	  else
+	  {
+		 echo "Invalid Login".PHP_EOL;
+		 return array("returnCode" => '1', 'message'=>"Invalid Login");
+	  }
     case "validate_session":
       return doValidate($request['sessionId']);
   }
-  return array("returnCode" => '0', 'message'=>"Server received request and processed");
-}
+  return array("returnCode" => '0', 'message'=>"Server received request and processed");}
 
 $server = new rabbitMQServer("testRabbitMQ.ini","testServer");
 
