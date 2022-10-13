@@ -105,4 +105,14 @@ echo "\n\n";
 
 echo $argv[0]." END".PHP_EOL;
 
+if ($response["returnCode"] == 0)
+{
+	echo "Correct Login, Redirecting to next page".PHP_EOL;
+        header("refresh: 3, url=testpage.php");
+}
+else
+{
+	echo "Incorrect Username and/or Password".PHP_EOL;
+}
+
 ?>
