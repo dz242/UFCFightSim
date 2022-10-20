@@ -3,6 +3,7 @@
 </html>
 
 <?php
+$continue = True;
 if (isset ($_GET["uname"]))
 {
         $uname = $_GET["uname"];
@@ -68,7 +69,7 @@ if ($password != $confPassword)
 
 <?php
 
-if ($continue == FALSE)
+if (!$continue)
 {
 	echo "Debug Exit Message";
 	exit();
