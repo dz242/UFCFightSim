@@ -72,6 +72,7 @@ function requestProcessor($request)
   switch ($request['type'])
   {
   case "Login":
+
 	  if (doLogin($request['username'],$request['password']))
 	  {
 		  echo "Successful login".PHP_EOL;
@@ -83,7 +84,7 @@ function requestProcessor($request)
 		 return array("returnCode" => '1', 'message'=>"Invalid Login");
 	  }
   case "Register":
-	if (doRegister($request['username'],$request['password',$request['email']))
+	if (doRegister($request['username'],$request['password'],$request['email']))
 	{
 		echo "Succesful Register".PHP_EOL;
 		return array("returnCode" => '0', 'message'=>"Successful Register");
@@ -99,7 +100,14 @@ function requestProcessor($request)
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");}
 
-$server = new rabbitMQServer("testRabbitMQ.ini","testServer");
+
+switch ($request['type'])
+{
+case "Login":
+	$server = new rabbitMQServer("testRabbitMQ.ini","testServer");
+case "Register":
+	$server = new rabbitMQServer("testRabbitMQ.ini","registerServer");
+}
 
 $server->process_requests('requestProcessor');
 exit();
