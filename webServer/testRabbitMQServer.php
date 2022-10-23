@@ -101,13 +101,7 @@ function requestProcessor($request)
   return array("returnCode" => '0', 'message'=>"Server received request and processed");}
 
 
-switch ($request['type'])
-{
-case "Login":
-	$server = new rabbitMQServer("testRabbitMQ.ini","testServer");
-case "Register":
-	$server = new rabbitMQServer("testRabbitMQ.ini","registerServer");
-}
+$server = new rabbitMQServer("testRabbitMQ.ini","testServer");
 
 $server->process_requests('requestProcessor');
 exit();
