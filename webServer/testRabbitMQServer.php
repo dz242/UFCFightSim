@@ -53,7 +53,7 @@ $response = $mydb->query($query);
         {
                 echo "failed to execute query:".PHP_EOL;
                 echo __FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL;
-                return false;
+        	 return false;
 	}
 	else
 	{
@@ -72,6 +72,7 @@ function requestProcessor($request)
   switch ($request['type'])
   {
   case "Login":
+
 	  if (doLogin($request['username'],$request['password']))
 	  {
 		  echo "Successful login".PHP_EOL;
@@ -83,7 +84,11 @@ function requestProcessor($request)
 		 return array("returnCode" => '1', 'message'=>"Invalid Login");
 	  }
   case "Register":
+<<<<<<< HEAD
 	if (doRegister($request['username'],$request['password'], $request['email']))
+=======
+	if (doRegister($request['username'],$request['password'],$request['email']))
+>>>>>>> f42367d566ba6b231a9cf3894131f4a40ef40783
 	{
 		echo "Succesful Register".PHP_EOL;
 		return array("returnCode" => '0', 'message'=>"Successful Register");
@@ -98,6 +103,7 @@ function requestProcessor($request)
       return doValidate($request['sessionId']);
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");}
+
 
 $server = new rabbitMQServer("testRabbitMQ.ini","testServer");
 

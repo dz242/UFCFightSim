@@ -3,6 +3,7 @@
 </html>
 
 <?php
+$continue = True;
 if (isset ($_GET["uname"]))
 {
         $uname = $_GET["uname"];
@@ -68,7 +69,7 @@ if ($password != $confPassword)
 
 <?php
 
-if ($continue == FALSE)
+if (!$continue)
 {
 	echo "Debug Exit Message";
 	exit();
@@ -77,7 +78,7 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
-$client = new rabbitMQClient("testRabbitMQ.ini","registerServer");
+$client = new rabbitMQClient("testRabbitMQ.ini","testServer");
 if (isset($argv[1]))
 {
   $msg = $argv[1];
@@ -102,7 +103,7 @@ echo "\n\n";
 
 echo $argv[0]." END".PHP_EOL;
 
-if ($response["returnCode"] == 0)
+if ($response["returnCode"] == '0')
 {
         echo "Succesfully Register new Account, Redirecting to Login Page".PHP_EOL;
         header("refresh: 3, url=loginpage.html");
