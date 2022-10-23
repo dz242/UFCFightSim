@@ -103,7 +103,7 @@ echo "\n\n";
 
 echo $argv[0]." END".PHP_EOL;
 
-if ($response["returnCode"] == 0)
+if ($response["returnCode"] == '0')
 {
         echo "Succesfully Register new Account, Redirecting to Login Page".PHP_EOL;
         header("refresh: 3, url=loginpage.html");
