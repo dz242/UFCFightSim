@@ -83,7 +83,7 @@ function requestProcessor($request)
 		 return array("returnCode" => '1', 'message'=>"Invalid Login");
 	  }
   case "Register":
-	if (doRegister($request['username'],$request['password',$request['email']))
+	if (doRegister($request['username'],$request['password'], $request['email']))
 	{
 		echo "Succesful Register".PHP_EOL;
 		return array("returnCode" => '0', 'message'=>"Successful Register");
