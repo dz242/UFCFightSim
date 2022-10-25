@@ -17,14 +17,36 @@ if ($mydb->errno != 0)
         exit(0);
 }
 
-//echo "successfully connected to database".PHP_EOL;
+//This foreach loop goes through each fighter and assigns their stats to variables, which are then put as the values of the sql query
 foreach($arr as $stat)
 {
-	
-	$query = "insert into fighters (dob, fighter_id, height, n_draw, n_loss, n_win, name, reach, sig_str_abs_pM, sig_str_def_pct, sig_str_land_pM, sig_str_land_pct, stance, sub_avg, td_avg, td_def_pct, td_land_pct, weight) values ('$stat[dob]', '$stat[fighter_id]', '$stat[height]', '$stat[n_draw]', '$stat[n_loss]', '$stat[n_win]', '$stat[name]', '$stat[reach]', '$stat[sig_str_abs_pM]', '$stat[sig_str_def_pct]', '$stat[sig_str_land_pM]', '$stat[sig_str_land_pct]', '$stat[stance]', '$stat[sub_avg]', '$stat[td_avg]', '$stat[td_def_pct]', '$stat[td_land_pct]', '$stat[weight]')";
+  $dob=$stat['dob'];
+  $fighter_id=$stat['fighter_id'];
+  $height=$stat['height'];
+  $n_draw=$stat['n_draw'];
+  $n_loss=$stat['n_loss'];
+  $n_win=$stat['n_win'];
+  $name=$stat['name'];
+  $reach=$stat['reach'];
+  $sig_str_abs_pM=$stat['sig_str_abs_pM'];
+  $sig_str_def_pct=$stat['sig_str_def_pct'];
+  $sig_str_land_pM=$stat['sig_str_land_pM'];
+  $sig_str_land_pct=$stat['sig_str_land_pct'];
+  $stance=$stat['stance'];
+  $sig_str_abs_pM=$stat['sig_str_abs_pM'];
+	$sub_avg=$stat['sub_avg'];
+  $td_avg=$stat['td_avg'];
+  $td_def_pct=$stat['td_def_pct'];
+  $td_land_pct=$stat['td_land_pct'];
+  $weight=$stat['weight'];
+
+	$query = "insert into fighters (dob, fighter_id, height, n_draw, n_loss, n_win, name, reach, sig_str_abs_pM, sig_str_def_pct, 
+  sig_str_land_pM, sig_str_land_pct, stance, sub_avg, td_avg, td_def_pct, td_land_pct, weight) 
+  values ('$dob', '$fighter_id', '$height', '$n_draw', '$n_loss', '$n_win', '$name', '$reach', '$sig_str_abs_pM', '$sig_str_def_pct', 
+  '$sig_str_land_pM', '$sig_str_land_pct', '$stance', '$sub_avg', '$td_avg', '$td_def_pct', '$td_land_pct', '$weight')";
 
 
-$response = $mydb->query($query);
+  $response = $mydb->query($query);
 }
 
         if ($mydb->errno != 0)
