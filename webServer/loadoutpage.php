@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,16 +80,74 @@ ul li.checked::before {
 </div>
 
 <ul id="myUL">
-  <li>Sample Fighter 1</li>
-  <li>Joe</li>
-  <li>Meet George</li>
-  <li>Buy eggs</li>
-  <li>Read a book</li>
-  <li>Organize office</li>
 </ul>
 
 <script>
-// Create a "close" button and append it to each list item
+/*Code Derived in part from : https://stackoverflow.com/questions/23740548/how-do-i-pass-variables-and-data-from-php-to-javascript */
+<div id="dom-target" style="display: none;">
+
+<?php
+
+if (!$continue)
+{
+	echo "Debug Exit Message";
+	exit();
+}
+require_once('path.inc');
+require_once('get_host_info.inc');
+require_once('rabbitMQLib.inc');
+
+$client = new rabbitMQClient("testRabbitMQ.ini","testServer");
+if (isset($argv[1]))
+{
+  $msg = $argv[1];
+}
+else
+{
+  $msg = "Default Register Message";
+}
+
+$request = array();
+$request['type'] = "getFighters";
+$response = $client->send_request($request);
+//$response = $client->publish($request);
+
+echo "client received response: ".PHP_EOL;
+//print_r($response);
+echo "\n\n";
+
+echo $argv[0]." END".PHP_EOL;
+
+if ($response["returnCode"] == '0')
+{
+        echo "Grabbed Fighters".PHP_EOL;
+}
+else
+{
+        echo "Grab Fighters Fail".PHP_EOL;
+}
+echo  htmlspecialchars($response);
+
+?>
+
+//Gets the data from the php
+
+var div = document.getElementById("dom-target");
+var fighterList = div.textContent;
+
+var singleFighter = '';
+var indexFighter = 0;
+//Loop that takes cuts every 18th Comma makes a new fighter Element with the data
+
+for(i = 0;i =< 5; i++)
+{
+singleFighter = fighterList[i].string;
+//singleFighter =  fighterList.replace(/([^\,]*\,){18*i}/, '');
+newElement(singleFighter);
+}
+
+
+//Count Variable for Selection
 
 var countery = 0;
 
@@ -111,12 +170,6 @@ list.addEventListener('click', function(ev) {
 //This will allow the user to keep note of what fighters they already chosen
 
 
-for(i = 0;i < 10; i++)
-{
-var egg = "egsg";
-newElement(egg);
-}
-
 // Create a new list item when clicking on the "Add" button
 function newElement(data) {
 	
@@ -127,7 +180,7 @@ function newElement(data) {
 }
 </script>
 
+
 </body>
 </html>
-
 
