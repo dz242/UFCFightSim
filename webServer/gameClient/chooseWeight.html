@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>The Octagon</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="fightClient.js"></script>
+    </head>
+
+    <body>
+
+        <h3>Choose your weight class!</h3>
+        <br><br><br>
+        <p id="chosenWeight"></p>
+        <br><br><br>
+
+        <button id="Strawweight" onclick="swButton()">Strawweight (115lbs)</button><br><br>
+        <button id="Flyweight" onclick="flwButton()">Flyweight (125lbs)</button><br><br>
+        <button id="Bantamweight" onclick="bwButton()">Bantamweight (135lbs)</button><br><br>
+        <button id="Featherweight" onclick="fwButton()">Featherweight (145lbs)</button><br><br>
+        <button id="Lightweight" onclick="lwButton()">Lightweight (155lbs)</button><br><br>
+        <button id="Welterweight" onclick="wwButton()">Welterweight (170lbs)</button><br><br>
+        <button id="Middleweight" onclick="mwButton()">Middleweight (185lbs)</button><br><br>
+        <button id="Light Heavyweight" onclick="lhwButton()">Light Heavyweight (205lbs)</button><br><br>
+        <button id="Heavyweight" onclick="hwButton()">Heavyweight (265lbs)</button><br><br>
+<br>
+    </body>
+</html>
