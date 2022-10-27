@@ -3,33 +3,11 @@
 </html>
 
 <?php
-//  #!/usr/bin/php
-/*
 
-$mydb = new mysqli('127.0.0.1','testUser','12345','testdb');
-
-if ($mydb->errno != 0)
-{
-        echo "failed to connect to database: ". $mydb->error . PHP_EOL;
-        exit(0);
-}
-
-echo "successfully connected to database".PHP_EOL;
-
-if (isset ($_GET["uname"]))
-{
-	$uname = $_GET["uname"];
-	$uname = mysqli_real_escape_string($mydb, $uname);
-}
-
-if (isset ($_GET["password"]))
-{
-        $password = $_GET["password"];
-        $password = mysqli_real_escape_string($mydb, $password);
-}
+$uname = $_GET["uname"];
+$password = $_GET["password"];
 
 
-*/
 ?>
 <html>
         <body>
@@ -48,34 +26,21 @@ if (isset ($_GET["password"]))
 
 
 <?php
-
-/*
-if (authenticate($mydb, $uname, $password))
+//Validate Username. Can only have alphanumeric characters
+$count = preg_match('/^[a-zA-Z0-9]*$/i', $uname, $matches);
+if ($count == 0)
 {
-	echo "Correct Login, Redirecting to next page".PHP_EOL;
-	header("refresh: 3, url=testpage.php");
+        echo "<br>Username contains invalid characters. Please Try again";
+        exit();
 }
-else
+//Validate Password. Can only have alphanumeric characters
+$count = preg_match('/^[a-zA-Z0-9]*$/i', $password, $matches);
+if ($count == 0)
 {
-        echo "Incorrect Username and/or Password".PHP_EOL;
+        echo "<br>Password contains invalid characters. Please Try again";
+        exit();
 }
 
-function authenticate($mydb, $uname, $password)
-{
-        $query = "select * from testtable where username='$uname' and password='$password' ";
-        $response = $mydb->query($query);
-        if ($mydb->errno != 0)
-        {       
-                echo "failed to execute query:".PHP_EOL;
-                echo __FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL;
-                exit(0);
-        }
-        $numrows = mysqli_num_rows($response);
-
-        if ($numrows == 0) {return false;}
-        else    {return true;}
-}
-*/
 
 require_once('path.inc');
 require_once('get_host_info.inc');
@@ -93,8 +58,8 @@ else
 
 $request = array();
 $request['type'] = "Login";
-$request['username'] = $_GET["uname"];
-$request['password'] = $_GET["password"];
+$request['username'] = $uname;
+$request['password'] = $password;
 $request['message'] = $msg;
 $response = $client->send_request($request);
 //$response = $client->publish($request);
