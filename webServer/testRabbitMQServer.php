@@ -17,6 +17,9 @@ if ($mydb->errno != 0)
 
 //echo "successfully connected to database".PHP_EOL;
 
+$username = sanitize($username);
+$password = sanitize($password);
+
 $query = "select * from users where username='$username' and password='$password' ";
 
 $response = $mydb->query($query);
@@ -53,12 +56,21 @@ $response = $mydb->query($query);
         {
                 echo "failed to execute query:".PHP_EOL;
                 echo __FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL;
-        	 return false;
+                return false;
 	}
 	else
 	{
 		return true;
 	}
+}
+
+function sanitize($input)
+{
+	$inputSan = filter_var($input, FILTER_SANITIZE_STRING); //Gets rid of Html code
+	//$inputSan = str_replace(' ', '', $inputSan); // gets rid of spaces
+	$inputSan = preg_replace('/^[a-zA-Z0-9]*$/i', '', $inputSan);
+	
+	return $inputSan;
 }
 
 function requestProcessor($request)
