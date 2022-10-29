@@ -74,6 +74,28 @@ if (!$continue)
 	echo "Debug Exit Message";
 	exit();
 }
+//Validate Username. Can only have alphanumeric characters
+$count = preg_match('/^[a-zA-Z0-9]*$/i', $uname, $matches);
+if ($count == 0)
+{
+        echo "<br>Username contains invalid characters. Characters can only be Letters or Numbers";
+        exit();
+}
+//Validate Password. Can only have alphanumeric characters
+$count = preg_match('/^[a-zA-Z0-9]*$/i', $password, $matches);
+if ($count == 0)
+{
+        echo "<br>Password contains invalid characters. Characters can only be Letters or Numbers";
+        exit();
+}
+//Validate Email.Must look like an email
+if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+{
+	echo "<br>Not a valid email address. Characters can only be Letters or Numbers";
+	exit();
+}
+
+
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');

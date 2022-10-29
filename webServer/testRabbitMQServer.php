@@ -19,11 +19,10 @@ if ($mydb->errno != 0)
 
 $username = sanitize($username);
 $password = sanitize($password);
-
 echo($username.PHP_EOL);
 echo($password.PHP_EOL);
 
-$query = "select * from users where username='$username' and password='$password' ";
+$query = "select * from users where username='$username'";
 
 $response = $mydb->query($query);
         if ($mydb->errno != 0)
@@ -34,8 +33,13 @@ $response = $mydb->query($query);
         }
         $numrows = mysqli_num_rows($response);
 
-        if ($numrows == 0) {return false;}
-        else    {return true;}
+	if ($numrows == 0) {return false;}
+
+	$row = mysqli_fetch_array($response, MYSQLI_ASSOC);
+	$hash = $row['password'];
+
+	if (password_verify($password, $hash)) {return true;}
+	else {return false;}
 }
 
 
@@ -52,7 +56,14 @@ if ($mydb->errno != 0)
 
 //echo "successfully connected to database".PHP_EOL;
 
-$query = "insert into users (username, password, email) values ('$username', '$password', '$email')";
+$username = sanitize($username);
+$password = sanitize($password);
+echo($username.PHP_EOL);
+echo($password.PHP_EOL);
+
+$hash = password_hash($password, PASSWORD_DEFAULT);
+
+$query = "insert into users (username, password, email) values ('$username', '$hash', '$email')";
 
 $response = $mydb->query($query);
         if ($mydb->errno != 0)
