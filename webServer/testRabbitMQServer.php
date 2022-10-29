@@ -20,6 +20,9 @@ if ($mydb->errno != 0)
 $username = sanitize($username);
 $password = sanitize($password);
 
+echo($username.PHP_EOL);
+echo($password.PHP_EOL);
+
 $query = "select * from users where username='$username' and password='$password' ";
 
 $response = $mydb->query($query);
@@ -68,10 +71,14 @@ function sanitize($input)
 {
 	$inputSan = filter_var($input, FILTER_SANITIZE_STRING); //Gets rid of Html code
 	//$inputSan = str_replace(' ', '', $inputSan); // gets rid of spaces
-	$inputSan = preg_replace('/^[a-zA-Z0-9]*$/i', '', $inputSan);
+	$inputSan = preg_replace('/[^A-Za-z0-9]/', '', $inputSan);
 	
 	return $inputSan;
 }
+
+
+//echo "successfully connected to database".PHP_EOL;
+
 
 function requestProcessor($request)
 {
@@ -96,11 +103,8 @@ function requestProcessor($request)
 		 return array("returnCode" => '1', 'message'=>"Invalid Login");
 	  }
   case "Register":
-<<<<<<< HEAD
 	if (doRegister($request['username'],$request['password'], $request['email']))
-=======
 	if (doRegister($request['username'],$request['password'],$request['email']))
->>>>>>> f42367d566ba6b231a9cf3894131f4a40ef40783
 	{
 		echo "Succesful Register".PHP_EOL;
 		return array("returnCode" => '0', 'message'=>"Successful Register");
@@ -112,7 +116,8 @@ function requestProcessor($request)
 	}
 
   case "validate_session":
-      return doValidate($request['sessionId']);
+	  return doValidate($request['sessionId']);
+
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");}
 
