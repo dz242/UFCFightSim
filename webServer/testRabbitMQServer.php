@@ -121,6 +121,19 @@ function requestProcessor($request)
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");}
 
+  case "getFighters":
+        {
+	    	$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+		$queryFighters = "SELECT TOP 10 * FROM FIGHTERS";
+		$response = $mydb->query($queryFighters);
+		echo $response;
+        	return($response);
+        }
+
+  }
+
+  return array("returnCode" => '0', 'message'=>"Server received request and processed");}
+ 
 
 $server = new rabbitMQServer("testRabbitMQ.ini","testServer");
 
