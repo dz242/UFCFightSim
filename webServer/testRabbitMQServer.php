@@ -82,10 +82,14 @@ function sanitize($input)
 {
 	$inputSan = filter_var($input, FILTER_SANITIZE_STRING); //Gets rid of Html code
 	//$inputSan = str_replace(' ', '', $inputSan); // gets rid of spaces
-	$inputSan = preg_replace('/^[a-zA-Z0-9]*$/i', '', $inputSan);
+	$inputSan = preg_replace('/[^A-Za-z0-9]/', '', $inputSan);
 	
 	return $inputSan;
 }
+
+
+//echo "successfully connected to database".PHP_EOL;
+
 
 function requestProcessor($request)
 {
@@ -110,6 +114,7 @@ function requestProcessor($request)
 		 return array("returnCode" => '1', 'message'=>"Invalid Login");
 	  }
   case "Register":
+	if (doRegister($request['username'],$request['password'], $request['email']))
 	if (doRegister($request['username'],$request['password'],$request['email']))
 	{
 		echo "Succesful Register".PHP_EOL;
@@ -123,6 +128,9 @@ function requestProcessor($request)
 
   case "validate_session":
 	  return doValidate($request['sessionId']);
+
+  }
+  return array("returnCode" => '0', 'message'=>"Server received request and processed");}
 
   case "getFighters":
         {
