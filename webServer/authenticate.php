@@ -3,6 +3,9 @@
 </html>
 
 <?php
+session_start();
+
+
 
 $uname = $_GET["uname"];
 $password = $_GET["password"];
@@ -41,7 +44,6 @@ if ($count == 0)
         exit();
 }
 
-
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
@@ -56,10 +58,13 @@ else
   $msg = "Default Login Message";
 }
 
+echo htmlspecialchars(SID).PHP_EOL; //debug echo SID
+
 $request = array();
 $request['type'] = "Login";
 $request['username'] = $uname;
 $request['password'] = $password;
+$request['SID'] = htmlspecialchars(SID);
 $request['message'] = $msg;
 $response = $client->send_request($request);
 //$response = $client->publish($request);
@@ -73,7 +78,8 @@ echo $argv[0]." END".PHP_EOL;
 if ($response["returnCode"] == '0')
 {
 	echo "Correct Login, Redirecting to next page".PHP_EOL;
-        header("refresh: 3, url=testpage.php");
+	$_SESSION["username"] = $uname;
+        header("refresh: 2, url=testpage.php");
 }
 else
 {
