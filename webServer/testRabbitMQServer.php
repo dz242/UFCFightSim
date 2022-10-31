@@ -4,7 +4,7 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
-function doLogin($username,$password)
+function doLogin($username,$password,$SID)
 {	
 	//Osama Login In Here
 $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
@@ -38,7 +38,11 @@ $response = $mydb->query($query);
 	$row = mysqli_fetch_array($response, MYSQLI_ASSOC);
 	$hash = $row['password'];
 
-	if (password_verify($password, $hash)) {return true;}
+	if (password_verify($password, $hash)) {
+		
+		updateSession($SID,$username,$mydb); 	
+		return true;
+	}
 	else {return false;}
 }
 
@@ -78,6 +82,29 @@ $response = $mydb->query($query);
 	}
 }
 
+function doValidate($SID) {
+$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+
+if ($mydb->errno != 0)
+{
+        echo "failed to connect to database: ". $mydb->error . PHP_EOL;
+        exit(0);
+}
+$query = "select * from users where SID='$SID'";
+
+$response = $mydb->query($query);
+        if ($mydb->errno != 0)
+        {
+                echo "failed to execute query:".PHP_EOL;
+                echo __FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL;
+                exit(0);
+        }
+        $numrows = mysqli_num_rows($response);
+
+	if ($numrows == 0) {return false;}
+	else {return true;}
+}
+
 function sanitize($input)
 {
 	$inputSan = filter_var($input, FILTER_SANITIZE_STRING); //Gets rid of Html code
@@ -87,9 +114,18 @@ function sanitize($input)
 	return $inputSan;
 }
 
-
-//echo "successfully connected to database".PHP_EOL;
-
+function updateSession($SID, $username, $mydb): void
+{
+	$query = "update users SET sid = '$SID' where username = '$username'";
+	$response = $mydb->query($query);
+        if ($mydb->errno != 0)
+        {
+                echo "failed to execute query:".PHP_EOL;
+                echo __FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL;
+                exit(0);
+	}
+	return;
+}
 
 function requestProcessor($request)
 {
@@ -103,7 +139,7 @@ function requestProcessor($request)
   {
   case "Login":
 
-	  if (doLogin($request['username'],$request['password']))
+	  if (doLogin($request['username'],$request['password'],$request['SID']))
 	  {
 		  echo "Successful login".PHP_EOL;
 		  return array("returnCode" => '0', 'message'=>"Successful Login");
@@ -114,7 +150,7 @@ function requestProcessor($request)
 		 return array("returnCode" => '1', 'message'=>"Invalid Login");
 	  }
   case "Register":
-	if (doRegister($request['username'],$request['password'], $request['email']))
+
 	if (doRegister($request['username'],$request['password'],$request['email']))
 	{
 		echo "Succesful Register".PHP_EOL;
@@ -127,10 +163,17 @@ function requestProcessor($request)
 	}
 
   case "validate_session":
-	  return doValidate($request['sessionId']);
 
-  }
-  return array("returnCode" => '0', 'message'=>"Server received request and processed");}
+	 if (doValidate($request['SID']))
+	 {
+		 echo "Succesful Session Validation".PHP_EOL;
+		 return true;
+	 }
+	 else
+	 {
+		 echo "Session Validation Failed".PHP_EOL;
+		 return false; 
+	 }
 
   case "getFighters":
         {
@@ -151,4 +194,3 @@ $server = new rabbitMQServer("testRabbitMQ.ini","testServer");
 $server->process_requests('requestProcessor');
 exit();
 ?>
-
