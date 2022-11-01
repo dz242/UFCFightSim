@@ -1,5 +1,5 @@
 <?php
-session_start();
+session_start(['use_only_cookies'=>0,'use_trans_sid'=>1]);
 
 echo "UFC Fight Time!".PHP_EOL;
 
