@@ -183,7 +183,29 @@ function requestProcessor($request)
 		$row = mysqli_fetch_array($response, MYSQLI_ASSOC);
 		echo $row;
         	return($row);
-        }
+  }
+	   case "getProfile":
+
+                $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+
+                $getName = "SELECT username from users where username = 'bob'";
+                $name = $mydb->query($getName);
+
+                $getEmail = "SELECT email from users where username = 'bob'";
+                $email = $mydb->query($getEmail);
+
+                $getWins = "SELECT wins from users where username = 'bob'";
+                $wins = $mydb->query($getWins);
+
+                $getLosses = "SELECT losses from users where username = 'bob'";
+                $losses = $mydb->query($getLosses);
+
+                echo "Name:".$name;
+                echo "Email:".$email;
+                echo "Wins:".$wins;
+                echo "Losses:".$losses;
+                return($name.$email.$wins.$losses);
+
 
   }
 
