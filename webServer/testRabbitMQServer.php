@@ -4,11 +4,12 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
-//logErr("testBanana4" . PHP_EOL);
+logErr("testBanana4" . PHP_EOL);
 
 function logErr($string)
 {
-	error_log($string,3,"error.log");
+	$t = time();
+	error_log(date("Y-m-d h:i:s A"). ' '. $string ,3,"error.log");
 	echo($string);
 }
 function doLogin($username,$password,$SID)
@@ -18,7 +19,7 @@ $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 
 if ($mydb->errno != 0)
 {
-        logErr("failed to connect to database: ". $mydb->error . PHP_EOL);`       
+        logErr("failed to connect to database: ". $mydb->error . PHP_EOL);       
 	exit(0);
 }
 
