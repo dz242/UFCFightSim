@@ -6,27 +6,91 @@
         <title>The Octagon</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" src="">
         <script src="/socket.io/socket.io.js"></script>
         <script src="fightClient.js"></script>
     </head>
 
     <body>
 
-        <h3>Choose your weight class!</h3>
+        <h3 id="ChooseHeader">Choose your weight class!</h3>
         <br><br><br>
         <p id="chosenWeight"></p>
         <br><br><br>
 
-        <button id="Strawweight" onclick="swButton()">Strawweight (115lbs)</button><br><br>
-        <button id="Flyweight" onclick="flwButton()">Flyweight (125lbs)</button><br><br>
-        <button id="Bantamweight" onclick="bwButton()">Bantamweight (135lbs)</button><br><br>
-        <button id="Featherweight" onclick="fwButton()">Featherweight (145lbs)</button><br><br>
-        <button id="Lightweight" onclick="lwButton()">Lightweight (155lbs)</button><br><br>
-        <button id="Welterweight" onclick="wwButton()">Welterweight (170lbs)</button><br><br>
-        <button id="Middleweight" onclick="mwButton()">Middleweight (185lbs)</button><br><br>
-        <button id="Light Heavyweight" onclick="lhwButton()">Light Heavyweight (205lbs)</button><br><br>
-        <button id="Heavyweight" onclick="hwButton()">Heavyweight (265lbs)</button><br><br>
+        <div id="LobbyButtons">
+            <button id="Strawweight" onclick="swButton()">Strawweight (115lbs)</button><br><br>
+            <button id="Flyweight" onclick="flwButton()">Flyweight (125lbs)</button><br><br>
+            <button id="Bantamweight" onclick="bwButton()">Bantamweight (135lbs)</button><br><br>
+            <button id="Featherweight" onclick="fwButton()">Featherweight (145lbs)</button><br><br>
+            <button id="Lightweight" onclick="lwButton()">Lightweight (155lbs)</button><br><br>
+            <button id="Welterweight" onclick="wwButton()">Welterweight (170lbs)</button><br><br>
+            <button id="Middleweight" onclick="mwButton()">Middleweight (185lbs)</button><br><br>
+            <button id="Light Heavyweight" onclick="lhwButton()">Light Heavyweight (205lbs)</button><br><br>
+            <button id="Heavyweight" onclick="hwButton()">Heavyweight (265lbs)</button><br><br>
+        </div>
+
+        <div id="GameHud" style="display:none;">
+
+            <div id="StatusUpdate" style="text-align:center;">
+                <strong><p></p></strong>
+            </div>
+
+            <br><br>
+
+            <div id="TurnUpdate" style="text-align:center;">
+                <strong><p></p></strong>
+            </div>
+
+
+            <div id="GoodSide" style="width:30%; float:left; padding:20px; border:2px">
+
+                <div id="CurrentFighter" style="text-align:right">
+                    <h3 id="FighterName01">Sample Fighter 01</h3><br>
+                    <progress id="fighter01Health" value="200" max="200"></progress><br><br>
+                    <button id="Move1" onclick="move1()">Jab</button><br><br>
+                    <button id="Move2" onclick="move2()">Single Leg</button><br><br>
+                    <button id="Move3" onclick="move3()">Rear Naked Choke</button><br><br>
+                    <button id="Move4" onclick="move4()">Taunt</button><br><br>
+                </div>
+
+                <div id="BackupFighter" style="text-align:left">
+                    <h4 id="FighterName02">Sample Fighter 02</h3><br>
+                    <progress id="fighter02Health" value="200" max="200"></progress><br><br>
+                    <button id="SwitchIn">Switch In!</button>
+                </div>
+
+                <div id="BackupFighter" style="text-align:left">
+                    <h4 id="FighterName03">Sample Fighter 03</h3><br>
+                    <progress id="fighter03Health" value="200" max="200"></progress><br><br>
+                    <button id="SwitchIn">Switch In!</button>
+                </div>
+
+            </div>
+
+            <div id="BadSide" style="width:30% ; float:right; padding:20px; border:2px">
+
+                <div id="CurrentEnemy" style="text-align:left">
+                    <h3 id="FighterName11">Sample Fighter 11</h3><br>
+                    <progress id="fighter11Health" value="200" max="200"></progress><br><br>
+                    <br><br><br><br><br><br><br><br>
+                </div>
+
+                <div id="BackupEnemy" style="text-align:right">
+                    <h4 id="FighterName12">Sample Fighter 12</h3><br>
+                    <progress id="fighter12Health" value="200" max="200"></progress><br><br>
+                    <br><br>
+                </div>
+
+                <div id="BackupEnemy" style="text-align:right">
+                    <h4 id="FighterName13">Sample Fighter 13</h3><br>
+                    <progress id="fighter13Health" value="200" max="200"></progress><br><br>
+                    <br><br>
+                </div>
+
+            </div>
+
+        </div>
 <br>
     </body>
 </html>

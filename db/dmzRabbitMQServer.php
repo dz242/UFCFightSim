@@ -40,6 +40,8 @@ foreach($arr as $stat)
   $td_land_pct=$stat['td_land_pct'];
   $weight=$stat['weight'];
 
+
+
 	$query = "insert into fighters (dob, fighter_id, height, n_draw, n_loss, n_win, name, reach, sig_str_abs_pM, sig_str_def_pct, 
   sig_str_land_pM, sig_str_land_pct, stance, sub_avg, td_avg, td_def_pct, td_land_pct, weight) 
   values ('$dob', '$fighter_id', '$height', '$n_draw', '$n_loss', '$n_win', '$name', '$reach', '$sig_str_abs_pM', '$sig_str_def_pct', 
