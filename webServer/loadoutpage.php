@@ -8,10 +8,10 @@ body {
   min-width: 250px;
 }
 
-//Code Derived From: https://www.w3schools.com/howto/howto_js_todolist.asp
+/*Code Derived From: https://www.w3schools.com/howto/howto_js_todolist.asp */
 
 /* Include the padding and border in an element's total width and height */
-* {
+{
   box-sizing: border-box;
 }
 
@@ -78,8 +78,12 @@ ul li.checked::before {
   <h2 style="margin:5px">Fighter Selection</h2>
 </div>
 
+<!--List to be populated with fighters-->
+
 <ul id="myUL">
 </ul>
+
+<div id="dom-target" style="display: none;">
 
 <?php
 
@@ -179,7 +183,7 @@ function newElement(data) {
 }
 </script>
 
-
+</div>
 </body>
 </html>
 
