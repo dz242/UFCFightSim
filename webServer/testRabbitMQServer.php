@@ -4,6 +4,13 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
+//logErr("testBanana4" . PHP_EOL);
+
+function logErr($string)
+{
+	error_log($string,3,"error.log");
+	echo($string);
+}
 function doLogin($username,$password,$SID)
 {	
 	//Osama Login In Here
@@ -11,8 +18,8 @@ $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 
 if ($mydb->errno != 0)
 {
-        echo "failed to connect to database: ". $mydb->error . PHP_EOL;
-        exit(0);
+        logErr("failed to connect to database: ". $mydb->error . PHP_EOL);`       
+	exit(0);
 }
 
 //echo "successfully connected to database".PHP_EOL;
@@ -27,8 +34,8 @@ $query = "select * from users where username='$username'";
 $response = $mydb->query($query);
         if ($mydb->errno != 0)
         {       
-                echo "failed to execute query:".PHP_EOL;
-                echo __FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL;
+                logErr("failed to execute query:".PHP_EOL);
+                logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
                 exit(0);
         }
         $numrows = mysqli_num_rows($response);
@@ -54,7 +61,7 @@ $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 
 if ($mydb->errno != 0)
 {
-        echo "failed to connect to database: ". $mydb->error . PHP_EOL;
+        logErr("failed to connect to database: ". $mydb->error . PHP_EOL);
         exit(0);
 }
 
@@ -72,8 +79,8 @@ $query = "insert into users (username, password, email) values ('$username', '$h
 $response = $mydb->query($query);
         if ($mydb->errno != 0)
         {
-                echo "failed to execute query:".PHP_EOL;
-                echo __FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL;
+                logErr("failed to execute query:".PHP_EOL);
+                logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
                 return false;
 	}
 	else
@@ -87,7 +94,7 @@ $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 
 if ($mydb->errno != 0)
 {
-        echo "failed to connect to database: ". $mydb->error . PHP_EOL;
+        logErr("failed to connect to database: ". $mydb->error . PHP_EOL);
         exit(0);
 }
 $query = "select * from users where SID='$SID'";
@@ -95,8 +102,8 @@ $query = "select * from users where SID='$SID'";
 $response = $mydb->query($query);
         if ($mydb->errno != 0)
         {
-                echo "failed to execute query:".PHP_EOL;
-                echo __FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL;
+                logErr("failed to execute query:".PHP_EOL);
+                logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
                 exit(0);
         }
         $numrows = mysqli_num_rows($response);
@@ -120,8 +127,8 @@ function updateSession($SID, $username, $mydb): void
 	$response = $mydb->query($query);
         if ($mydb->errno != 0)
         {
-                echo "failed to execute query:".PHP_EOL;
-                echo __FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL;
+                logErr("failed to execute query:".PHP_EOL);
+                logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
                 exit(0);
 	}
 	return;
@@ -133,7 +140,8 @@ function requestProcessor($request)
   var_dump($request);
   if(!isset($request['type']))
   {
-    return "ERROR: unsupported message type";
+	logErr("ERROR: unsupported message type");
+    return;
   }
   switch ($request['type'])
   {
@@ -146,7 +154,7 @@ function requestProcessor($request)
 	  }
 	  else
 	  {
-		 echo "Invalid Login".PHP_EOL;
+		 logErr("Invalid Login".PHP_EOL);
 		 return array("returnCode" => '1', 'message'=>"Invalid Login");
 	  }
   case "Register":
@@ -158,7 +166,7 @@ function requestProcessor($request)
 	}
 	else
 	{
-		echo "Register Failed".PHP_EOL;
+		logErr("Register Failed".PHP_EOL);
 		return array("returnCode" => '1', 'message'=>"Register Failed");
 	}
 
@@ -171,7 +179,7 @@ function requestProcessor($request)
 	 }
 	 else
 	 {
-		 echo "Session Validation Failed".PHP_EOL;
+		 logErr("Session Validation Failed".PHP_EOL);
 		 return false; 
 	 }
 
