@@ -187,11 +187,14 @@ function requestProcessor($request)
   case "getFighters":
         {
 	    	$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
-		$queryFighters = "SELECT TOP 10 * FROM FIGHTERS";
+		$queryFighters = "select * from fighters limit 0,11";
+		$fighterArray = array();
 		$response = $mydb->query($queryFighters);
-		$row = mysqli_fetch_array($response, MYSQLI_ASSOC);
-		echo $row;
-        	return($row);
+		for(i=0;i<10;i++)
+		{
+			$fighterArray[i] = mysqli_fetch_array($response,MYSQLI_NUM);
+		}
+        	return($fighterArray);
   }
 	   case "getProfile":
 
