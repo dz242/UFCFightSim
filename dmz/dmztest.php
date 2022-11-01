@@ -19,6 +19,6 @@ $obj = json_decode($json, true);
 
 foreach($obj as $stat)
 {
-	echo($stat['name'].PHP_EOL);
+	echo($stat['height'].PHP_EOL);
 }
 ?>
