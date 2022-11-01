@@ -3,7 +3,7 @@
 </html>
 
 <?php
-session_start();
+session_start(['use_only_cookies'=>0,'use_trans_sid'=>1]);
 
 
 
@@ -58,7 +58,7 @@ else
   $msg = "Default Login Message";
 }
 
-echo htmlspecialchars(SID).PHP_EOL; //debug echo SID
+echo(htmlspecialchars(SID).PHP_EOL); //debug echo SID
 
 $request = array();
 $request['type'] = "Login";

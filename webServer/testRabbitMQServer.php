@@ -180,8 +180,9 @@ function requestProcessor($request)
 	    	$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 		$queryFighters = "SELECT TOP 10 * FROM FIGHTERS";
 		$response = $mydb->query($queryFighters);
-		echo $response;
-        	return($response);
+		$row = mysqli_fetch_array($response, MYSQLI_ASSOC);
+		echo $row;
+        	return($row);
         }
 
   }
