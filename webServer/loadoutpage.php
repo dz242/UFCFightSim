@@ -81,10 +81,6 @@ ul li.checked::before {
 <ul id="myUL">
 </ul>
 
-<script>
-/*Code Derived in part from : https://stackoverflow.com/questions/23740548/how-do-i-pass-variables-and-data-from-php-to-javascript */
-<div id="dom-target" style="display: none;">
-
 <?php
 
 if (!$continue)
@@ -130,6 +126,10 @@ echo  htmlspecialchars($response);
 ?>
 
 //Gets the data from the php
+<script>
+/*Code Derived in part from : https://stackoverflow.com/questions/23740548/how-do-i-pass-variables-and-data-from-php-to-javascript */
+<div id="dom-target" style="display: none;">
+
 
 var div = document.getElementById("dom-target");
 var fighterList = div.textContent;
@@ -140,8 +140,8 @@ var indexFighter = 0;
 
 for(i = 0;i =< 5; i++)
 {
-singleFighter = fighterList[i].string;
-//singleFighter =  fighterList.replace(/([^\,]*\,){18*i}/, '');
+//singleFighter = fighterList[i].string;
+singleFighter =  fighterList.replace(/([^\,]*\,){18*i}/, '');
 newElement(singleFighter);
 }
 
