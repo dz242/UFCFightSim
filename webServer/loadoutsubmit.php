@@ -12,9 +12,9 @@ $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
 $request = array();
 $request['type'] = "submitLoadout";
 $request['userId'] = $_SESSION["userID"];
-$request['fighter1'] = $fightersArray[1];
-$request['fighter2'] = $fightersArray[2];
-$request['fighter3'] = $fightersArray[3];
+$request['fighter1'] = $fData[1];
+$request['fighter2'] = $fData[2];
+$request['fighter3'] = $fData[3];
 
 $response = $client->send_request($request);
 //$response = $client->publish($request);
