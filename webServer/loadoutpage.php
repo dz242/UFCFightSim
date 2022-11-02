@@ -177,7 +177,7 @@ function newElement(data) {
 }
 </script>
 
-<script type = “text/javascript”>
+<script type = "text/javascript">
 
 function getFighters()
 {
@@ -189,7 +189,7 @@ return true;
 </script>
 
 <div>
-<form action = “loadoutsubmit.php” method = “post” onsubmit= “return getFighters()” >
+<form action = "loadoutsubmit.php" method = "post" onsubmit= "return getFighters()" >
 
 <p>Select Special Move For Fighter One:</p>
 
