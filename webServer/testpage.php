@@ -4,7 +4,8 @@ session_start(['use_only_cookies'=>0,'use_trans_sid'=>1]);
 echo "UFC Fight Time!".PHP_EOL;
 
 $uname = $_SESSION["username"];
-echo "Current User Logged in: $uname".PHP_EOL;
+$email = $_SESSION["email"];
+echo "Current User Logged in: $uname and Email is: $email".PHP_EOL;
 echo "Validating Session...".PHP_EOL;
 
 require_once('path.inc');

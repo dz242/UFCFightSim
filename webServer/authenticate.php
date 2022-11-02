@@ -78,7 +78,8 @@ echo $argv[0]." END".PHP_EOL;
 if ($response["returnCode"] == '0')
 {
 	echo "Correct Login, Redirecting to next page".PHP_EOL;
-	$_SESSION["username"] = $uname;
+	$_SESSION["username"] = $response["user"]["username"];
+	$_SESSION["email"] = $response["user"]["email"];
         header("refresh: 2, url=testpage.php");
 }
 else
