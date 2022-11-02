@@ -111,19 +111,19 @@ echo "\n\n";
 
 echo $argv[0]." END".PHP_EOL;
 
-if ($response["returnCode"] == '0')
+/*if ($response["returnCode"] == '0')
 {
         echo "Grabbed Fighters".PHP_EOL;
 }
 else
 {
         echo "Grab Fighters Fail".PHP_EOL;
-}
+}*/
 //echo  htmlspecialchars($response);
 
 ?>
 
-//Gets the data from the php
+
 <script>
 
 //Get Php/mysql array into the javascript
@@ -131,7 +131,7 @@ var fighterData = <?php echo json_encode($response); ?>;
 
 //Loop that takes cuts every 18th Comma makes a new fighter Element with the data
 
-for(var i = 0; i =< fighterData.length; i++)
+for(var i = 0; i < fighterData.length; i++)
 {
 //singleFighter = fighterList[i].string;
 singleFighter =  fighterData[i];
@@ -168,7 +168,26 @@ function newElement(data) {
 }
 </script>
 
+<script type = “text/javascript”>
 
+function getFighters()
+{
+var theList = document.getElementById(“myUL”);
+var checkedFighters = theList.getElementsByClassName('checked');
+document.getElementById(“fData”).value = checkedFighters;
+return true;
+}
+</script>
+
+<div>
+<form action = “loadoutsubmit.php” method = “post” onsubmit= “return getFighters()” >
+
+
+<input type = “hidden” id = “fData” value = “apple” />
+<input type = “submit” value = "Submit Selection”/>
+	
+</form>
+	</div>
 </body>
 </html>
 
