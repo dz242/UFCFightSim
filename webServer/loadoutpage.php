@@ -134,8 +134,8 @@ var fighterData = <?php echo json_encode($response); ?>;
 for(var i = 0; i < fighterData.length; i++)
 {
 //singleFighter = fighterList[i].string;
-singleFighter =  fighterData[i];
-newElement(singleFighter);
+var singleFighter =  fighterData[i];
+newElement(singleFighter[6]);
 }
 
 
