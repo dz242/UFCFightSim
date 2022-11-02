@@ -218,27 +218,31 @@ function requestProcessor($request)
 		}
         	return($fighterArray);
   }
-	   case "getProfile":
-
+case "getProfile":
                 $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 
-                $getName = "SELECT username from users where username = 'bob'";
-                $name = $mydb->query($getName);
+                $query = "select * from users where username='bob'";
 
-                $getEmail = "SELECT email from users where username = 'bob'";
-                $email = $mydb->query($getEmail);
+                $response = $mydb->query($query);
+                if ($mydb->errno != 0)
+                {
+                        logErr("failed to execute query:".PHP_EOL);
+                        logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
+                        exit(0);
+                }
+                $numrows = mysqli_num_rows($response);
 
-                $getWins = "SELECT wins from users where username = 'bob'";
-                $wins = $mydb->query($getWins);
+                if ($numrows == 0) {return false;}
 
-                $getLosses = "SELECT losses from users where username = 'bob'";
-                $losses = $mydb->query($getLosses);
+                $row = mysqli_fetch_array($response, MYSQLI_ASSOC);
 
-                echo "Name:".$name;
-                echo "Email:".$email;
-                echo "Wins:".$wins;
-                echo "Losses:".$losses;
-                return($name.$email.$wins.$losses);
+
+                echo "Name:".$row['username'];
+                echo "Email:".$row['email'];
+                echo "Wins:".$row['wins'];
+                echo "Losses:".$row['losses'];
+                $profileInfoArray=array('username'=>$row['username'],'email'=>$row['email'],'wins'=>$row['wins'],'losses'=>$row['losses']);
+                return($profileInfoArray);
 
 
   }
