@@ -69,6 +69,15 @@ ul li.checked::before {
   width: 7px;
 }
 
+input[type='radio'], label{   
+    vertical-align: baseline;
+    margin: 7px;
+   }
+input[type=submit] {
+    display: block;
+    margin: 10px;
+}
+
 
 </style>
 </head>
@@ -181,6 +190,49 @@ return true;
 
 <div>
 <form action = “loadoutsubmit.php” method = “post” onsubmit= “return getFighters()” >
+
+<p>Select Special Move For Fighter One:</p>
+
+  <input type="radio" id="Just Bleed" name="f1sm" value="Just Bleed">
+  <label for="Just Bleed">Just Bleed</label>
+  
+  <input type="radio" id="Scissor Claw" name="f1sm" value="Scissor Claw">
+  <label for="Scissor Claw">Scissor Claw</label>
+  
+  <input type="radio" id="Meteor Assualt" name="f1sm" value="Meteor Assualt">
+  <label for="Meteor Assualt">Meteor Assualt</label>
+  
+  <input type="radio" id="Roundhouse Kick" name="f1sm" value="Roundhouse Kick">
+  <label for="Roundhouse Kick">Roundhouse Kick</label>
+  
+
+<p>Select Special Move For Fighter Two:</p>
+
+  <input type="radio" id="Just Bleed" name="f2sm" value="Just Bleed">
+  <label for="Just Bleed">Just Bleed</label>
+  
+  <input type="radio" id="Scissor Claw" name="f2sm" value="Scissor Claw">
+  <label for="Scissor Claw">Scissor Claw</label>
+  
+  <input type="radio" id="Meteor Assualt" name="f2sm" value="Meteor Assualt">
+  <label for="Meteor Assualt">Meteor Assualt</label>
+  
+  <input type="radio" id="Roundhouse Kick" name="f2sm" value="Roundhouse Kick">
+  <label for="Roundhouse Kick">Roundhouse Kick</label>
+  
+ <p>Select Special Move For Fighter Three:</p>
+
+  <input type="radio" id="Just Bleed" name="f3sm" value="Just Bleed">
+  <label for="Just Bleed">Just Bleed</label>
+  
+  <input type="radio" id="Scissor Claw" name="f3sm" value="Scissor Claw">
+  <label for="Scissor Claw">Scissor Claw</label>
+  
+  <input type="radio" id="Meteor Assualt" name="f3sm" value="Meteor Assualt">
+  <label for="Meteor Assualt">Meteor Assualt</label>
+  
+  <input type="radio" id="Roundhouse Kick" name="f3sm" value="Roundhouse Kick">
+  <label for="Roundhouse Kick">Roundhouse Kick</label>
 
 
 <input type = “hidden” id = “fData” value = “apple” />
