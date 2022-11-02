@@ -83,15 +83,9 @@ ul li.checked::before {
 <ul id="myUL">
 </ul>
 
-<div id="dom-target" style="display: none;">
 
 <?php
 
-if (!$continue)
-{
-	echo "Debug Exit Message";
-	exit();
-}
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
@@ -163,10 +157,6 @@ list.addEventListener('click', function(ev) {
   }
 
 }, false);
-
-//IMPORANT : When new query is done, make sure to store all checked fighters before, 
-//This will allow the user to keep note of what fighters they already chosen
-
 
 // Create a new list item when clicking on the "Add" button
 function newElement(data) {
