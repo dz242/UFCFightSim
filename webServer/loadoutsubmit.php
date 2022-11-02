@@ -11,7 +11,7 @@ $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
 
 $request = array();
 $request['type'] = "submitLoadout";
-$request['username'] = _SESSION[$uname];
+$request['userId'] = $_SESSION["userID"];
 $request['fighter1'] = $fightersArray[1];
 $request['fighter2'] = $fightersArray[2];
 $request['fighter3'] = $fightersArray[3];

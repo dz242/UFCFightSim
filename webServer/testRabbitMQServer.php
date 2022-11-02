@@ -201,6 +201,24 @@ function getFighterStats($fighter)
 
 }
 
+function insertLoadouts($userId,$fighter1,$fighter2,$fighter3)
+{
+	 $query = "insert into loadouts(userId, fighter1, fighter2, fighter3, sp_move1, sp_move2, sp_move3) values('$userId','$fighter1', '$fighter2', '$fighter3', 'Flame Kick', 'Thunderbolt', 'Rock Smash')";
+
+                $response = $mydb->query($query);
+                if ($mydb->errno != 0)
+                {
+                        logErr("failed to execute query:".PHP_EOL);
+                        logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
+			
+			return(false);
+                }
+		return(true);
+
+
+}
+
+
 function requestProcessor($request)
 {
   echo "received request".PHP_EOL;
@@ -288,6 +306,22 @@ case "getProfile":
                 echo "Losses:".$row['losses'];
                 $profileInfoArray=array('username'=>$row['username'],'email'=>$row['email'],'wins'=>$row['wins'],'losses'=>$row['losses']);
                 return($profileInfoArray);
+
+
+case "submitLoadout": 
+	$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+
+	if(insertLoadouts($request['userId'],$request['fighter1'],$request['fighter2'],$request['fighter3']))
+	{
+                echo "Succesful Insert Into Loadouts".PHP_EOL;
+                return array("returnCode" => '0', 'message'=>"Successful Register");
+        }
+        else
+        {
+                logErr("Inserting Loadouts Failed".PHP_EOL);
+                return array("returnCode" => '1', 'message'=>"Register Failed");
+        }
+
 
 
   }
