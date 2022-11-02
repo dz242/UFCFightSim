@@ -172,7 +172,7 @@ function requestProcessor($request)
 	  if (doLogin($request['username'],$request['password'],$request['SID']))
 	  {
 		  echo "Successful login".PHP_EOL;
-		  $user = fetchUser($request['username'])
+		  $user = fetchUser($request['username']);
 		  return array("returnCode" => '0', 'message'=>"Successful Login", "user"=>$user);
 	  }
 	  else
@@ -207,17 +207,17 @@ function requestProcessor($request)
 	 }
 
   case "getFighters":
-        {
+        
 	    	$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 		$queryFighters = "select * from fighters limit 0,11";
 		$fighterArray = array();
 		$response = $mydb->query($queryFighters);
-		for(i=0;i<10;i++)
+		for($i=0;$i<10;$i++)
 		{
 			$fighterArray[i] = mysqli_fetch_array($response,MYSQLI_NUM);
 		}
         	return($fighterArray);
-  }
+  
 case "getProfile":
                 $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 
