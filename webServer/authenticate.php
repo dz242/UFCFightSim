@@ -3,8 +3,8 @@
 </html>
 
 <?php
-session_start(['use_only_cookies'=>0,'use_trans_sid'=>1]);
-
+//session_start(['use_only_cookies'=>0,'use_trans_sid'=>1]);
+session_start();
 
 
 $uname = $_GET["uname"];
@@ -58,13 +58,13 @@ else
   $msg = "Default Login Message";
 }
 
-echo(htmlspecialchars(SID).PHP_EOL); //debug echo SID
+//echo(htmlspecialchars(SID).PHP_EOL); //debug echo SID
 
 $request = array();
 $request['type'] = "Login";
 $request['username'] = $uname;
 $request['password'] = $password;
-$request['SID'] = htmlspecialchars(SID);
+$request['SID'] = session_id();
 $request['message'] = $msg;
 $response = $client->send_request($request);
 //$response = $client->publish($request);
@@ -80,6 +80,9 @@ if ($response["returnCode"] == '0')
 	echo "Correct Login, Redirecting to next page".PHP_EOL;
 	$_SESSION["username"] = $response["user"]["username"];
 	$_SESSION["email"] = $response["user"]["email"];
+	$_SESSION["userID"] = $response["user"]["userID"];
+	$_SESSION["wins"] = $response["user"]["wins"];
+	$_SESSION["losses"] = $response["user"]["losses"];
         header("refresh: 2, url=testpage.php");
 }
 else
