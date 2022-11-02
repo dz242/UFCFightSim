@@ -235,9 +235,12 @@ return true;
   <label for="Roundhouse Kick">Roundhouse Kick</label>
 
 
-<input type = “hidden” id = “fData” value = “apple” />
-<input type = “submit” value = "Submit Selection”/>
-	
+<input type = "hidden" id = "fData" value = "apple" />
+
+<div>
+<input type = "submit" value = "Submit Selection" />
+</div>	
+
 </form>
 	</div>
 </body>
