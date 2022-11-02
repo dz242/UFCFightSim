@@ -1,6 +1,6 @@
 <?php
-session_start(['use_only_cookies'=>0,'use_trans_sid'=>1]);
-
+//session_start(['use_only_cookies'=>0,'use_trans_sid'=>1]);
+session_start();
 echo "UFC Fight Time!".PHP_EOL;
 
 $uname = $_SESSION["username"];
@@ -22,13 +22,13 @@ else
   $msg = "Default Login Message";
 }
 
-echo htmlspecialchars(SID).PHP_EOL; //debug echo SID
+//echo htmlspecialchars(SID).PHP_EOL; //debug echo SID
 
 $request = array();
 $request['type'] = "validate_session";
 //$request['username'] = $uname;
 //$request['password'] = $password;
-$request['SID'] = htmlspecialchars(SID);
+$request['SID'] = session_id();
 //$request['message'] = $msg;
 $response = $client->send_request($request);
 //$response = $client->publish($request);
