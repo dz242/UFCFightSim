@@ -184,7 +184,7 @@ return true;
 
 
 <input type = “hidden” id = “fData” value = “apple” />
-<input type = “submit” value =”Submit Selection”/>
+<input type = “submit” value = "Submit Selection”/>
 	
 </form>
 	</div>
