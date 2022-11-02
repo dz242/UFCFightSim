@@ -1,8 +1,52 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </html>
+
+<?php
+require_once('path.inc');
+require_once('get_host_info.inc');
+require_once('rabbitMQLib.inc');
+
+$client = new rabbitMQClient("testRabbitMQ.ini","testServer");
+if (isset($argv[1]))
+{
+  $msg = $argv[1];
+}
+else
+{
+  $msg = "Default Profile Message";
+}
+/*
+$request = array();
+$request['type'] = "getProfile";
+$response = $client->send_request($request);
+
+//$response = $client->publish($request);
+
+echo "client received response: ".PHP_EOL;
+print_r($response);
+
+echo "\n\n";
+
+echo $argv[0]." END".PHP_EOL;
+ */
+/*
+if ($response["returnCode"] == '0')
+{
+        echo "Grabbed profile".PHP_EOL;
+}
+else
+{
+        echo "Failed to grab profile".PHP_EOL;
+}
+echo($response);
+ */
+?>
 
 <style>
 table, th, td {
@@ -50,45 +94,3 @@ th, td{
 	</table>
 
 </html>
-
-<?php
-require_once('path.inc');
-require_once('get_host_info.inc');
-require_once('rabbitMQLib.inc');
-
-$client = new rabbitMQClient("testRabbitMQ.ini","testServer");
-if (isset($argv[1]))
-{
-  $msg = $argv[1];
-}
-else
-{
-  $msg = "Default Register Message";
-}
-
-$request = array();
-$request['type'] = "getProfile";
-$response = $client->send_request($request);
-
-//$response = $client->publish($request);
-
-echo "client received response: ".PHP_EOL;
-print_r($response);
-
-echo "\n\n";
-
-echo $argv[0]." END".PHP_EOL;
-/*
-if ($response["returnCode"] == '0')
-{
-        echo "Grabbed profile".PHP_EOL;
-}
-else
-{
-        echo "Failed to grab profile".PHP_EOL;
-}
-echo($response);
- */
-?>
-
-
