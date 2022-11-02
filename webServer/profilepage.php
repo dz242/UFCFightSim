@@ -21,28 +21,28 @@ th, td{
 		<tr>
 			<th>Username</th>
 			<td>
-				<?php echo($_SESSION['username']);?>
+				<?php echo($_SESSION["username"]);?>
 				
 			</td>
 		</tr>
 		<tr>
                         <th>Email</th>
                         <td>
-				<?php echo($_SESSION['email']);?>
+				<?php echo($_SESSION["email"]);?>
 
                         </td>
                 </tr>
 		<tr>
                         <th>Wins</th>
                         <td>
-				<?php echo($_SESSION['wins']);?>
+				<?php echo($_SESSION["wins"]);?>
 
                         </td>
                 </tr>
 		<tr>
                         <th>Losses</th>
                         <td>
-				<?php echo($_SESSION['losses']);?>
+				<?php echo($_SESSION["losses"]);?>
 
                         </td>
                 </tr>
