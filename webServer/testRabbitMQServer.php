@@ -134,6 +134,27 @@ function updateSession($SID, $username, $mydb): void
 	}
 	return;
 }
+function fetchUser($username)
+{
+	$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+
+	if ($mydb->errno != 0)
+	{
+        logErr("failed to connect to database: ". $mydb->error . PHP_EOL);
+        exit(0);
+	}
+	$query = "select * from users where username='$username'";
+
+	$response = $mydb->query($query);
+        if ($mydb->errno != 0)
+        {
+                logErr("failed to execute query:".PHP_EOL);
+                logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
+                exit(0);
+        }
+	$user = mysqli_fetch_array($response, MYSQLI_ASSOC);
+	return array("userID" => $user['userId'], "username" => $user['username'], "email" => $user['email'], "wins" => $user['wins'], "losses" => $user['losses']);
+}
 
 function requestProcessor($request)
 {
@@ -151,7 +172,8 @@ function requestProcessor($request)
 	  if (doLogin($request['username'],$request['password'],$request['SID']))
 	  {
 		  echo "Successful login".PHP_EOL;
-		  return array("returnCode" => '0', 'message'=>"Successful Login");
+		  $user = fetchUser($request['username'])
+		  return array("returnCode" => '0', 'message'=>"Successful Login", "user"=>$user);
 	  }
 	  else
 	  {
