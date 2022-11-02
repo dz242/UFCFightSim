@@ -73,11 +73,12 @@ $response = $client->send_request($request);
 //$response = $client->publish($request);
 
 echo "client received response: ".PHP_EOL;
-//print_r($response);
+print_r($response);
+
 echo "\n\n";
 
 echo $argv[0]." END".PHP_EOL;
-
+/*
 if ($response["returnCode"] == '0')
 {
         echo "Grabbed profile".PHP_EOL;
@@ -87,7 +88,7 @@ else
         echo "Failed to grab profile".PHP_EOL;
 }
 echo($response);
-
+ */
 ?>
 
 
