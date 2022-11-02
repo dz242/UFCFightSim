@@ -125,27 +125,22 @@ else
 {
         echo "Grab Fighters Fail".PHP_EOL;
 }
-echo  htmlspecialchars($response);
+//echo  htmlspecialchars($response);
 
 ?>
 
 //Gets the data from the php
 <script>
-/*Code Derived in part from : https://stackoverflow.com/questions/23740548/how-do-i-pass-variables-and-data-from-php-to-javascript */
-<div id="dom-target" style="display: none;">
 
+//Get Php/mysql array into the javascript
+var fighterData = <?php echo json_encode($response); ?>;
 
-var div = document.getElementById("dom-target");
-var fighterList = div.textContent;
-
-var singleFighter = '';
-var indexFighter = 0;
 //Loop that takes cuts every 18th Comma makes a new fighter Element with the data
 
-for(i = 0;i =< 5; i++)
+for(var i = 0; i =< fighterData.length; i++)
 {
 //singleFighter = fighterList[i].string;
-singleFighter =  fighterList.replace(/([^\,]*\,){18*i}/, '');
+singleFighter =  fighterData[i];
 newElement(singleFighter);
 }
 
@@ -183,7 +178,7 @@ function newElement(data) {
 }
 </script>
 
-</div>
+
 </body>
 </html>
 
