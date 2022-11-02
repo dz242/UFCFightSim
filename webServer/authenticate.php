@@ -83,7 +83,7 @@ if ($response["returnCode"] == '0')
 	$_SESSION["userID"] = $response["user"]["userID"];
 	$_SESSION["wins"] = $response["user"]["wins"];
 	$_SESSION["losses"] = $response["user"]["losses"];
-        header("refresh: 2, url=testpage.php");
+        header("refresh: 2, url=index.html");
 }
 else
 {

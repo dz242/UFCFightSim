@@ -259,7 +259,7 @@ function requestProcessor($request)
 		$response = $mydb->query($queryFighters);
 		for($i=0;$i<10;$i++)
 		{
-			$fighterArray[i] = mysqli_fetch_array($response,MYSQLI_NUM);
+			$fighterArray[$i] = mysqli_fetch_array($response,MYSQLI_NUM);
 		}
         	return($fighterArray);
   
