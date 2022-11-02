@@ -155,6 +155,51 @@ function fetchUser($username)
 	$user = mysqli_fetch_array($response, MYSQLI_ASSOC);
 	return array("userID" => $user['userId'], "username" => $user['username'], "email" => $user['email'], "wins" => $user['wins'], "losses" => $user['losses']);
 }
+function fetchLoadout($userId)
+{
+$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+
+        if ($mydb->errno != 0)
+        {
+        logErr("failed to connect to database: ". $mydb->error . PHP_EOL);
+        exit(0);
+        }
+        $query = "select * from loadouts where userId='$userId'";
+
+        $response = $mydb->query($query);
+        if ($mydb->errno != 0)
+        {
+                logErr("failed to execute query:".PHP_EOL);
+                logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
+                exit(0);
+        }
+	$loadout = mysqli_fetch_array($response, MYSQLI_ASSOC);
+	return array("fighter1" => $loadout['fighter1'], "fighter2" => $loadout['fighter2'], "fighter3" => $loadout['fighter3'], "sp_move1" => $loadout['sp_move1'], "sp_move2" => $loadout['sp_move2'], "sp_move3" => $loadout['sp_move3']);
+
+}
+
+function getFighterStats($fighter)
+{
+	$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+
+        if ($mydb->errno != 0)
+        {
+        logErr("failed to connect to database: ". $mydb->error . PHP_EOL);
+        exit(0);
+        }
+        $query = "select * from loadouts where fighter_id='$fighter'";
+
+        $response = $mydb->query($query);
+        if ($mydb->errno != 0)
+        {
+                logErr("failed to execute query:".PHP_EOL);
+                logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
+                exit(0);
+        }
+	$stats = mysqli_fetch_array($response, MYSQLI_ASSOC);
+	return array("dob" => $stats['dob'], "fighter_id" => $stats['fighter_id'], "height" => $stats['height'], "n_draw" => $stats['n_draw'], "n_loss" => $stats['n_loss'], "n_win" => $stats['n_win'], "name" => $stats['name'], "reach" => $stats['reach'], "sig_str_abs_pM" => $stats['sig_str_abs_pM'], "sig_str_def_pct" => $stats['sig_str_def_pct'], "sig_str_land_pM" => $stats['sig_str_land_pM'], "sig_str_land_pct" => $stats['sig_str_land_pct'], "stance" => $stats['stance'], "sub_avg" => $stats['sug_avg'], "td_avg" => $stats['td_avg'], "td_def_pct" => $stats['td_def_pct'], "td_land_pct" => $stats['td_land_pct'], "weight" => $stats['weight']); 
+
+}
 
 function requestProcessor($request)
 {
