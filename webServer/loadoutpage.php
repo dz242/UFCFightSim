@@ -168,17 +168,17 @@ list.addEventListener('click', function(ev) {
   ev.target.classList.toggle('checked');
   countery--;
   }
-*/
-}, false);
 
+}, false);
+*/
 // Create a new list item when clicking on the "Add" button
 function newElement(data) {
 	 	var option = document.createElement("option");
 		 option.text = data;
         	option.value = data;
-		document.getElementById("fighter0").add(option);
-		document.getElementById("fighter1").add(option);
-		document.getElementById("fighter2").add(option);
+		document.getElementById("fighter0").appendChild(option);
+		document.getElementById("fighter1").appendChild(option);
+		document.getElementById("fighter2").appendChild(option);
 
         
 }
@@ -216,8 +216,9 @@ console.log(checkedFighters3);*/
 //return true;
 }
 </script>
-
-
+<div>
+document.onload = populateList();
+	</div>
 <div>
 <form action = "loadoutsubmit.php" id="submission" method = "post" onsubmit="getFighters()" >
 
