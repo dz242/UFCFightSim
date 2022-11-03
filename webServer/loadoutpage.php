@@ -94,6 +94,14 @@ input[type=submit] {
 
 
 <?php
+session_start();
+
+if (!isset($_SESSION["username"]))
+{
+	echo "Log in to view this Page";
+	header("refresh: 4, url=index.html");
+	exit();
+}	
 
 require_once('path.inc');
 require_once('get_host_info.inc');
