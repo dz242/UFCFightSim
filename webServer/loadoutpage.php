@@ -133,18 +133,21 @@ else
 ?>
 
 
-<script>
+<script type = "text/javascript">
 
 //Get Php/mysql array into the javascript
 var fighterData = <?php echo json_encode($response); ?>;
 
 //Loop that takes cuts every 18th Comma makes a new fighter Element with the data
-
+var fighterIds = [];
+var fighterNames = [];
 for(var i = 0; i < fighterData.length; i++)
 {
 //singleFighter = fighterList[i].string;
-var singleFighter =  fighterData[i];
-newElement(singleFighter[6]);
+	var singleFighter =  fighterData[i];
+	fighterIds[i] = singleFighter[1];
+	fighterNames[i] = singleFighter[6];
+	newElement(singleFighter[6]);
 }
 
 
@@ -175,21 +178,43 @@ function newElement(data) {
   li.appendChild(document.createTextNode(data));
   ul.appendChild(li);
 }
-</script>
-
-<script type = "text/javascript">
 
 function getFighters()
 {
-var theList = document.getElementById(“myUL”);
-var checkedFighters = theList.getElementsByClassName('checked');
-document.getElementById(“fData”).value = checkedFighters;
-return true;
+//var checkedFighters = [];
+	var theList = document.getElementById("myUL");
+	for(var i = 0; i < fighterData.length; i++){
+		if (fighterNames[i] = theList.getElementsByClassName('checked')[0].innerText){
+			checkedFighters1 = fighterIds[i];
+		}
+	}
+	for(var i = 0; i < fighterData.length; i++){
+                if (fighterNames[i] = theList.getElementsByClassName('checked')[1].innerText){
+                        checkedFighters2 = fighterIds[i];
+                }
+	}
+	for(var i = 0; i < fighterData.length; i++){
+                if (fighterNames[i] = theList.getElementsByClassName('checked')[2].innerText){
+                        checkedFighters3 = fighterIds[i];
+                }
+        }
+
+
+//checkedFighters1 = theList.getElementsByClassName('checked')[0].innerText;
+//checkedFighters2 = theList.getElementsByClassName('checked')[1].innerText;
+//checkedFighters3 = theList.getElementsByClassName('checked')[2].innerText;
+document.getElementById("fData1").value = checkedFighters1;
+document.getElementById("fData2").value = checkedFighters2;
+document.getElementById("fData3").value = checkedFighters3;
+console.log(checkedFighters1);
+console.log(checkedFighters2);
+console.log(checkedFighters3);
+//return true;
 }
 </script>
 
 <div>
-<form action = "loadoutsubmit.php" method = "post" onsubmit= "return getFighters()" >
+<form action = "loadoutsubmit.php" id="submission" method = "post" onsubmit="getFighters()" >
 
 <p>Select Special Move For Fighter One:</p>
 
@@ -235,7 +260,9 @@ return true;
   <label for="Roundhouse Kick">Roundhouse Kick</label>
 
 
-<input type = "hidden" id = "fData" value = "apple" />
+<input type = "hidden" id = "fData1" value = "apple" />
+<input type = "hidden" id = "fData2" value = "banana" />
+<input type = "hidden" id = "fData3" value = "orange" />
 
 <div>
 <input type = "submit" value = "Submit Selection" />

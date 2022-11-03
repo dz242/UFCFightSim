@@ -9,12 +9,16 @@ require_once('rabbitMQLib.inc');
 $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
 
 
+$fData1 = $_POST['fData1'];
+$fData2 = $_POST['fData2'];
+$fData3 = $_POST['fData3'];
+
 $request = array();
 $request['type'] = "submitLoadout";
 $request['userId'] = $_SESSION["userID"];
-$request['fighter1'] = $fData[1];
-$request['fighter2'] = $fData[2];
-$request['fighter3'] = $fData[3];
+$request['fighter1'] = $fData1;
+$request['fighter2'] = $fData2;
+$request['fighter3'] = $fData3;
 
 $response = $client->send_request($request);
 //$response = $client->publish($request);
