@@ -250,7 +250,10 @@ function requestProcessor($request)
 		  echo "Successful login".PHP_EOL;
 		  $user = fetchUser($request['username']);
 		  $loadout = fetchLoadout($user["userID"]);
-		  return array("returnCode" => '0', 'message'=>"Successful Login", "user"=>$user, "loadout"=>$loadout);
+		  $fighter1 = getFighterStats($loadout["fighter1"]);
+		  $fighter2 = getFighterStats($loadout["fighter2"]);
+		  $fighter3 = getFighterStats($loadout["fighter3"]);
+		  return array("returnCode" => '0', 'message'=>"Successful Login", "user"=>$user, "loadout"=>$loadout, "fighter1"=>$fighter1, "fighter2"=>$fighter2, "fighter3"=>$fighter3);
 	  }
 	  else
 	  {
@@ -326,8 +329,12 @@ case "submitLoadout":
 
 	if(insertLoadouts($request['userId'],$request['fighter1'],$request['fighter2'],$request['fighter3'],$request['f1sm'],$request['f2sm'],$request['f3sm']))
 	{
-                echo "Succesful Insert Into Loadouts".PHP_EOL;
-                return array("returnCode" => '0', 'message'=>"Successful Register");
+		echo "Succesful Insert Into Loadouts".PHP_EOL;
+
+		$fighter1 = getFighterStats($request['fighter1']);
+                $fighter2 = getFighterStats($request['fighter2']);
+                $fighter3 = getFighterStats($request['fighter3']);
+                return array("returnCode" => '0', 'message'=>"Successful Register", "fighter1"=>$fighter1, "fighter2"=>$fighter2, "fighter3"=>$fighter3);
         }
         else
         {
