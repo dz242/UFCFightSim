@@ -81,7 +81,7 @@ input[type=submit] {
 
 </style>
 </head>
-<body>
+<body onload="populateList();">
 
 <div id="myDIV" class="header">
   <h2 style="margin:5px">Fighter Selection</h2>
@@ -141,6 +141,7 @@ var fighterData = <?php echo json_encode($response); ?>;
 //Loop that takes cuts every 18th Comma makes a new fighter Element with the data
 var fighterIds = [];
 var fighterNames = [];
+function populateList(){
 for(var i = 0; i < fighterData.length; i++)
 {
 //singleFighter = fighterList[i].string;
@@ -149,7 +150,7 @@ for(var i = 0; i < fighterData.length; i++)
 	fighterNames[i] = singleFighter[6];
 	newElement(singleFighter[6]);
 }
-
+}
 
 //Count Variable for Selection
 
@@ -215,6 +216,7 @@ console.log(checkedFighters3);*/
 //return true;
 }
 </script>
+
 
 <div>
 <form action = "loadoutsubmit.php" id="submission" method = "post" onsubmit="getFighters()" >
