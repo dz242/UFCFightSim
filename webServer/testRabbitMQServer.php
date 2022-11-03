@@ -4,7 +4,7 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
-logErr("testBanana4" . PHP_EOL);
+//logErr("testBanana4" . PHP_EOL);
 
 function logErr($string)
 {
@@ -157,7 +157,7 @@ function fetchUser($username)
 }
 function fetchLoadout($userId)
 {
-$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+	$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 
         if ($mydb->errno != 0)
         {
@@ -201,11 +201,24 @@ function getFighterStats($fighter)
 
 }
 
-function insertLoadouts($userId,$fighter1,$fighter2,$fighter3)
+function insertLoadouts($userId,$fighter1,$fighter2,$fighter3,$f1sm,$f2sm,$f3sm)
 {
-	 $query = "insert into loadouts(userId, fighter1, fighter2, fighter3, sp_move1, sp_move2, sp_move3) values('$userId','$fighter1', '$fighter2', '$fighter3', 'Flame Kick', 'Thunderbolt', 'Rock Smash')";
+	 $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+	 $query = "select * from loadouts where userId='$userId'";
+	$response = $mydb->query($query);
+	
+	 $numrows = mysqli_num_rows($response);
 
-                $response = $mydb->query($query);
+	 if ($numrows == 0) {
+	 $query2 = "insert into loadouts(userId, fighter1, fighter2, fighter3, sp_move1, sp_move2, sp_move3) values('$userId','$fighter1', '$fighter2', '$fighter3', '$f1sm', '$f2sm', '$f3sm')";
+
+	 }
+	 else
+	 {
+		 $query2 = "update loadouts set fighter1 = '$fighter1' fighter2 = '$fighter2' fighter3 = '$fighter3' sp_move1 = '$f1sm', sp_move2 = '$f2sm', sp_move3 = '$f3sm' where userId = '$userId'";
+	 }
+
+                $response = $mydb->query($query2);
                 if ($mydb->errno != 0)
                 {
                         logErr("failed to execute query:".PHP_EOL);
@@ -309,9 +322,8 @@ case "getProfile":
 
 
 case "submitLoadout": 
-	$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 
-	if(insertLoadouts($request['userId'],$request['fighter1'],$request['fighter2'],$request['fighter3']))
+	if(insertLoadouts($request['userId'],$request['fighter1'],$request['fighter2'],$request['fighter3'],$request['f1sm'],$request['f2sm'],$request['f3sm']))
 	{
                 echo "Succesful Insert Into Loadouts".PHP_EOL;
                 return array("returnCode" => '0', 'message'=>"Successful Register");
