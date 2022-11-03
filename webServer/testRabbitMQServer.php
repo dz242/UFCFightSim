@@ -249,7 +249,8 @@ function requestProcessor($request)
 	  {
 		  echo "Successful login".PHP_EOL;
 		  $user = fetchUser($request['username']);
-		  return array("returnCode" => '0', 'message'=>"Successful Login", "user"=>$user);
+		  $loadout = fetchLoadout($user["userID"]);
+		  return array("returnCode" => '0', 'message'=>"Successful Login", "user"=>$user, "loadout"=>$loadout);
 	  }
 	  else
 	  {
