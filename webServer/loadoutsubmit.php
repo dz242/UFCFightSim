@@ -39,9 +39,9 @@ if ($response["returnCode"] == '0')
 {
 	echo "Successfully Made Loadout!, Redirecting to Login Page".PHP_EOL;
 	
-	$_SESSION["fighter1"] = $fData1;
-	$_SESSION["fighter2"] = $fData2;
-	$_SESSION["fighter3"] = $fData3;
+	$_SESSION["fighter1"] = $response["fighter1"];
+        $_SESSION["fighter2"] = $response["fighter2"];
+        $_SESSION["fighter3"] = $response["fighter3"];
 	$_SESSION["move1"] = $f1sm;
 	$_SESSION["move2"] = $f2sm;
 	$_SESSION["move3"] = $f3sm;

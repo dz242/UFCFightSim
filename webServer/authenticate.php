@@ -84,9 +84,9 @@ if ($response["returnCode"] == '0')
 	$_SESSION["wins"] = $response["user"]["wins"];
 	$_SESSION["losses"] = $response["user"]["losses"];
 
-	$_SESSION["fighter1"] = $response["loadout"]["fighter1"];
-	$_SESSION["fighter2"] = $response["loadout"]["fighter2"];
-	$_SESSION["fighter3"] = $response["loadout"]["fighter3"];
+	$_SESSION["fighter1"] = $response["fighter1"];
+	$_SESSION["fighter2"] = $response["fighter2"];
+	$_SESSION["fighter3"] = $response["fighter3"];
 	$_SESSION["move1"] = $response["loadout"]["sp_move1"];
 	$_SESSION["move2"] = $response["loadout"]["sp_move2"];
 	$_SESSION["move3"] = $response["loadout"]["sp_move3"];

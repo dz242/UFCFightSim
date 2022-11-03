@@ -103,7 +103,7 @@ th, td{
                 <tr>
                         <th>Fighter 1</th>
                         <td>
-                                <?php echo($_SESSION["fighter1"]);?>
+                                <?php echo($_SESSION["fighter1"]["name"]);?>
 
                         </td>
 		</tr>
@@ -117,7 +117,7 @@ th, td{
                 <tr>
                         <th>Fighter 2</th>
                         <td>
-                                <?php echo($_SESSION["fighter2"]);?>
+                                <?php echo($_SESSION["fighter2"]["name"]);?>
 
                         </td>
 		</tr>
@@ -131,7 +131,7 @@ th, td{
                 <tr>
                         <th>Fighter 3</th>
                         <td>
-                                <?php echo($_SESSION["fighter3"]);?>
+                                <?php echo($_SESSION["fighter3"]["name"]);?>
 
                         </td>
                 </tr>
