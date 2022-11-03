@@ -201,7 +201,7 @@ function getFighterStats($fighter)
 
 }
 
-function insertLoadouts($userId,$fighter1,$fighter2,$fighter3)
+function insertLoadouts($userId,$fighter1,$fighter2,$fighter3,$f1sm,$f2sm,$f3sm)
 {
 	 $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 	 $query = "select * from loadouts where userId='$userId'";
@@ -210,12 +210,12 @@ function insertLoadouts($userId,$fighter1,$fighter2,$fighter3)
 	 $numrows = mysqli_num_rows($response);
 
 	 if ($numrows == 0) {
-	 $query2 = "insert into loadouts(userId, fighter1, fighter2, fighter3, sp_move1, sp_move2, sp_move3) values('$userId','$fighter1', '$fighter2', '$fighter3', 'Flame Kick', 'Thunderbolt', 'Rock Smash')";
+	 $query2 = "insert into loadouts(userId, fighter1, fighter2, fighter3, sp_move1, sp_move2, sp_move3) values('$userId','$fighter1', '$fighter2', '$fighter3', '$f1sm', '$f2sm', '$f3sm')";
 
 	 }
 	 else
 	 {
-		 $query2 = "update loadouts set fighter1 = '$fighter1' fighter2 = '$fighter2' fighter3 = '$fighter3' sp_move1 = 'Flame Kick', sp_move2 = 'Thunderbolt', sp_move3 = 'Rock Smash' where userId = '$userId'";
+		 $query2 = "update loadouts set fighter1 = '$fighter1' fighter2 = '$fighter2' fighter3 = '$fighter3' sp_move1 = '$f1sm', sp_move2 = '$f2sm', sp_move3 = '$f3sm' where userId = '$userId'";
 	 }
 
                 $response = $mydb->query($query2);
@@ -323,7 +323,7 @@ case "getProfile":
 
 case "submitLoadout": 
 
-	if(insertLoadouts($request['userId'],$request['fighter1'],$request['fighter2'],$request['fighter3']))
+	if(insertLoadouts($request['userId'],$request['fighter1'],$request['fighter2'],$request['fighter3'],$request['f1sm'],$request['f2sm'],$request['f3sm']))
 	{
                 echo "Succesful Insert Into Loadouts".PHP_EOL;
                 return array("returnCode" => '0', 'message'=>"Successful Register");
