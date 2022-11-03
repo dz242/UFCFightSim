@@ -99,4 +99,50 @@ th, td{
 
 	</table>
 
+	<table>
+                <tr>
+                        <th>Fighter 1</th>
+                        <td>
+                                <?php echo($_SESSION["fighter1"]);?>
+
+                        </td>
+		</tr>
+		<tr>
+                        <th>Special Move</th>
+                        <td>
+                                <?php echo($_SESSION["move1"]);?>
+
+                        </td>
+                </tr>
+                <tr>
+                        <th>Fighter 2</th>
+                        <td>
+                                <?php echo($_SESSION["fighter2"]);?>
+
+                        </td>
+		</tr>
+		<tr>
+                        <th>Special Move</th>
+                        <td>
+                                <?php echo($_SESSION["move2"]);?>
+
+                        </td>
+                </tr>
+                <tr>
+                        <th>Fighter 3</th>
+                        <td>
+                                <?php echo($_SESSION["fighter3"]);?>
+
+                        </td>
+                </tr>
+		<tr>
+                        <th>Special Move</th>
+                        <td>
+                                <?php echo($_SESSION["move3"]);?>
+
+                        </td>
+                </tr>
+
+        </table>
+
 </html>
