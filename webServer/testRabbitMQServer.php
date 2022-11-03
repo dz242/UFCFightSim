@@ -204,9 +204,21 @@ function getFighterStats($fighter)
 function insertLoadouts($userId,$fighter1,$fighter2,$fighter3)
 {
 	 $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
-	 $query = "insert into loadouts(userId, fighter1, fighter2, fighter3, sp_move1, sp_move2, sp_move3) values('$userId','$fighter1', '$fighter2', '$fighter3', 'Flame Kick', 'Thunderbolt', 'Rock Smash')";
+	 $query = "select * from loadouts where userId='$userId'";
+	$response = $mydb->query($query);
+	
+	 $numrows = mysqli_num_rows($response);
 
-                $response = $mydb->query($query);
+	 if ($numrows == 0) {
+	 $query2 = "insert into loadouts(userId, fighter1, fighter2, fighter3, sp_move1, sp_move2, sp_move3) values('$userId','$fighter1', '$fighter2', '$fighter3', 'Flame Kick', 'Thunderbolt', 'Rock Smash')";
+
+	 }
+	 else
+	 {
+		 $query2 = "update loadouts set fighter1 = '$fighter1' fighter2 = '$fighter2' fighter3 = '$fighter3' sp_move1 = 'Flame Kick', sp_move2 = 'Thunderbolt', sp_move3 = 'Rock Smash' where userId = '$userId'";
+	 }
+
+                $response = $mydb->query($query2);
                 if ($mydb->errno != 0)
                 {
                         logErr("failed to execute query:".PHP_EOL);
