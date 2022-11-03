@@ -215,7 +215,7 @@ function insertLoadouts($userId,$fighter1,$fighter2,$fighter3,$f1sm,$f2sm,$f3sm)
 	 }
 	 else
 	 {
-		 $query2 = "update loadouts set fighter1 = '$fighter1' fighter2 = '$fighter2' fighter3 = '$fighter3' sp_move1 = '$f1sm', sp_move2 = '$f2sm', sp_move3 = '$f3sm' where userId = '$userId'";
+		 $query2 = "update loadouts set fighter1 = '$fighter1', fighter2 = '$fighter2', fighter3 = '$fighter3', sp_move1 = '$f1sm', sp_move2 = '$f2sm', sp_move3 = '$f3sm' where userId = '$userId'";
 	 }
 
                 $response = $mydb->query($query2);
