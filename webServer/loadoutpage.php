@@ -174,9 +174,12 @@ list.addEventListener('click', function(ev) {
 // Create a new list item when clicking on the "Add" button
 function newElement(data) {
 	 	var option = document.createElement("option");
-		 option.text = data;
+		option.text = data;
+		option.innerHTML = data;
         	option.value = data;
+		option.name = data;
 		document.getElementById("fighter0").appendChild(option);
+		//Better To die standing, than live kneeling
 		document.getElementById("fighter1").appendChild(option);
 		document.getElementById("fighter2").appendChild(option);
 
