@@ -4,7 +4,7 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
-logErr("testBanana4" . PHP_EOL);
+//logErr("testBanana4" . PHP_EOL);
 
 function logErr($string)
 {
@@ -157,7 +157,7 @@ function fetchUser($username)
 }
 function fetchLoadout($userId)
 {
-$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+	$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 
         if ($mydb->errno != 0)
         {
@@ -203,6 +203,7 @@ function getFighterStats($fighter)
 
 function insertLoadouts($userId,$fighter1,$fighter2,$fighter3)
 {
+	 $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 	 $query = "insert into loadouts(userId, fighter1, fighter2, fighter3, sp_move1, sp_move2, sp_move3) values('$userId','$fighter1', '$fighter2', '$fighter3', 'Flame Kick', 'Thunderbolt', 'Rock Smash')";
 
                 $response = $mydb->query($query);
@@ -309,7 +310,6 @@ case "getProfile":
 
 
 case "submitLoadout": 
-	$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 
 	if(insertLoadouts($request['userId'],$request['fighter1'],$request['fighter2'],$request['fighter3']))
 	{
