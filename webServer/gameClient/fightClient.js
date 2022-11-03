@@ -2,9 +2,24 @@
 const socket = io();
 
 var isMyTurn = false;
+var hasADV = false;
+var isTD = false;
+var isKD = false;
+
 
 socket.on('test', (msg) => {
     console.log(msg);
+})
+
+socket.on('OppDisconnected', function(){
+    console.log('Received disconnect emit');
+    document.getElementById('ChooseHeader').style.display = 'block';
+    document.getElementById('LobbyButtons').style.display = 'block';
+    document.getElementById('chosenWeight').innerHTML = 'Found a match! Starting the game...'
+    if(document.getElementById('GameHud').style.display = 'none'){
+        document.getElementById('chosenWeight').style.display = 'block';
+    }
+    alert('Your opponent has left the match, you may choose to join another lobby');
 })
 
 socket.on('matchFound', function() {
@@ -23,47 +38,178 @@ socket.on('status', (msg) => {
 
 socket.on('changeTurn', function() {
     console.log(isMyTurn);
-    isMyTurn != isMyTurn;
-    console.log(isMyTurn);
-    if(isMyTurn == true){
-        document.getElementById('TurnUpdate').innerHTML = 'It is now your turn!';
+    isMyTurn = !isMyTurn;
+    console.log(`${isMyTurn}, changed by changeTurn event`);
+    if(isMyTurn == true && document.getElementById('fighter01Health').value > 0){
+        if(isTD || isKD){
+            document.getElementById('Move3').disabled = false;
+            document.getElementById('Gettup').style.display = 'block';
+        }
+        else{
+            document.getElementById('Move1').disabled = false;
+            document.getElementById('Move2').disabled = false;
+            document.getElementById('Move3').disabled = false;
+            document.getElementById('Move4').disabled = false;
+
+        }
+        
+        if(hasADV == true){
+            document.getElementById('TurnUpdate').innerHTML = 'It is now your turn with advantage!';
+        }
+        else{
+            document.getElementById('TurnUpdate').innerHTML = 'It is now your turn!';
+        }
+
     }
     else{
+        document.getElementById('Move1').disabled = true;
+        document.getElementById('Move2').disabled = true;
+        document.getElementById('Move3').disabled = true;
+        document.getElementById('Move4').disabled = true;
+        document.getElementById('Gettup').style.display = 'none';
+        
         document.getElementById('TurnUpdate').innerHTML = 'It is the opponent\'s turn';
     }
 })
 
 socket.on('takeDMG', (dmg) => {
-    if (isMyTurn == false){
+    if(isMyTurn == false){
         console.log('Received takeDMG emit')
         var health = document.getElementById('fighter01Health');
         health.value -= dmg;
-        isMyTurn = !isMyTurn;
     }
-    
+    else{
+        var health = document.getElementById('fighter11Health');
+        health.value -= dmg;
+    }
 })
 
 
+socket.on('takeDWN', function() {
+    if (isMyTurn == false){
+        console.log('Received takeDWN emit');
+        isTD = true;
+        document.getElementById('Move1').disabled = true;
+        document.getElementById('Move2').disabled = true;
+        document.getElementById('Move4').disabled = true;
+        document.getElementById('Gettup').style.display = 'block';
+    }
+    else{
+        hasADV = true;
+        document.getElementById('fighter11Status').innerHTML = '<strong>DOWN</strong>'
+    }
+})
+
+socket.on('takeKD', function(){
+    if (isMyTurn == false){
+        console.log('Received takeKD emit');
+        isKD = true;
+        document.getElementById('Move1').disabled = true;
+        document.getElementById('Move2').disabled = true;
+        document.getElementById('Move4').disabled = true;
+        document.getElementById('Gettup').style.display = 'block';
+    }
+    else{
+        document.getElementById('fighter11Status').innerHTML = '<strong>DOWN</strong>'
+    }
+})
+
+socket.on('removeADV', function(){
+    hasADV = false;
+})
+
+socket.on('playEmoteHeheheha', senderID => {
+    console.log(`Received emote from ${senderID}`);
+    if(socket.id === senderID){
+        document.getElementById('emoteUs').src = 'heheheha.gif'
+        setTimeout(hideUs, 3000);
+    }
+    else{
+        document.getElementById('emoteThem').src = 'heheheha.gif'
+        setTimeout(hideThem, 3000);
+    }
+})
+
+socket.on('playEmoteRogan', senderID => {
+    console.log(`Received emote from ${senderID}`);
+    if(socket.id === senderID){
+        document.getElementById('emoteUs').src = 'rogan.gif';
+        setTimeout(hideUs, 3000);
+    }
+    else{
+        document.getElementById('emoteThem').src = 'rogan.gif';
+        setTimeout(hideThem, 3000);
+    }
+})
+
+socket.on('gettup', function(){
+    if(isMyTurn == true){
+        isTD = false;
+        isKD = false;
+        document.getElementById('Move1').disabled = false;
+        document.getElementById('Move2').disabled = false;
+        document.getElementById('Move4').disabled = false;
+        document.getElementById('Gettup').style.display = 'none';
+    }
+})
+
+function hideUs(){
+    document.getElementById('emoteUs').src = '';
+}
+
+function hideThem(){
+    document.getElementById('emoteThem').src = '';
+}
 
 function move1(){
     var moveName = document.getElementById('Move1').innerText;
-    if(socket.emit('move', moveName, isMyTurn)){
-        console.log(`Sent move, ${moveName}, to server`);
-        console.log(isMyTurn);
-        isMyTurn = !isMyTurn;
+    if(isMyTurn == true){
+        socket.emit('move', moveName, isMyTurn, hasADV)
+        console.log(`Sent move, ${moveName}, to server while ${isMyTurn}`);
+        console.log(`Turn value changed to ${isMyTurn}`)
     }
+        
 }
 function move2(){
-    var moveName = document.getElementById('Move2');
-    socket.emit('move', moveName);
+    var moveName = document.getElementById('Move2').innerText;
+    if(isMyTurn == true){
+        socket.emit('move', moveName, isMyTurn, hasADV)
+        console.log(`Sent move, ${moveName}, to server while ${isMyTurn}`);
+        console.log(`Turn value changed to ${isMyTurn}`)
+    }
 }
 function move3(){
-    var moveName = document.getElementById('Move3');
-    socket.emit('move', moveName);
+    var moveName = document.getElementById('Move3').innerText;
+    if(isMyTurn == true){
+        socket.emit('move', moveName, isMyTurn, hasADV)
+        console.log(`Sent move, ${moveName}, to server while ${isMyTurn}`);
+        console.log(`Turn value changed to ${isMyTurn}`)
+    }
 }
 function move4(){
-    var moveName = document.getElementById('Move4');
-    socket.emit('move', moveName);
+    var moveName = document.getElementById('Move4').innerText;
+    if(isMyTurn == true){
+        socket.emit('move', moveName, isMyTurn, hasADV)
+        console.log(`Sent move, ${moveName}, to server while ${isMyTurn}`);
+        console.log(`Turn value changed to ${isMyTurn}`)
+    }
+}
+
+function tryGettup(){
+    if(isMyTurn == true){
+        socket.emit('tryGettup', isMyTurn)
+        console.log(`Sent tryGettup to server while ${isMyTurn}`);
+        console.log(`Turn value changed to ${isMyTurn}`);
+    }
+}
+
+
+function heheEmote(){
+    socket.emit('heheheha');
+}
+
+function roganEmote(){
+    socket.emit('rogan');
 }
 
 function swButton(){

@@ -18,6 +18,7 @@
         <p id="chosenWeight"></p>
         <br><br><br>
 
+
         <div id="LobbyButtons">
             <button id="Strawweight" onclick="swButton()">Strawweight (115lbs)</button><br><br>
             <button id="Flyweight" onclick="flwButton()">Flyweight (125lbs)</button><br><br>
@@ -43,15 +44,16 @@
             </div>
 
 
-            <div id="GoodSide" style="width:30%; float:left; padding:20px; border:2px">
+            <div id="GoodSide" style="width:33%; float:left; padding:20px; border:2px">
 
                 <div id="CurrentFighter" style="text-align:right">
                     <h3 id="FighterName01">Sample Fighter 01</h3><br>
                     <progress id="fighter01Health" value="200" max="200"></progress><br><br>
-                    <button id="Move1" onclick="move1()">Jab</button><br><br>
-                    <button id="Move2" onclick="move2()">Single Leg</button><br><br>
-                    <button id="Move3" onclick="move3()">Rear Naked Choke</button><br><br>
-                    <button id="Move4" onclick="move4()">Taunt</button><br><br>
+                    <button id="Move1" onclick="move1()">Jab</button><br>
+                    <button id="Move2" onclick="move2()">Single Leg</button><br>
+                    <button id="Move3" onclick="move3()">Rear Naked Choke</button><br>
+                    <button id="Move4" onclick="move4()">Just Bleed</button><br>
+                    <button id="Gettup" onclick="tryGettup()" style="display:none;">Try to get up!</button><br>
                 </div>
 
                 <div id="BackupFighter" style="text-align:left">
@@ -68,22 +70,38 @@
 
             </div>
 
-            <div id="BadSide" style="width:30% ; float:right; padding:20px; border:2px">
+            <div id="Emotes" style="width:27%; float:left; padding:20px; border:2px">
+
+                <div id="emoteBtns" style="text-align:center;">
+                    <p><strong>Emotes:</strong></p><br>
+                    <button id="Heheheha" onclick="heheEmote()">Heheheha!</button>
+                    <button id="Rogan" onclick="roganEmote()">The Joe</button>
+                </div><br><br><br>
+
+                <div id="ourEmote" style="text-align:left;">
+                    <img src='' id='emoteUs' class='mx-auto'/>
+                </div><br>
+                <div id="theirEmote" style="text-align:right;">
+                    <img src='' id='emoteThem' class='mx-auto'/></div>
+                
+            </div>
+
+            <div id="BadSide" style="width:33% ; float:right; padding:20px; border:2px">
 
                 <div id="CurrentEnemy" style="text-align:left">
-                    <h3 id="FighterName11">Sample Fighter 11</h3><br>
+                    <h3 id="FighterName11">Sample Fighter 11<p id='fighter11Status'></p></h3><br>
                     <progress id="fighter11Health" value="200" max="200"></progress><br><br>
                     <br><br><br><br><br><br><br><br>
                 </div>
 
                 <div id="BackupEnemy" style="text-align:right">
-                    <h4 id="FighterName12">Sample Fighter 12</h3><br>
+                    <h4 id="FighterName12">Sample Fighter 12</h3><p id='fighter12Status'></p><br>
                     <progress id="fighter12Health" value="200" max="200"></progress><br><br>
                     <br><br>
                 </div>
 
                 <div id="BackupEnemy" style="text-align:right">
-                    <h4 id="FighterName13">Sample Fighter 13</h3><br>
+                    <h4 id="FighterName13">Sample Fighter 13</h3><p id='fighter13Status'></p><br>
                     <progress id="fighter13Health" value="200" max="200"></progress><br><br>
                     <br><br>
                 </div>
