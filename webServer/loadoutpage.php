@@ -174,10 +174,12 @@ list.addEventListener('click', function(ev) {
 function newElement(data) {
       for(var i = 0; i < 3; i++)
                 {
-                    var ul = document.getElementById("fighters" + i);
-                    var op = document.createElement("op");
-                    op.appendChild(document.createTextNode(data));
-                    ul.appendChild(op);
+                    var ul = document.getElementById("fighters" + String(i));
+		    var op = document.createElement("op");
+		    op.text = data;
+                    //op.appendChild(document.createTextNode(data));
+		    //ul.appendChild(op);
+		    ul.add(op);
                 }
 }
 
