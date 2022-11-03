@@ -172,14 +172,16 @@ list.addEventListener('click', function(ev) {
 
 // Create a new list item when clicking on the "Add" button
 function newElement(data) {
-	
-  var ul = document.getElementById("myUL");
-  var li = document.createElement("li");
-  li.appendChild(document.createTextNode(data));
-  ul.appendChild(li);
+      for(var i = 0; i < 3; i++)
+                {
+                    var ul = document.getElementById("fighters" + i);
+                    var op = document.createElement("op");
+                    op.appendChild(document.createTextNode(data));
+                    ul.appendChild(op);
+                }
 }
 
-function getFighters()
+/*function getFighters()
 {
 //var checkedFighters = [];
 	var theList = document.getElementById("myUL");
@@ -198,17 +200,17 @@ function getFighters()
                         checkedFighters3 = fighterIds[i];
                 }
         }
-
+*/
 
 //checkedFighters1 = theList.getElementsByClassName('checked')[0].innerText;
 //checkedFighters2 = theList.getElementsByClassName('checked')[1].innerText;
 //checkedFighters3 = theList.getElementsByClassName('checked')[2].innerText;
-document.getElementById("fData1").value = checkedFighters1;
+/*document.getElementById("fData1").value = checkedFighters1;
 document.getElementById("fData2").value = checkedFighters2;
 document.getElementById("fData3").value = checkedFighters3;
 console.log(checkedFighters1);
 console.log(checkedFighters2);
-console.log(checkedFighters3);
+console.log(checkedFighters3);*/
 //return true;
 }
 </script>
@@ -216,6 +218,18 @@ console.log(checkedFighters3);
 <div>
 <form action = "loadoutsubmit.php" id="submission" method = "post" onsubmit="getFighters()" >
 
+	<label for="fighter">Choose Your Fighters:</label>
+           
+	<select name="fighters0" id="fighters0">
+            </select>
+           
+	<select name="fighters1" id="fighters1">
+            </select>
+           
+	<select name="fighters2" id="fighters2">
+            </select>
+              
+	<br><br>
 <p>Select Special Move For Fighter One:</p>
 
   <input type="radio" id="Just Bleed" name="f1sm" value="Just Bleed">
