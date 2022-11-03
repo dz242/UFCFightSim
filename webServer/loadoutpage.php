@@ -173,12 +173,13 @@ list.addEventListener('click', function(ev) {
 
 // Create a new list item when clicking on the "Add" button
 function newElement(data) {
-                var ul = document.getElementById("fighters1");
-		ul.options[ul.options.length] = new Option(data);
-		var ul = document.getElementById("fighters2");
-		ul.options[ul.options.length] = new Option(data);
-		var ul = document.getElementById("fighters3");
-		ul.options[ul.options.length] = new Option(data);
+	 	var option = document.createElement("option");
+		 option.text = data;
+        	option.value = data;
+		document.getElementById("fighter0").add(option);
+		document.getElementById("fighter1").add(option);
+		document.getElementById("fighter2").add(option);
+
         
 }
 
