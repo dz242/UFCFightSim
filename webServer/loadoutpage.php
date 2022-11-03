@@ -81,7 +81,7 @@ input[type=submit] {
 
 </style>
 </head>
-<body onload="populateList();">
+<body>
 
 <div id="myDIV" class="header">
   <h2 style="margin:5px">Fighter Selection</h2>
@@ -134,14 +134,14 @@ else
 
 
 <script type = "text/javascript">
-
+/*
 //Get Php/mysql array into the javascript
 var fighterData = <?php echo json_encode($response); ?>;
 
 //Loop that takes cuts every 18th Comma makes a new fighter Element with the data
 var fighterIds = [];
 var fighterNames = [];
-function populateList(){
+window.onload = function populateList(){
 for(var i = 0; i < fighterData.length; i++)
 {
 //singleFighter = fighterList[i].string;
@@ -172,12 +172,13 @@ list.addEventListener('click', function(ev) {
 }, false);
 */
 // Create a new list item when clicking on the "Add" button
+/*
 function newElement(data) {
 	 	var option = document.createElement("option");
 		option.text = data;
-		option.innerHTML = data;
+		//option.innerHTML = data;
         	option.value = data;
-		option.name = data;
+		//option.name = data;
 		document.getElementById("fighter0").appendChild(option);
 		//Better To die standing, than live kneeling
 		document.getElementById("fighter1").appendChild(option);
@@ -217,23 +218,53 @@ console.log(checkedFighters1);
 console.log(checkedFighters2);
 console.log(checkedFighters3);*/
 //return true;
-}
+//}
+/*
+document.onload = populateList();
+
 </script>
 <div>
-document.onload = populateList();
-	</div>
-<div>
-<form action = "loadoutsubmit.php" id="submission" method = "post" onsubmit="getFighters()" >
+<form action = "loadoutsubmit.php" id="submission" method = "post" >
 
 	<label for="fighter">Choose Your Fighters:</label>
            
 	<select name="fighters0" id="fighters0">
+		<option value = "<?php echo $response[0][1]; ?>"><?php echo $response[0][6] ?></option>
+		<option value = "<?php echo $response[1][1]; ?>"><?php echo $response[1][6] ?></option>
+		<option value = "<?php echo $response[2][1]; ?>"><?php echo $response[2][6] ?></option>
+		<option value = "<?php echo $response[3][1]; ?>"><?php echo $response[3][6] ?></option>
+		<option value = "<?php echo $response[4][1]; ?>"><?php echo $response[4][6] ?></option>
+		<option value = "<?php echo $response[5][1]; ?>"><?php echo $response[5][6] ?></option>
+		<option value = "<?php echo $response[6][1]; ?>"><?php echo $response[6][6] ?></option>
+		<option value = "<?php echo $response[7][1]; ?>"><?php echo $response[7][6] ?></option>
+		<option value = "<?php echo $response[8][1]; ?>"><?php echo $response[8][6] ?></option>
+		<option value = "<?php echo $response[9][1]; ?>"><?php echo $response[9][6] ?></option>
             </select>
            
 	<select name="fighters1" id="fighters1">
+		<option value = "<?php echo $response[0][1]; ?>"><?php echo $response[0][6] ?></option>
+                <option value = "<?php echo $response[1][1]; ?>"><?php echo $response[1][6] ?></option>
+                <option value = "<?php echo $response[2][1]; ?>"><?php echo $response[2][6] ?></option>
+                <option value = "<?php echo $response[3][1]; ?>"><?php echo $response[3][6] ?></option>
+                <option value = "<?php echo $response[4][1]; ?>"><?php echo $response[4][6] ?></option>
+                <option value = "<?php echo $response[5][1]; ?>"><?php echo $response[5][6] ?></option>
+                <option value = "<?php echo $response[6][1]; ?>"><?php echo $response[6][6] ?></option>
+                <option value = "<?php echo $response[7][1]; ?>"><?php echo $response[7][6] ?></option>
+                <option value = "<?php echo $response[8][1]; ?>"><?php echo $response[8][6] ?></option>
+                <option value = "<?php echo $response[9][1]; ?>"><?php echo $response[9][6] ?></option>
             </select>
            
 	<select name="fighters2" id="fighters2">
+		<option value = "<?php echo $response[0][1]; ?>"><?php echo $response[0][6] ?></option>
+                <option value = "<?php echo $response[1][1]; ?>"><?php echo $response[1][6] ?></option>
+                <option value = "<?php echo $response[2][1]; ?>"><?php echo $response[2][6] ?></option>
+                <option value = "<?php echo $response[3][1]; ?>"><?php echo $response[3][6] ?></option>
+                <option value = "<?php echo $response[4][1]; ?>"><?php echo $response[4][6] ?></option>
+                <option value = "<?php echo $response[5][1]; ?>"><?php echo $response[5][6] ?></option>
+                <option value = "<?php echo $response[6][1]; ?>"><?php echo $response[6][6] ?></option>
+                <option value = "<?php echo $response[7][1]; ?>"><?php echo $response[7][6] ?></option>
+                <option value = "<?php echo $response[8][1]; ?>"><?php echo $response[8][6] ?></option>
+                <option value = "<?php echo $response[9][1]; ?>"><?php echo $response[9][6] ?></option>
             </select>
               
 	<br><br>
