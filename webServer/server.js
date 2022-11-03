@@ -89,7 +89,9 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
                 else{
                     console.log('Could not match players into private room')
                 }
+                socket.currentRoom = `${clientArr[0]}Room`;
                 console.log(io.sockets.adapter.rooms);
+                console.log(socket.currentRoom);
             }
         }
     })
@@ -128,7 +130,9 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
                 else{
                     console.log('Could not match players into private room')
                 }
+                socket.currentRoom = `${clientArr[0]}Room`;
                 console.log(io.sockets.adapter.rooms);
+                console.log(socket.currentRoom);
             }
         }
     })
@@ -166,7 +170,9 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
                 else{
                     console.log('Could not match players into private room')
                 }
+                socket.currentRoom = `${clientArr[0]}Room`;
                 console.log(io.sockets.adapter.rooms);
+                console.log(socket.currentRoom);
             }
         }
     })
@@ -244,7 +250,9 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
                 else{
                     console.log('Could not match players into private room')
                 }
+                socket.currentRoom = `${clientArr[0]}Room`;
                 console.log(io.sockets.adapter.rooms);
+                console.log(socket.currentRoom);
             }
         }
     })
@@ -322,7 +330,9 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
                 else{
                     console.log('Could not match players into private room')
                 }
+                socket.currentRoom = `${clientArr[0]}Room`;
                 console.log(io.sockets.adapter.rooms);
+                console.log(socket.currentRoom);
             }
         }
     })
@@ -361,7 +371,9 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
                 else{
                     console.log('Could not match players into private room')
                 }
+                socket.currentRoom = `${clientArr[0]}Room`;
                 console.log(io.sockets.adapter.rooms);
+                console.log(socket.currentRoom);
             }
         }
     })
@@ -412,9 +424,9 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
         }
     })
 
-    socket.on('move', (moveName, isMyTurn, hasADV) => {
+    socket.on('move', (moveName, isMyTurn, hasADV, dmgBuff) => {
         
-            console.log(`Received move, ${moveName}, from ${socket.id} while they are ${isMyTurn} with ${hasADV}`)
+            console.log(`Received move, ${moveName}, from ${socket.id} while they are ${isMyTurn} with ${hasADV} and current buff of +${dmgBuff}`)
             var clientRooms = [];
             for (var room of socket.rooms){
                 clientRooms.push(room);
@@ -429,19 +441,19 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
                         
                         if(Math.random() < 0.15){
                             if(Math.random() < 0.10){
-                                socket.to(theRoom).emit('takeDMG', 30);
+                                socket.to(theRoom).emit('takeDMG', 30 + dmgBuff);
                                 socket.to(theRoom).emit('takeKD');
                                 io.to(theRoom).emit('status', 'The move succeeded with a super crit and knocked them down!');
                                 io.to(theRoom).emit('changeTurn');
                             }
                             else{
-                                socket.to(theRoom).emit('takeDMG', 20);
+                                socket.to(theRoom).emit('takeDMG', 20 + dmgBuff);
                                 io.to(theRoom).emit('status', 'The move succeeded with a critical hit!');
                                 io.to(theRoom).emit('changeTurn');
                             }
                         }
                         else{
-                            socket.to(theRoom).emit('takeDMG', 10);
+                            socket.to(theRoom).emit('takeDMG', 10 + dmgBuff);
                             io.to(theRoom).emit('status', 'The move succeeded');
                             io.to(theRoom).emit('changeTurn');
                         }
@@ -495,6 +507,15 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
                     break;
 
                 case "Just Bleed":
+                    if(Math.random() < 0.95){
+                        socket.to(theRoom).emit('receiveDMGBuff', 15, 3);
+                        io.to(theRoom).emit('status', 'The fighter is seeing red! (+DMG)');
+                        io.to(theRoom).emit('changeTurn');
+                    }
+                    else{
+                        io.to(theRoom).emit('status', 'The move failed');
+                        io.to(theRoom).emit('changeTurn');
+                    }
                     break;
 
                 default:
