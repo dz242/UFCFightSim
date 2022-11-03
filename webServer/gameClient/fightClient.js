@@ -5,6 +5,8 @@ var isMyTurn = false;
 var hasADV = false;
 var isTD = false;
 var isKD = false;
+var dmgBuff = 0;
+var buffTurnCounter = 0;
 
 
 socket.on('test', (msg) => {
@@ -58,6 +60,11 @@ socket.on('changeTurn', function() {
         }
         else{
             document.getElementById('TurnUpdate').innerHTML = 'It is now your turn!';
+        }
+
+        if(buffTurnCounter > 0){
+            buffTurnCounter -= 1;
+            console.log(`buffTurnCounter = ${buffTurnCounter} after changeTurn`)
         }
 
     }
@@ -142,6 +149,17 @@ socket.on('playEmoteRogan', senderID => {
     }
 })
 
+socket.on('receiveDMGBuff', (buff, buffDuration) =>{
+    if(isMyTurn == true){
+        dmgBuff += buff;
+        console.log(`dmgBuff = ${dmgBuff}`);
+        buffTurnCounter = buffDuration;
+        console.log(`buffTurnCounter = ${buffTurnCounter}`);
+    }
+
+})
+
+
 socket.on('gettup', function(){
     if(isMyTurn == true){
         isTD = false;
@@ -164,7 +182,7 @@ function hideThem(){
 function move1(){
     var moveName = document.getElementById('Move1').innerText;
     if(isMyTurn == true){
-        socket.emit('move', moveName, isMyTurn, hasADV)
+        socket.emit('move', moveName, isMyTurn, hasADV, dmgBuff)
         console.log(`Sent move, ${moveName}, to server while ${isMyTurn}`);
         console.log(`Turn value changed to ${isMyTurn}`)
     }
