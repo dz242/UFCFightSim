@@ -156,7 +156,7 @@ for(var i = 0; i < fighterData.length; i++)
 var countery = 0;
 
 // Add a "checked" symbol when clicking on a list item
-var list = document.querySelector('ul');
+/*var list = document.querySelector('ul');
 list.addEventListener('click', function(ev) {
   if (ev.target.tagName === 'LI' && countery < 3 && !ev.target.classList.contains('checked')) {
     ev.target.classList.toggle('checked');
@@ -167,7 +167,7 @@ list.addEventListener('click', function(ev) {
   ev.target.classList.toggle('checked');
   countery--;
   }
-
+*/
 }, false);
 
 // Create a new list item when clicking on the "Add" button
@@ -175,11 +175,7 @@ function newElement(data) {
       for(var i = 0; i < 3; i++)
                 {
                     var ul = document.getElementById("fighters" + String(i));
-		    var op = document.createElement("op");
-		    op.text = data;
-                    //op.appendChild(document.createTextNode(data));
-		    //ul.appendChild(op);
-		    ul.add(op);
+			ul.options[ul.options.length] = new Option(data);
                 }
 }
 
