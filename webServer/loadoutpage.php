@@ -81,7 +81,7 @@ input[type=submit] {
 
 </style>
 </head>
-<body>
+<body onload="populateList();">
 
 <div id="myDIV" class="header">
   <h2 style="margin:5px">Fighter Selection</h2>
@@ -141,6 +141,7 @@ var fighterData = <?php echo json_encode($response); ?>;
 //Loop that takes cuts every 18th Comma makes a new fighter Element with the data
 var fighterIds = [];
 var fighterNames = [];
+function populateList(){
 for(var i = 0; i < fighterData.length; i++)
 {
 //singleFighter = fighterList[i].string;
@@ -149,14 +150,14 @@ for(var i = 0; i < fighterData.length; i++)
 	fighterNames[i] = singleFighter[6];
 	newElement(singleFighter[6]);
 }
-
+}
 
 //Count Variable for Selection
 
 var countery = 0;
 
 // Add a "checked" symbol when clicking on a list item
-var list = document.querySelector('ul');
+/*var list = document.querySelector('ul');
 list.addEventListener('click', function(ev) {
   if (ev.target.tagName === 'LI' && countery < 3 && !ev.target.classList.contains('checked')) {
     ev.target.classList.toggle('checked');
@@ -169,16 +170,20 @@ list.addEventListener('click', function(ev) {
   }
 
 }, false);
-
+*/
 // Create a new list item when clicking on the "Add" button
 function newElement(data) {
-      for(var i = 0; i < 3; i++)
-                {
-                    var ul = document.getElementById("fighters" + i);
-                    var op = document.createElement("op");
-                    op.appendChild(document.createTextNode(data));
-                    ul.appendChild(op);
-                }
+	 	var option = document.createElement("option");
+		option.text = data;
+		option.innerHTML = data;
+        	option.value = data;
+		option.name = data;
+		document.getElementById("fighter0").appendChild(option);
+		//Better To die standing, than live kneeling
+		document.getElementById("fighter1").appendChild(option);
+		document.getElementById("fighter2").appendChild(option);
+
+        
 }
 
 /*function getFighters()
@@ -214,7 +219,9 @@ console.log(checkedFighters3);*/
 //return true;
 }
 </script>
-
+<div>
+document.onload = populateList();
+	</div>
 <div>
 <form action = "loadoutsubmit.php" id="submission" method = "post" onsubmit="getFighters()" >
 
