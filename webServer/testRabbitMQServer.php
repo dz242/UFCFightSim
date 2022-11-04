@@ -187,7 +187,7 @@ function getFighterStats($fighter)
         logErr("failed to connect to database: ". $mydb->error . PHP_EOL);
         exit(0);
         }
-        $query = "select * from loadouts where fighter_id='$fighter'";
+        $query = "select * from fighters where fighter_id='$fighter'";
 
         $response = $mydb->query($query);
         if ($mydb->errno != 0)
