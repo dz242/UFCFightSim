@@ -197,7 +197,7 @@ function getFighterStats($fighter)
                 exit(0);
         }
 	$stats = mysqli_fetch_array($response, MYSQLI_ASSOC);
-	return array("dob" => $stats['dob'], "fighter_id" => $stats['fighter_id'], "height" => $stats['height'], "n_draw" => $stats['n_draw'], "n_loss" => $stats['n_loss'], "n_win" => $stats['n_win'], "name" => $stats['name'], "reach" => $stats['reach'], "sig_str_abs_pM" => $stats['sig_str_abs_pM'], "sig_str_def_pct" => $stats['sig_str_def_pct'], "sig_str_land_pM" => $stats['sig_str_land_pM'], "sig_str_land_pct" => $stats['sig_str_land_pct'], "stance" => $stats['stance'], "sub_avg" => $stats['sug_avg'], "td_avg" => $stats['td_avg'], "td_def_pct" => $stats['td_def_pct'], "td_land_pct" => $stats['td_land_pct'], "weight" => $stats['weight']); 
+	return array("dob" => $stats['dob'], "fighter_id" => $stats['fighter_id'], "height" => $stats['height'], "n_draw" => $stats['n_draw'], "n_loss" => $stats['n_loss'], "n_win" => $stats['n_win'], "name" => $stats['name'], "reach" => $stats['reach'], "sig_str_abs_pM" => $stats['sig_str_abs_pM'], "sig_str_def_pct" => $stats['sig_str_def_pct'], "sig_str_land_pM" => $stats['sig_str_land_pM'], "sig_str_land_pct" => $stats['sig_str_land_pct'], "stance" => $stats['stance'], "sub_avg" => $stats['sub_avg'], "td_avg" => $stats['td_avg'], "td_def_pct" => $stats['td_def_pct'], "td_land_pct" => $stats['td_land_pct'], "weight" => $stats['weight']); 
 
 }
 
