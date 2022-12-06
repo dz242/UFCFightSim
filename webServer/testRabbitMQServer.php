@@ -13,33 +13,33 @@ function logErr($string)
 	echo($string);
 }
 function doLogin($username,$password,$SID)
-{	
-	//Osama Login In Here
-$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
-
-if ($mydb->errno != 0)
 {
-        logErr("failed to connect to database: ". $mydb->error . PHP_EOL);       
-	exit(0);
-}
+	//Osama Login In Here
+    $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 
-//echo "successfully connected to database".PHP_EOL;
+    if ($mydb->errno != 0)
+    {
+        logErr("failed to connect to database: ". $mydb->error . PHP_EOL);
+        exit(0);
+    }
 
-$username = sanitize($username);
-$password = sanitize($password);
-echo($username.PHP_EOL);
-echo($password.PHP_EOL);
+    //echo "successfully connected to database".PHP_EOL;
 
-$query = "select * from users where username='$username'";
+    $username = sanitize($username);
+    $password = sanitize($password);
+    echo($username.PHP_EOL);
+    echo($password.PHP_EOL);
 
-$response = $mydb->query($query);
-        if ($mydb->errno != 0)
-        {       
-                logErr("failed to execute query:".PHP_EOL);
-                logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
-                exit(0);
-        }
-        $numrows = mysqli_num_rows($response);
+    $query = "select * from users where username='$username'";
+
+    $response = $mydb->query($query);
+    if ($mydb->errno != 0)
+    {
+        logErr("failed to execute query:".PHP_EOL);
+        logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
+        exit(0);
+    }
+    $numrows = mysqli_num_rows($response);
 
 	if ($numrows == 0) {return false;}
 
@@ -47,8 +47,8 @@ $response = $mydb->query($query);
 	$hash = $row['password'];
 
 	if (password_verify($password, $hash)) {
-		
-		updateSession($SID,$username,$mydb); 	
+
+		updateSession($SID,$username,$mydb);
 		return true;
 	}
 	else {return false;}
@@ -57,32 +57,32 @@ $response = $mydb->query($query);
 
 function doRegister($username,$password,$email)
 {
-	        //Osama Login In Here
-$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+    //Osama Login In Here
+    $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 
-if ($mydb->errno != 0)
-{
+    if ($mydb->errno != 0)
+    {
         logErr("failed to connect to database: ". $mydb->error . PHP_EOL);
         exit(0);
-}
+    }
 
-//echo "successfully connected to database".PHP_EOL;
+    //echo "successfully connected to database".PHP_EOL;
 
-$username = sanitize($username);
-$password = sanitize($password);
-echo($username.PHP_EOL);
-echo($password.PHP_EOL);
+    $username = sanitize($username);
+    $password = sanitize($password);
+    echo($username.PHP_EOL);
+    echo($password.PHP_EOL);
 
-$hash = password_hash($password, PASSWORD_DEFAULT);
+    $hash = password_hash($password, PASSWORD_DEFAULT);
 
-$query = "insert into users (username, password, email) values ('$username', '$hash', '$email')";
+    $query = "insert into users (username, password, email) values ('$username', '$hash', '$email')";
 
-$response = $mydb->query($query);
-        if ($mydb->errno != 0)
-        {
-                logErr("failed to execute query:".PHP_EOL);
-                logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
-                return false;
+    $response = $mydb->query($query);
+    if ($mydb->errno != 0)
+    {
+        logErr("failed to execute query:".PHP_EOL);
+        logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
+        return false;
 	}
 	else
 	{
@@ -91,23 +91,23 @@ $response = $mydb->query($query);
 }
 
 function doValidate($SID) {
-$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+    $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 
-if ($mydb->errno != 0)
-{
+    if ($mydb->errno != 0)
+    {
         logErr("failed to connect to database: ". $mydb->error . PHP_EOL);
         exit(0);
-}
-$query = "select * from users where SID='$SID'";
+    }
+    $query = "select * from users where SID='$SID'";
 
-$response = $mydb->query($query);
-        if ($mydb->errno != 0)
-        {
-                logErr("failed to execute query:".PHP_EOL);
-                logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
-                exit(0);
-        }
-        $numrows = mysqli_num_rows($response);
+    $response = $mydb->query($query);
+    if ($mydb->errno != 0)
+    {
+        logErr("failed to execute query:".PHP_EOL);
+        logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
+        exit(0);
+    }
+    $numrows = mysqli_num_rows($response);
 
 	if ($numrows == 0) {return false;}
 	else {return true;}
@@ -118,7 +118,7 @@ function sanitize($input)
 	$inputSan = filter_var($input, FILTER_SANITIZE_STRING); //Gets rid of Html code
 	//$inputSan = str_replace(' ', '', $inputSan); // gets rid of spaces
 	$inputSan = preg_replace('/[^A-Za-z0-9]/', '', $inputSan);
-	
+
 	return $inputSan;
 }
 
@@ -126,11 +126,11 @@ function updateSession($SID, $username, $mydb): void
 {
 	$query = "update users SET sid = '$SID' where username = '$username'";
 	$response = $mydb->query($query);
-        if ($mydb->errno != 0)
-        {
-                logErr("failed to execute query:".PHP_EOL);
-                logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
-                exit(0);
+    if ($mydb->errno != 0)
+    {
+        logErr("failed to execute query:".PHP_EOL);
+        logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
+        exit(0);
 	}
 	return;
 }
@@ -146,12 +146,12 @@ function fetchUser($username)
 	$query = "select * from users where username='$username'";
 
 	$response = $mydb->query($query);
-        if ($mydb->errno != 0)
-        {
-                logErr("failed to execute query:".PHP_EOL);
-                logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
-                exit(0);
-        }
+    if ($mydb->errno != 0)
+    {
+        logErr("failed to execute query:".PHP_EOL);
+        logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
+        exit(0);
+    }
 	$user = mysqli_fetch_array($response, MYSQLI_ASSOC);
 	return array("userID" => $user['userId'], "username" => $user['username'], "email" => $user['email'], "wins" => $user['wins'], "losses" => $user['losses']);
 }
@@ -159,20 +159,20 @@ function fetchLoadout($userId)
 {
 	$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 
-        if ($mydb->errno != 0)
-        {
+    if ($mydb->errno != 0)
+    {
         logErr("failed to connect to database: ". $mydb->error . PHP_EOL);
         exit(0);
-        }
-        $query = "select * from loadouts where userId='$userId'";
+    }
+    $query = "select * from loadouts where userId='$userId'";
 
-        $response = $mydb->query($query);
-        if ($mydb->errno != 0)
-        {
-                logErr("failed to execute query:".PHP_EOL);
-                logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
-                exit(0);
-        }
+    $response = $mydb->query($query);
+    if ($mydb->errno != 0)
+    {
+        logErr("failed to execute query:".PHP_EOL);
+        logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
+        exit(0);
+    }
 	$loadout = mysqli_fetch_array($response, MYSQLI_ASSOC);
 	return array("fighter1" => $loadout['fighter1'], "fighter2" => $loadout['fighter2'], "fighter3" => $loadout['fighter3'], "sp_move1" => $loadout['sp_move1'], "sp_move2" => $loadout['sp_move2'], "sp_move3" => $loadout['sp_move3']);
 
@@ -182,51 +182,51 @@ function getFighterStats($fighter)
 {
 	$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 
-        if ($mydb->errno != 0)
-        {
+    if ($mydb->errno != 0)
+    {
         logErr("failed to connect to database: ". $mydb->error . PHP_EOL);
         exit(0);
-        }
-        $query = "select * from fighters where fighter_id='$fighter'";
+    }
+    $query = "select * from fighters where fighter_id='$fighter'";
 
-        $response = $mydb->query($query);
-        if ($mydb->errno != 0)
-        {
-                logErr("failed to execute query:".PHP_EOL);
-                logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
-                exit(0);
-        }
+    $response = $mydb->query($query);
+    if ($mydb->errno != 0)
+    {
+        logErr("failed to execute query:".PHP_EOL);
+        logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
+        exit(0);
+    }
 	$stats = mysqli_fetch_array($response, MYSQLI_ASSOC);
-	return array("dob" => $stats['dob'], "fighter_id" => $stats['fighter_id'], "height" => $stats['height'], "n_draw" => $stats['n_draw'], "n_loss" => $stats['n_loss'], "n_win" => $stats['n_win'], "name" => $stats['name'], "reach" => $stats['reach'], "sig_str_abs_pM" => $stats['sig_str_abs_pM'], "sig_str_def_pct" => $stats['sig_str_def_pct'], "sig_str_land_pM" => $stats['sig_str_land_pM'], "sig_str_land_pct" => $stats['sig_str_land_pct'], "stance" => $stats['stance'], "sub_avg" => $stats['sub_avg'], "td_avg" => $stats['td_avg'], "td_def_pct" => $stats['td_def_pct'], "td_land_pct" => $stats['td_land_pct'], "weight" => $stats['weight']); 
+	return array("dob" => $stats['dob'], "fighter_id" => $stats['fighter_id'], "height" => $stats['height'], "n_draw" => $stats['n_draw'], "n_loss" => $stats['n_loss'], "n_win" => $stats['n_win'], "name" => $stats['name'], "reach" => $stats['reach'], "sig_str_abs_pM" => $stats['sig_str_abs_pM'], "sig_str_def_pct" => $stats['sig_str_def_pct'], "sig_str_land_pM" => $stats['sig_str_land_pM'], "sig_str_land_pct" => $stats['sig_str_land_pct'], "stance" => $stats['stance'], "sub_avg" => $stats['sub_avg'], "td_avg" => $stats['td_avg'], "td_def_pct" => $stats['td_def_pct'], "td_land_pct" => $stats['td_land_pct'], "weight" => $stats['weight']);
 
 }
 
 function insertLoadouts($userId,$fighter1,$fighter2,$fighter3,$f1sm,$f2sm,$f3sm)
 {
-	 $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
-	 $query = "select * from loadouts where userId='$userId'";
+    $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+    $query = "select * from loadouts where userId='$userId'";
 	$response = $mydb->query($query);
-	
-	 $numrows = mysqli_num_rows($response);
 
-	 if ($numrows == 0) {
-	 $query2 = "insert into loadouts(userId, fighter1, fighter2, fighter3, sp_move1, sp_move2, sp_move3) values('$userId','$fighter1', '$fighter2', '$fighter3', '$f1sm', '$f2sm', '$f3sm')";
+    $numrows = mysqli_num_rows($response);
 
-	 }
-	 else
-	 {
-		 $query2 = "update loadouts set fighter1 = '$fighter1', fighter2 = '$fighter2', fighter3 = '$fighter3', sp_move1 = '$f1sm', sp_move2 = '$f2sm', sp_move3 = '$f3sm' where userId = '$userId'";
-	 }
+    if ($numrows == 0) {
+        $query2 = "insert into loadouts(userId, fighter1, fighter2, fighter3, sp_move1, sp_move2, sp_move3) values('$userId','$fighter1', '$fighter2', '$fighter3', '$f1sm', '$f2sm', '$f3sm')";
 
-                $response = $mydb->query($query2);
-                if ($mydb->errno != 0)
-                {
-                        logErr("failed to execute query:".PHP_EOL);
-                        logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
-			
-			return(false);
-                }
-		return(true);
+    }
+    else
+    {
+        $query2 = "update loadouts set fighter1 = '$fighter1', fighter2 = '$fighter2', fighter3 = '$fighter3', sp_move1 = '$f1sm', sp_move2 = '$f2sm', sp_move3 = '$f3sm' where userId = '$userId'";
+    }
+
+    $response = $mydb->query($query2);
+    if ($mydb->errno != 0)
+    {
+        logErr("failed to execute query:".PHP_EOL);
+        logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
+
+        return(false);
+    }
+    return(true);
 
 
 }
@@ -234,120 +234,152 @@ function insertLoadouts($userId,$fighter1,$fighter2,$fighter3,$f1sm,$f2sm,$f3sm)
 
 function requestProcessor($request)
 {
-  echo "received request".PHP_EOL;
-  var_dump($request);
-  if(!isset($request['type']))
-  {
-	logErr("ERROR: unsupported message type");
-    return;
-  }
-  switch ($request['type'])
-  {
-  case "Login":
+    echo "received request".PHP_EOL;
+    var_dump($request);
+    if(!isset($request['type']))
+    {
+        logErr("ERROR: unsupported message type");
+        return;
+    }
+    switch ($request['type'])
+    {
+        case "Login":
 
-	  if (doLogin($request['username'],$request['password'],$request['SID']))
-	  {
-		  echo "Successful login".PHP_EOL;
-		  $user = fetchUser($request['username']);
-		  $loadout = fetchLoadout($user["userID"]);
-		  $fighter1 = getFighterStats($loadout["fighter1"]);
-		  $fighter2 = getFighterStats($loadout["fighter2"]);
-		  $fighter3 = getFighterStats($loadout["fighter3"]);
-		  return array("returnCode" => '0', 'message'=>"Successful Login", "user"=>$user, "loadout"=>$loadout, "fighter1"=>$fighter1, "fighter2"=>$fighter2, "fighter3"=>$fighter3);
-	  }
-	  else
-	  {
-		 logErr("Invalid Login".PHP_EOL);
-		 return array("returnCode" => '1', 'message'=>"Invalid Login");
-	  }
-  case "Register":
+            if (doLogin($request['username'],$request['password'],$request['SID']))
+            {
+                echo "Successful login".PHP_EOL;
+                $user = fetchUser($request['username']);
+                $loadout = fetchLoadout($user["userID"]);
+                $fighter1 = getFighterStats($loadout["fighter1"]);
+                $fighter2 = getFighterStats($loadout["fighter2"]);
+                $fighter3 = getFighterStats($loadout["fighter3"]);
+                return array("returnCode" => '0', 'message'=>"Successful Login", "user"=>$user, "loadout"=>$loadout, "fighter1"=>$fighter1, "fighter2"=>$fighter2, "fighter3"=>$fighter3);
+            }
+            else
+            {
+                logErr("Invalid Login".PHP_EOL);
+                return array("returnCode" => '1', 'message'=>"Invalid Login");
+            }
+        case "Register":
 
-	if (doRegister($request['username'],$request['password'],$request['email']))
-	{
-		echo "Succesful Register".PHP_EOL;
-		return array("returnCode" => '0', 'message'=>"Successful Register");
-	}
-	else
-	{
-		logErr("Register Failed".PHP_EOL);
-		return array("returnCode" => '1', 'message'=>"Register Failed");
-	}
+            if (doRegister($request['username'],$request['password'],$request['email']))
+            {
+                echo "Succesful Register".PHP_EOL;
+                return array("returnCode" => '0', 'message'=>"Successful Register");
+            }
+            else
+            {
+                logErr("Register Failed".PHP_EOL);
+                return array("returnCode" => '1', 'message'=>"Register Failed");
+            }
 
-  case "validate_session":
+        case "validate_session":
 
-	 if (doValidate($request['SID']))
-	 {
-		 echo "Succesful Session Validation".PHP_EOL;
-		 return true;
-	 }
-	 else
-	 {
-		 logErr("Session Validation Failed".PHP_EOL);
-		 return false; 
-	 }
+            if (doValidate($request['SID']))
+            {
+                echo "Succesful Session Validation".PHP_EOL;
+                return true;
+            }
+            else
+            {
+                logErr("Session Validation Failed".PHP_EOL);
+                return false;
+            }
 
-  case "getFighters":
-        
+        case "getFighters":
+
 	    	$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
-		$queryFighters = "select * from fighters limit 0,11";
-		$fighterArray = array();
-		$response = $mydb->query($queryFighters);
-		for($i=0;$i<10;$i++)
-		{
-			$fighterArray[$i] = mysqli_fetch_array($response,MYSQLI_NUM);
-		}
+            $queryFighters = "select * from fighters limit 0,11";
+            $fighterArray = array();
+            $response = $mydb->query($queryFighters);
+            for($i=0;$i<10;$i++)
+            {
+                $fighterArray[$i] = mysqli_fetch_array($response,MYSQLI_NUM);
+            }
         	return($fighterArray);
-  
-case "getProfile":
-                $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 
-                $query = "select * from users where username='bob'";
+        case "getProfile":
+            $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
 
-                $response = $mydb->query($query);
-                if ($mydb->errno != 0)
-                {
-                        logErr("failed to execute query:".PHP_EOL);
-                        logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
-                        exit(0);
-                }
-                $numrows = mysqli_num_rows($response);
+            $query = "select * from users where username='bob'";
 
-                if ($numrows == 0) {return false;}
+            $response = $mydb->query($query);
+            if ($mydb->errno != 0)
+            {
+                logErr("failed to execute query:".PHP_EOL);
+                logErr(__FILE__.':'.__LINE__.":error: ".$mydb->error.PHP_EOL);
+                exit(0);
+            }
+            $numrows = mysqli_num_rows($response);
 
-                $row = mysqli_fetch_array($response, MYSQLI_ASSOC);
+            if ($numrows == 0) {return false;}
 
-
-                echo "Name:".$row['username'];
-                echo "Email:".$row['email'];
-                echo "Wins:".$row['wins'];
-                echo "Losses:".$row['losses'];
-                $profileInfoArray=array('username'=>$row['username'],'email'=>$row['email'],'wins'=>$row['wins'],'losses'=>$row['losses']);
-                return($profileInfoArray);
+            $row = mysqli_fetch_array($response, MYSQLI_ASSOC);
 
 
-case "submitLoadout": 
+            echo "Name:".$row['username'];
+            echo "Email:".$row['email'];
+            echo "Wins:".$row['wins'];
+            echo "Losses:".$row['losses'];
+            $profileInfoArray=array('username'=>$row['username'],'email'=>$row['email'],'wins'=>$row['wins'],'losses'=>$row['losses']);
+            return($profileInfoArray);
 
-	if(insertLoadouts($request['userId'],$request['fighter1'],$request['fighter2'],$request['fighter3'],$request['f1sm'],$request['f2sm'],$request['f3sm']))
-	{
-		echo "Succesful Insert Into Loadouts".PHP_EOL;
 
-		$fighter1 = getFighterStats($request['fighter1']);
+        case "submitLoadout":
+
+            if(insertLoadouts($request['userId'],$request['fighter1'],$request['fighter2'],$request['fighter3'],$request['f1sm'],$request['f2sm'],$request['f3sm']))
+            {
+                echo "Succesful Insert Into Loadouts".PHP_EOL;
+
+                $fighter1 = getFighterStats($request['fighter1']);
                 $fighter2 = getFighterStats($request['fighter2']);
                 $fighter3 = getFighterStats($request['fighter3']);
                 return array("returnCode" => '0', 'message'=>"Successful Register", "fighter1"=>$fighter1, "fighter2"=>$fighter2, "fighter3"=>$fighter3);
-        }
-        else
-        {
+            }
+            else
+            {
                 logErr("Inserting Loadouts Failed".PHP_EOL);
                 return array("returnCode" => '1', 'message'=>"Register Failed");
-        }
+            }
 
+        case "getShop":
+            {
+                $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+                $queryUsers = "select * from users where userId = '$request['userId']'";
+                $queryFighters = "select * from fighters limit 12,17";
+                $fighterArray = array();
+                $response = $mydb->query($queryFighters);
+                $response2 = $mydb->query($queryUsers);
+                for($i=2;$i<8;$i++)
+                {
+                    $fighterArray[$i] = mysqli_fetch_array($response,MYSQLI_NUM);
+                }
+                $fighterArray[1] = mysqli_fetch_array($response2,MYSQLI_NUM);
+                return($fighterArray);
+            }
+        case "getInventory":
+            {
+                $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+                $queryInventory = "select * from inventory where userId = '$request['userId']'";
+                $fighterArray = array();
+                $response = $mydb->query($queryInventory);
+                $i = 0;
+                do{
+                    $fighterArray[$i] = mysqli_fetch_array($response,MYSQLI_NUM);
+                    $i++;
+                }while($fighterArray[$i] != null);
+                return($fighterArray);
+            }
+        case "buyItem":
+            {
+               return;
+            }
 
+    }
 
-  }
+    return array("returnCode" => '0', 'message'=>"Server received request and processed");
+}
 
-  return array("returnCode" => '0', 'message'=>"Server received request and processed");}
- 
 
 $server = new rabbitMQServer("testRabbitMQ.ini","testServer");
 
