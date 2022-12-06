@@ -124,6 +124,7 @@ $response = $client->send_request($request);
 
 $request = array();
 $request['type'] = "getInventory";
+$request['userId'] = $_SESSION["userID"];
 $response2 = $client->send_request($request);
 
 
