@@ -52,7 +52,6 @@ echo $argv[0]." END".PHP_EOL;
 		</select>
 		
 		
-		<input type = "hidden" id = "currency" value = "<?php echo $response[1][1]; ?>"/>
 		<div>
 			<input type="submit" value="Buy Item" />
 		</div>
