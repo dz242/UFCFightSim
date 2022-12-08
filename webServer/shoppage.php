@@ -37,7 +37,7 @@ echo $argv[0]." END".PHP_EOL;
 
 if(!is_null($_POST['shop']))
 {
-	$fightercost = 0;
+	$fightercheck = 0;
 	$difference = 0;
 	foreach($response as $fighter)
     {
