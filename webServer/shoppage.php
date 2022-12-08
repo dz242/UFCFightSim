@@ -50,7 +50,9 @@ echo $argv[0]." END".PHP_EOL;
 			<option value = "<?php echo $response[5][1]; ?>"><?php echo $response[5][6] ?><?php echo $response[5][18] ?></option>
 			<option value = "<?php echo $response[6][1]; ?>"><?php echo $response[6][6] ?><?php echo $response[6][18] ?></option>
 		</select>
-
+		
+		
+		<input type = "hidden" id = "currency" value = "<?php echo $response[1][1]; ?>"/>
 		<div>
 			<input type="submit" value="Buy Item" />
 		</div>
