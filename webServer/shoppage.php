@@ -3,6 +3,7 @@
 
 session_start();
 
+
 if (!isset($_SESSION["username"]))
 {
 	echo "Log in to view this Page";
@@ -34,13 +35,40 @@ echo "\n\n";
 
 echo $argv[0]." END".PHP_EOL;
 
+if(!is_null($_POST['shop']))
+{
+	$fightercost = 0;
+	$difference = 0;
+	foreach($response as $fighter)
+    {
+        if($_POST['shop'] == $fighter[1])
+        {
+            $fightercheck = $fighter[18];
+        }
+    }
+    if($response[1][1] >= $fightercheck)
+    {
+        $difference = $response[1][1] - $fightercheck;
+		$request = array();
+        $request['type'] = "submitPurchase";
+        $request['userId'] = $_SESSION["userID"];
+		$request['balance'] = $difference;
+		$response = $client->send_request($request);
+		echo "Successfully Made Purchase!, Redirecting to Main Page".PHP_EOL;
+        header("refresh: 3, url=index.html");
+    }
+	if($response[1][1] < $fightercheck)
+    {
+        echo "Not Enough Money to Make the purchase";
+    }
+}
 
 ?>
 <html>
 <body>
-	<!--Echo User Currency-->
+	<!--Echo User Currency Form action should Return to same page-->
 	<h1><?php echo $response[1][1]; ?></h1>
-	<form action="shoppagesubmit.php" id="submission" method="post">
+	<form action="" id="submission" method="post">
 
 		<select name="shop" id="shop">
 			<!--Value is fighterid,then echo name, then echo price-->
@@ -60,4 +88,3 @@ echo $argv[0]." END".PHP_EOL;
 
 </body>
 </html>
-
