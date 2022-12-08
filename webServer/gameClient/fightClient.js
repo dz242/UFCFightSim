@@ -1,5 +1,24 @@
+//import { createRequire } from 'module';
+//const require = createRequire(import.meta.url);
 
+//const e = require("express");
+
+import * as e from "express";
+
+import * as Memcached from 'memcached';
+//var Memcached = require('memcached');
+var memcached = new Memcached('127.0.0.1:11211');
+
+if (memcached.get("username", function (err, data) {
+	alert('welcome ' + data);
+})){
+	console.log(`Recieved username ${data}`);
+}
+else {
+	console.log('Could not recieve username fro memcached');
+}
 const socket = io();
+
 
 var isMyTurn = false;
 var hasADV = false;

@@ -344,8 +344,9 @@ function requestProcessor($request)
 
         case "getShop":
             {
-                $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
-                $queryUsers = "select * from users where userId = '$request['userId']'";
+		    $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+		    $userId = $request['userId'];
+                $queryUsers = "select * from users where userId = '$userId'";
                 $queryFighters = "select * from fighters limit 12,17";
                 $fighterArray = array();
                 $response = $mydb->query($queryFighters);
@@ -359,8 +360,9 @@ function requestProcessor($request)
             }
         case "getInventory":
             {
-                $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
-                $queryInventory = "select * from inventory where userId = '$request['userId']'";
+		    $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+		    $userId = $request['userId'];
+                $queryInventory = "select * from inventory where userId = '$userId'";
                 $fighterArray = array();
                 $response = $mydb->query($queryInventory);
                 $i = 0;
