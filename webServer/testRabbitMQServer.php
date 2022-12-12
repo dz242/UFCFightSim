@@ -187,7 +187,7 @@ function getFighterStats($fighter)
         logErr("failed to connect to database: ". $mydb->error . PHP_EOL);
         exit(0);
         }
-        $query = "select * from loadouts where fighter_id='$fighter'";
+        $query = "select * from fighters where fighter_id='$fighter'";
 
         $response = $mydb->query($query);
         if ($mydb->errno != 0)
@@ -197,7 +197,7 @@ function getFighterStats($fighter)
                 exit(0);
         }
 	$stats = mysqli_fetch_array($response, MYSQLI_ASSOC);
-	return array("dob" => $stats['dob'], "fighter_id" => $stats['fighter_id'], "height" => $stats['height'], "n_draw" => $stats['n_draw'], "n_loss" => $stats['n_loss'], "n_win" => $stats['n_win'], "name" => $stats['name'], "reach" => $stats['reach'], "sig_str_abs_pM" => $stats['sig_str_abs_pM'], "sig_str_def_pct" => $stats['sig_str_def_pct'], "sig_str_land_pM" => $stats['sig_str_land_pM'], "sig_str_land_pct" => $stats['sig_str_land_pct'], "stance" => $stats['stance'], "sub_avg" => $stats['sug_avg'], "td_avg" => $stats['td_avg'], "td_def_pct" => $stats['td_def_pct'], "td_land_pct" => $stats['td_land_pct'], "weight" => $stats['weight']); 
+	return array("dob" => $stats['dob'], "fighter_id" => $stats['fighter_id'], "height" => $stats['height'], "n_draw" => $stats['n_draw'], "n_loss" => $stats['n_loss'], "n_win" => $stats['n_win'], "name" => $stats['name'], "reach" => $stats['reach'], "sig_str_abs_pM" => $stats['sig_str_abs_pM'], "sig_str_def_pct" => $stats['sig_str_def_pct'], "sig_str_land_pM" => $stats['sig_str_land_pM'], "sig_str_land_pct" => $stats['sig_str_land_pct'], "stance" => $stats['stance'], "sub_avg" => $stats['sub_avg'], "td_avg" => $stats['td_avg'], "td_def_pct" => $stats['td_def_pct'], "td_land_pct" => $stats['td_land_pct'], "weight" => $stats['weight']); 
 
 }
 
@@ -215,7 +215,7 @@ function insertLoadouts($userId,$fighter1,$fighter2,$fighter3,$f1sm,$f2sm,$f3sm)
 	 }
 	 else
 	 {
-		 $query2 = "update loadouts set fighter1 = '$fighter1' fighter2 = '$fighter2' fighter3 = '$fighter3' sp_move1 = '$f1sm', sp_move2 = '$f2sm', sp_move3 = '$f3sm' where userId = '$userId'";
+		 $query2 = "update loadouts set fighter1 = '$fighter1', fighter2 = '$fighter2', fighter3 = '$fighter3', sp_move1 = '$f1sm', sp_move2 = '$f2sm', sp_move3 = '$f3sm' where userId = '$userId'";
 	 }
 
                 $response = $mydb->query($query2);
@@ -249,7 +249,11 @@ function requestProcessor($request)
 	  {
 		  echo "Successful login".PHP_EOL;
 		  $user = fetchUser($request['username']);
-		  return array("returnCode" => '0', 'message'=>"Successful Login", "user"=>$user);
+		  $loadout = fetchLoadout($user["userID"]);
+		  $fighter1 = getFighterStats($loadout["fighter1"]);
+		  $fighter2 = getFighterStats($loadout["fighter2"]);
+		  $fighter3 = getFighterStats($loadout["fighter3"]);
+		  return array("returnCode" => '0', 'message'=>"Successful Login", "user"=>$user, "loadout"=>$loadout, "fighter1"=>$fighter1, "fighter2"=>$fighter2, "fighter3"=>$fighter3);
 	  }
 	  else
 	  {
@@ -325,8 +329,12 @@ case "submitLoadout":
 
 	if(insertLoadouts($request['userId'],$request['fighter1'],$request['fighter2'],$request['fighter3'],$request['f1sm'],$request['f2sm'],$request['f3sm']))
 	{
-                echo "Succesful Insert Into Loadouts".PHP_EOL;
-                return array("returnCode" => '0', 'message'=>"Successful Register");
+		echo "Succesful Insert Into Loadouts".PHP_EOL;
+
+		$fighter1 = getFighterStats($request['fighter1']);
+                $fighter2 = getFighterStats($request['fighter2']);
+                $fighter3 = getFighterStats($request['fighter3']);
+                return array("returnCode" => '0', 'message'=>"Successful Register", "fighter1"=>$fighter1, "fighter2"=>$fighter2, "fighter3"=>$fighter3);
         }
         else
         {

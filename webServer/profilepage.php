@@ -1,5 +1,11 @@
 <?php
 session_start();
+if (!isset($_SESSION["username"]))
+{
+        echo "Log in to view this Page";
+        header("refresh: 4, url=index.html");
+        exit();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -92,5 +98,51 @@ th, td{
                 </tr>
 
 	</table>
+
+	<table>
+                <tr>
+                        <th>Fighter 1</th>
+                        <td>
+                                <?php echo($_SESSION["fighter1"]["name"]);?>
+
+                        </td>
+		</tr>
+		<tr>
+                        <th>Special Move</th>
+                        <td>
+                                <?php echo($_SESSION["move1"]);?>
+
+                        </td>
+                </tr>
+                <tr>
+                        <th>Fighter 2</th>
+                        <td>
+                                <?php echo($_SESSION["fighter2"]["name"]);?>
+
+                        </td>
+		</tr>
+		<tr>
+                        <th>Special Move</th>
+                        <td>
+                                <?php echo($_SESSION["move2"]);?>
+
+                        </td>
+                </tr>
+                <tr>
+                        <th>Fighter 3</th>
+                        <td>
+                                <?php echo($_SESSION["fighter3"]["name"]);?>
+
+                        </td>
+                </tr>
+		<tr>
+                        <th>Special Move</th>
+                        <td>
+                                <?php echo($_SESSION["move3"]);?>
+
+                        </td>
+                </tr>
+
+        </table>
 
 </html>
