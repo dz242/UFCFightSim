@@ -1,3 +1,6 @@
+
+
+
 const express = require('express')
 const path = require('path')
 const http = require('http')
@@ -6,6 +9,19 @@ const socketio = require('socket.io')
 const app = express()
 const server = http.createServer(app)
 const io = socketio(server)
+
+var Memcached = require('memcached');
+var memcached = new Memcached('127.0.0.1:11211');
+
+if(memcached.get("username", function(err, data){
+    var userName = data;
+})){
+    console.log(`Received username ${data}`);
+}
+else{
+    console.log('Could not receive username from memcached');
+}
+
 
 app.use(express.static('gameClient/', {index: 'chooseWeight.html'}))
 
@@ -404,7 +420,7 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
             }
     })
 
-    socket.on('tryGettup', isMyTurn => {
+    socket.on('tryGettup', isMyTurn, fighter_td_def_pct => {
         var clientRooms = [];
         for (var room of socket.rooms){
             clientRooms.push(room);
@@ -412,7 +428,7 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
         const theRoom = clientRooms[0];
         
         if(isMyTurn == true){
-            if(Math.random() < 0.30){
+            if(Math.random() < (0.50 * fighter_td_def_pct)){
                 socket.to(theRoom).emit('gettup');
                 io.to(theRoom).emit('status', 'The fighter got back up and is about to retaliate!');
                 io.to(theRoom).emit('removeADV');
@@ -421,6 +437,19 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
                 io.to(theRoom).emit('status', 'The fighter failed to get up');
                 io.to(theRoom).emit('changeTurn');
             }
+        }
+    })
+
+    socket.on('switchFighter', isMyTurn, switchedFighter => {
+        var clientRooms = [];
+        for (var room of socket.rooms){
+            clientRooms.push(room);
+        }
+        const theRoom = clientRooms[0];
+
+        if(isMyTurn == true){
+            io.to(theRoom).emit('switchEnemy', switchedFighter);
+            io.to(theRoom).emit('changeTurn');
         }
     })
 
@@ -527,6 +556,33 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
             console.log(`Received move from ${socket.id}, but it is not their turn yet`)
         }
     })
+
+    socket.on('sendFighterNames', (f1_name, f2_name, f3_name) => {
+        var e1_name = f1_name;
+        var e2_name = f2_name;
+        var e3_name = f3_name;
+
+        var clientRooms = [];
+        for (var room of socket.rooms){
+            clientRooms.push(room);
+        }
+        const theRoom = clientRooms[0];
+
+        var playerName = socket.id;
+
+        io.to(theRoom).emit('receiveEnemyFighters', playerName, e1_name, e2_name, e3_name);
+
+    })
+
+    socket.on('endGame', function(){
+        console.log(`Received an admission of defeat from ${socket.id}`);
+        
+        socket.to(`${clientArr[0]}Room`).emit('alertResults');
+
+        io.sockets.clients(`${clientArr[0]}Room`).forEach(function(s){
+            s.leave(`${clientArr[0]}Room`);
+        });
+    })
     
     
     socket.on('disconnect', function(){
@@ -543,7 +599,5 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
 
 
 })
-
-
 
 
