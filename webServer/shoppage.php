@@ -49,12 +49,13 @@ if(!is_null($_POST['shop']))
     if($response[1][1] >= $fightercheck)
     {
         $difference = $response[1][1] - $fightercheck;
-		$request = array();
+	$request = array();
         $request['type'] = "submitPurchase";
         $request['userId'] = $_SESSION["userID"];
-		$request['balance'] = $difference;
-		$response = $client->send_request($request);
-		echo "Successfully Made Purchase!, Redirecting to Main Page".PHP_EOL;
+	$request['balance'] = $difference;
+	$request['fid'] = $_POST['shop'];
+	$response = $client->send_request($request);
+	echo "Successfully Made Purchase!, Redirecting to Main Page".PHP_EOL;
         header("refresh: 3, url=index.html");
     }
 	if($response[1][1] < $fightercheck)
