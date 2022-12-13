@@ -377,7 +377,7 @@ function requestProcessor($request)
                 $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
                 $userid = $request['userId'];
                 $fighter = $request['fid'];
-                $balance = $request['balance']
+                $balance = $request['balance'];
 
                 $queryUser = "update users set money = '$balance' where userId = '$userid'";
 
