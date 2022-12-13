@@ -110,11 +110,11 @@ require_once('rabbitMQLib.inc');
 $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
 if (isset($argv[1]))
 {
-  $msg = $argv[1];
+    $msg = $argv[1];
 }
 else
 {
-  $msg = "Default Register Message";
+    $msg = "Default Register Message";
 }
 
 $request = array();
@@ -122,117 +122,30 @@ $request['type'] = "getFighters";
 $response = $client->send_request($request);
 //$response = $client->publish($request);
 
+$request = array();
+$request['type'] = "getInventory";
+$request['userId'] = $_SESSION["userID"];
+$response2 = $client->send_request($request);
+
+
 echo "client received response: ".PHP_EOL;
 //print_r($response);
 echo "\n\n";
 
 echo $argv[0]." END".PHP_EOL;
 
-/*if ($response["returnCode"] == '0')
-{
-        echo "Grabbed Fighters".PHP_EOL;
-}
-else
-{
-        echo "Grab Fighters Fail".PHP_EOL;
-}*/
-//echo  htmlspecialchars($response);
+
 
 ?>
 
 
 <script type = "text/javascript">
-/*
-//Get Php/mysql array into the javascript
-var fighterData = <?php echo json_encode($response); ?>;
-
-//Loop that takes cuts every 18th Comma makes a new fighter Element with the data
-var fighterIds = [];
-var fighterNames = [];
-window.onload = function populateList(){
-for(var i = 0; i < fighterData.length; i++)
-{
-//singleFighter = fighterList[i].string;
-	var singleFighter =  fighterData[i];
-	fighterIds[i] = singleFighter[1];
-	fighterNames[i] = singleFighter[6];
-	newElement(singleFighter[6]);
-}
-}
-
-//Count Variable for Selection
-
-var countery = 0;
-
-// Add a "checked" symbol when clicking on a list item
-/*var list = document.querySelector('ul');
-list.addEventListener('click', function(ev) {
-  if (ev.target.tagName === 'LI' && countery < 3 && !ev.target.classList.contains('checked')) {
-    ev.target.classList.toggle('checked');
-    countery++;
-  }
-  else if(ev.target.classList.contains('checked'))
-  {
-  ev.target.classList.toggle('checked');
-  countery--;
-  }
-
-}, false);
-*/
-// Create a new list item when clicking on the "Add" button
-/*
-function newElement(data) {
-	 	var option = document.createElement("option");
-		option.text = data;
-		//option.innerHTML = data;
-        	option.value = data;
-		//option.name = data;
-		document.getElementById("fighter0").appendChild(option);
-		//Better To die standing, than live kneeling
-		document.getElementById("fighter1").appendChild(option);
-		document.getElementById("fighter2").appendChild(option);
-
-        
-}
-
-/*function getFighters()
-{
-//var checkedFighters = [];
-	var theList = document.getElementById("myUL");
-	for(var i = 0; i < fighterData.length; i++){
-		if (fighterNames[i] = theList.getElementsByClassName('checked')[0].innerText){
-			checkedFighters1 = fighterIds[i];
-		}
-	}
-	for(var i = 0; i < fighterData.length; i++){
-                if (fighterNames[i] = theList.getElementsByClassName('checked')[1].innerText){
-                        checkedFighters2 = fighterIds[i];
-                }
-	}
-	for(var i = 0; i < fighterData.length; i++){
-                if (fighterNames[i] = theList.getElementsByClassName('checked')[2].innerText){
-                        checkedFighters3 = fighterIds[i];
-                }
-        }
-*/
-
-//checkedFighters1 = theList.getElementsByClassName('checked')[0].innerText;
-//checkedFighters2 = theList.getElementsByClassName('checked')[1].innerText;
-//checkedFighters3 = theList.getElementsByClassName('checked')[2].innerText;
-/*document.getElementById("fData1").value = checkedFighters1;
-document.getElementById("fData2").value = checkedFighters2;
-document.getElementById("fData3").value = checkedFighters3;
-console.log(checkedFighters1);
-console.log(checkedFighters2);
-console.log(checkedFighters3);*/
-//return true;
-//}
-/*
 document.onload = populateList();
 
 </script>
 <div>
 <form action = "loadoutsubmit.php" id="submission" method = "post" >
+
 
 	<label for="fighter">Choose Your Fighters:</label>
            
@@ -247,6 +160,13 @@ document.onload = populateList();
 		<option value = "<?php echo $response[7][1]; ?>"><?php echo $response[7][6] ?></option>
 		<option value = "<?php echo $response[8][1]; ?>"><?php echo $response[8][6] ?></option>
 		<option value = "<?php echo $response[9][1]; ?>"><?php echo $response[9][6] ?></option>
+
+        <?php
+        foreach($response2 as $fighter)
+        {
+            echo "<option value = '$fighter[1]'>$fighter[6]</option>";  
+        }
+        ?>
             </select>
            
 	<select name="fighters1" id="fighters1">
@@ -260,6 +180,13 @@ document.onload = populateList();
                 <option value = "<?php echo $response[7][1]; ?>"><?php echo $response[7][6] ?></option>
                 <option value = "<?php echo $response[8][1]; ?>"><?php echo $response[8][6] ?></option>
                 <option value = "<?php echo $response[9][1]; ?>"><?php echo $response[9][6] ?></option>
+		
+	<?php
+        foreach($response2 as $fighter)
+        {
+            echo "<option value = '$fighter[1]'>$fighter[6]</option>";  
+        }
+        ?>
             </select>
            
 	<select name="fighters2" id="fighters2">
@@ -272,7 +199,14 @@ document.onload = populateList();
                 <option value = "<?php echo $response[6][1]; ?>"><?php echo $response[6][6] ?></option>
                 <option value = "<?php echo $response[7][1]; ?>"><?php echo $response[7][6] ?></option>
                 <option value = "<?php echo $response[8][1]; ?>"><?php echo $response[8][6] ?></option>
-                <option value = "<?php echo $response[9][1]; ?>"><?php echo $response[9][6] ?></option>
+                <option value = "<?php echo $response[9][1]; ?>"><?php echo $response[9][6] ?></option>	
+
+	<?php
+        foreach($response2 as $fighter)
+        {
+            echo "<option value = '$fighter[1]'>$fighter[6]</option>";  
+        }
+        ?>
             </select>
               
 	<br><br>
@@ -332,4 +266,3 @@ document.onload = populateList();
 	</div>
 </body>
 </html>
-
