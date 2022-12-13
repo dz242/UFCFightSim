@@ -12,8 +12,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "amqplib": "^0.10.3",
     "express": "^4.18.2",
     "memcached": "^2.2.2",
+<<<<<<< HEAD
+    "php-unserialize": "^0.0.1",
+=======
+>>>>>>> 9ae4e31761933651245de8995217c18dedc96632
     "socket.io": "^4.5.3"
   },
   "devDependencies": {
