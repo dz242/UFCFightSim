@@ -22,7 +22,6 @@ else{
     console.log('Could not receive username from memcached');
 }
 
-
 app.use(express.static('gameClient/', {index: 'chooseWeight.html'}))
 
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`))
@@ -30,6 +29,8 @@ server.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
 
     socket.currentRoom = '';
+
+    var clientArr = [];
 
     socket.on('joinSW', function() {
         socket.leaveAll()
@@ -43,7 +44,7 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
 
         if (numClientsSW >= 2){
             const clients = io.sockets.adapter.rooms.get('sw');
-            var clientArr = [];
+            
             for (const clientID of clients){
                 const clientSocket = io.sockets.sockets.get(clientID).id;
                 console.log(clientSocket);
@@ -83,7 +84,7 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
 
         if (numClientsFLW >= 2){
             const clients = io.sockets.adapter.rooms.get('flw');
-            var clientArr = [];
+            
             for (const clientID of clients){
                 const clientSocket = io.sockets.sockets.get(clientID).id;
                 console.log(clientSocket);
@@ -124,7 +125,7 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
 
         if (numClientsBW >= 2){
             const clients = io.sockets.adapter.rooms.get('bw');
-            var clientArr = [];
+            
             for (const clientID of clients){
                 const clientSocket = io.sockets.sockets.get(clientID).id;
                 console.log(clientSocket);
@@ -165,7 +166,7 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
 
         if (numClientsFW >= 2){
             const clients = io.sockets.adapter.rooms.get('fw');
-            var clientArr = [];
+            
             for (const clientID of clients){
                 const clientSocket = io.sockets.sockets.get(clientID).id;
                 console.log(clientSocket);
@@ -205,7 +206,7 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
 
         if (numClientsLW >= 2){
             const clients = io.sockets.adapter.rooms.get('lw');
-            var clientArr = [];
+            
             for (const clientID of clients){
                 const clientSocket = io.sockets.sockets.get(clientID).id;
                 console.log(clientSocket);
@@ -244,7 +245,7 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
 
         if (numClientsWW >= 2){
             const clients = io.sockets.adapter.rooms.get('ww');
-            var clientArr = [];
+            
             for (const clientID of clients){
                 const clientSocket = io.sockets.sockets.get(clientID).id;
                 console.log(clientSocket);
@@ -285,7 +286,7 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
 
         if (numClientsMW >= 2){
             const clients = io.sockets.adapter.rooms.get('mw');
-            var clientArr = [];
+            
             for (const clientID of clients){
                 const clientSocket = io.sockets.sockets.get(clientID).id;
                 console.log(clientSocket);
@@ -324,7 +325,7 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
 
         if (numClientsLHW >= 2){
             const clients = io.sockets.adapter.rooms.get('lhw');
-            var clientArr = [];
+            
             for (const clientID of clients){
                 const clientSocket = io.sockets.sockets.get(clientID).id;
                 console.log(clientSocket);
@@ -365,7 +366,7 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
 
         if (numClientsHW >= 2){
             const clients = io.sockets.adapter.rooms.get('hw');
-            var clientArr = [];
+            
             for (const clientID of clients){
                 const clientSocket = io.sockets.sockets.get(clientID).id;
                 console.log(clientSocket);
@@ -420,15 +421,17 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
             }
     })
 
-    socket.on('tryGettup', isMyTurn, fighter_td_def_pct => {
+    socket.on('tryGettup', (isMyTurn, fighter_td_def_pct) => {
         var clientRooms = [];
         for (var room of socket.rooms){
             clientRooms.push(room);
         }
         const theRoom = clientRooms[0];
+
+        console.log(`Received tryGettup emit with a fighter_td_def_pct of ${fighter_td_def_pct}`);
         
         if(isMyTurn == true){
-            if(Math.random() < (0.50 * fighter_td_def_pct)){
+            if(Math.random() < fighter_td_def_pct){
                 socket.to(theRoom).emit('gettup');
                 io.to(theRoom).emit('status', 'The fighter got back up and is about to retaliate!');
                 io.to(theRoom).emit('removeADV');
@@ -440,7 +443,7 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
         }
     })
 
-    socket.on('switchFighter', isMyTurn, switchedFighter => {
+    socket.on('switchFighter', (isMyTurn, switchedFighter) => {
         var clientRooms = [];
         for (var room of socket.rooms){
             clientRooms.push(room);
@@ -453,7 +456,7 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
         }
     })
 
-    socket.on('move', (moveName, isMyTurn, hasADV, dmgBuff) => {
+    socket.on('move', (moveName, isMyTurn, hasADV, dmgBuff, sig_str_land_pM, sig_str_land_pct, td_avg, td_land_pct, sub_avg) => {
         
             console.log(`Received move, ${moveName}, from ${socket.id} while they are ${isMyTurn} with ${hasADV} and current buff of +${dmgBuff}`)
             var clientRooms = [];
@@ -466,10 +469,10 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
             if (isMyTurn == true){
             switch(moveName){
                 case "Jab":
-                    if (Math.random() < 0.90){
+                    if (Math.random() < (sig_str_land_pct * (sig_str_land_pM * 0.5))){
                         
-                        if(Math.random() < 0.15){
-                            if(Math.random() < 0.10){
+                        if(Math.random() < (0.40 * sig_str_land_pct)){
+                            if(Math.random() < (0.30 * sig_str_land_pct)){
                                 socket.to(theRoom).emit('takeDMG', 30 + dmgBuff);
                                 socket.to(theRoom).emit('takeKD');
                                 io.to(theRoom).emit('status', 'The move succeeded with a super crit and knocked them down!');
@@ -494,7 +497,7 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
                     break;
 
                 case "Single Leg":
-                    if(Math.random() < 0.70){
+                    if(Math.random() < (td_land_pct + (td_avg * 0.1))){
                         socket.to(theRoom).emit('takeDWN');
                         io.to(theRoom).emit('status', 'The move succeeded');
                         io.to(theRoom).emit('changeTurn');
@@ -508,7 +511,7 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
                 case "Rear Naked Choke":
                     if(hasADV == true){
                         console.log('Have ADV')
-                        if(Math.random() < 0.30){
+                        if(Math.random() < (sub_avg * 0.30)){
                             console.log('Sub');
                             socket.to(theRoom).emit('takeDMG', 200);
                             io.to(theRoom).emit('status', 'The move succeeded');
@@ -521,7 +524,7 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
                         }
                     }
                     else{
-                        if(Math.random() < 0.05){
+                        if(Math.random() < (sub_avg * 0.15)){
                             console.log('Sub');
                             socket.to(theRoom).emit('takeDMG', 200);
                             io.to(theRoom).emit('status', 'The move succeeded');
