@@ -344,8 +344,8 @@ function requestProcessor($request)
 
         case "getShop":
             {
-		    $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
-		    $userId = $request['userId'];
+                $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+                $userId = $request['userId'];
                 $queryUsers = "select * from users where userId = '$userId'";
                 $queryFighters = "select * from fighters limit 12,17";
                 $fighterArray = array();
@@ -360,8 +360,8 @@ function requestProcessor($request)
             }
         case "getInventory":
             {
-		    $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
-		    $userId = $request['userId'];
+                $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+                $userId = $request['userId'];
                 $queryInventory = "select * from inventory where userId = '$userId'";
                 $fighterArray = array();
                 $response = $mydb->query($queryInventory);
@@ -372,9 +372,20 @@ function requestProcessor($request)
                 }while($fighterArray[$i] != null);
                 return($fighterArray);
             }
-        case "buyItem":
+        case "submitPurchase":
             {
-               return;
+                $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+                $userid = $request['userId'];
+                $fighter = $request['fid'];
+                $balance = $request['balance']
+
+                $queryUser = "update users set money = '$balance' where userId = '$userid'";
+
+                $queryInventory = "insert into inventory(userId,fighter_id) values('$userid','$fighter')";
+
+                $response = $mydb->query($queryInventory);
+                $response2 = $mydb->query($queryUser);
+                return;
             }
 
     }
