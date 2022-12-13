@@ -27,6 +27,9 @@ const socket = io();
 
 var isMyTurn = false;
 var hasLost = false;
+var punch10_ach = 0;
+var wrestle5_ach = 0;
+var firstSub_ach = 0;
 
 //below are variables containing all of the names of both our's (f1,f2,f3) and the enemy's fighters (e1,e2,e3) and set them in the HTML
 
@@ -453,6 +456,14 @@ socket.on('takeDMG', (dmg) => {
         }
     }
     else {
+
+        if(dmg >= 200){
+            firstSub_ach++;
+            if(firstSub_ach == 1){
+                alert('Achievement Get: Submission Artist');
+            }
+        }
+
         switch(currentEnemy){
             case 'enemy01':
                 var health = document.getElementById('enemy01Health');
@@ -842,6 +853,10 @@ function move1(){
     //var moveName = document.getElementById('Move1').innerText;
     if(isMyTurn == true){
         moveChecker1();
+        punch10_ach++;
+        if(punch10_ach == 10){
+            alert('Achievement Get: Born Striker');
+        }
         //socket.emit('move', moveName, isMyTurn, hasADV, dmgBuff)
         //console.log(`Sent move, ${moveName}, to server while ${isMyTurn}`);
         //console.log(`Turn value changed to ${isMyTurn}`);
@@ -852,6 +867,10 @@ function move2(){
     //var moveName = document.getElementById('Move2').innerText;
     if(isMyTurn == true){
         moveChecker2();
+        wrestle5_ach++;
+        if(wrestle5_ach == 5){
+            alert('Achievement Get: Born Wrestler');
+        }
         //socket.emit('move', moveName, isMyTurn, hasADV, dmgBuff)
         //console.log(`Sent move, ${moveName}, to server while ${isMyTurn}`);
         //console.log(`Turn value changed to ${isMyTurn}`);
