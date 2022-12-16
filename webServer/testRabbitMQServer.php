@@ -365,12 +365,16 @@ function requestProcessor($request)
                 $queryInventory = "select * from inventory where userId = '$userId'";
                 $fighterArray = array();
                 $response = $mydb->query($queryInventory);
-                $i = 0;
-                do{
+		$InventoryNum = mysqli_num_rows($response);
+		for ($i=0; $i<$InventoryNum; $i++)
+		{
+			$fighterArray[$i] = mysqli_fetch_array($response,MYSQLI_NUM);
+		}
+               /* do{
                     $fighterArray[$i] = mysqli_fetch_array($response,MYSQLI_NUM);
                     $i++;
-                }while($fighterArray[$i] != null);
-                return($fighterArray);
+		}while($fighterArray[$i] != null);*/
+		return($fighterArray);
             }
         case "submitPurchase":
             {
