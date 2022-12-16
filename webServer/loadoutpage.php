@@ -11,10 +11,11 @@ body {
 /*Code Derived From: https://www.w3schools.com/howto/howto_js_todolist.asp */
 
 /* Include the padding and border in an element's total width and height */
+/*
 {
   box-sizing: border-box;
 }
-
+*/
 /* Remove margins and padding from the list */
 ul {
   margin: 0;
