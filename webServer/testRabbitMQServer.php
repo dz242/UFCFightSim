@@ -341,7 +341,7 @@ function requestProcessor($request)
                 logErr("Inserting Loadouts Failed".PHP_EOL);
                 return array("returnCode" => '1', 'message'=>"Register Failed");
             }
-
+/*
         case "getShop":
             {
                 $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
@@ -387,7 +387,7 @@ function requestProcessor($request)
                 $response2 = $mydb->query($queryUser);
                 return;
             }
-
+ */
     }
 
     return array("returnCode" => '0', 'message'=>"Server received request and processed");
