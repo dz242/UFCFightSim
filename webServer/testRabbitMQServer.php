@@ -367,7 +367,7 @@ function requestProcessor($request)
                 $response = $mydb->query($queryInventory);
 		$InventoryNum = mysqli_num_rows($response);
 		print_r($InventoryNum);
-		for ($i=0; $i<$InventoryNum; $i++)
+		/*for ($i=0; $i<$InventoryNum; $i++)
 		{
 			$fighterArray[$i] = mysqli_fetch_array($response,MYSQLI_NUM);
 		}
@@ -376,7 +376,7 @@ function requestProcessor($request)
                     $i++;
 		}while($fighterArray[$i] != null);*/
 		print_r($fighterArray);
-		return($fighterArray);
+		return(true);
             }
         case "submitPurchase":
             {
