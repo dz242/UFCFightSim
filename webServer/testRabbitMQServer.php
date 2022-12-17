@@ -289,13 +289,24 @@ function requestProcessor($request)
         case "getFighters":
 
 	    	$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
-            $queryFighters = "select * from fighters limit 0,11";
+		$queryFighters = "select * from fighters limit 0,11";
             $fighterArray = array();
             $response = $mydb->query($queryFighters);
             for($i=0;$i<10;$i++)
             {
                 $fighterArray[$i] = mysqli_fetch_array($response,MYSQLI_NUM);
-            }
+	    }
+
+		$userId = $request['userId'];
+	    $queryInventory = "select * from inventory where userId = '$userId'";
+	    $response2 = $mydb->query($queryInventory);
+	    $InventoryNum = mysqli_num_rows($response2);
+
+	    for ($i=10; $i<$InventoryNum+10; $i++)
+                {
+                        $fighterArray[$i] = mysqli_fetch_array($response2,MYSQLI_NUM);
+                }
+
         	return($fighterArray);
 
         case "getProfile":
