@@ -41,7 +41,7 @@ echo $argv[0]." END".PHP_EOL;
 	<!--Echo User Currency Form action should Return to same page-->
 	<h1>"Your Currency: "<?php echo $response[1][8]; ?></h1>
 	<h2>"Each Fighter is 100 Currency"</h2>
-	<form action="" id="submission" method="post">
+	<form action="shopsubmit.php" id="submission" method="post">
 
 		<select name="shop" id="shop">
         <?php
