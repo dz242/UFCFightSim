@@ -120,16 +120,21 @@ else
 
 $request = array();
 $request['type'] = "getFighters";
+$request['userId'] = $_SESSION["userID"];
 $response = $client->send_request($request);
 //$response = $client->publish($request);
 
-$request = array();
-$request['type'] = "getInventory";
-$request['userId'] = $_SESSION["userID"];
-$response2 = $client->send_request($request);
-
-
 echo "client received response: ".PHP_EOL;
+print_r($response);
+
+/*
+$request2 = array();
+$request2['type'] = "getInventory";
+$request2['userId'] = $_SESSION["userID"];
+$response2 = $client->send_request($request2);
+ */
+
+//echo "client received response2: ".PHP_EOL;
 //print_r($response);
 echo "\n\n";
 
@@ -151,27 +156,33 @@ document.onload = populateList();
 	<label for="fighter">Choose Your Fighters:</label>
            
 	<select name="fighters0" id="fighters0">
-		<option value = "<?php echo $response[0][1]; ?>"><?php echo $response[0][6] ?></option>
-		<option value = "<?php echo $response[1][1]; ?>"><?php echo $response[1][6] ?></option>
-		<option value = "<?php echo $response[2][1]; ?>"><?php echo $response[2][6] ?></option>
-		<option value = "<?php echo $response[3][1]; ?>"><?php echo $response[3][6] ?></option>
-		<option value = "<?php echo $response[4][1]; ?>"><?php echo $response[4][6] ?></option>
-		<option value = "<?php echo $response[5][1]; ?>"><?php echo $response[5][6] ?></option>
-		<option value = "<?php echo $response[6][1]; ?>"><?php echo $response[6][6] ?></option>
-		<option value = "<?php echo $response[7][1]; ?>"><?php echo $response[7][6] ?></option>
-		<option value = "<?php echo $response[8][1]; ?>"><?php echo $response[8][6] ?></option>
-		<option value = "<?php echo $response[9][1]; ?>"><?php echo $response[9][6] ?></option>
-
-        <?php
-        foreach($response2 as $fighter)
+	<?php 
+	
+        foreach($response as $fighter)
         {
             echo "<option value = '$fighter[1]'>$fighter[6]</option>";  
-        }
+	}
         ?>
             </select>
            
 	<select name="fighters1" id="fighters1">
-		<option value = "<?php echo $response[0][1]; ?>"><?php echo $response[0][6] ?></option>
+	<?php
+	foreach($response as $fighter)
+        {
+            echo "<option value = '$fighter[1]'>$fighter[6]</option>";  
+	}
+	?>
+            </select>
+           
+	<select name="fighters2" id="fighters2">
+	<?php
+        foreach($response as $fighter)
+        {
+            echo "<option value = '$fighter[1]'>$fighter[6]</option>";  
+	}
+
+	/*
+	 * <option value = "<?php echo $response[0][1]; ?>"><?php echo $response[0][6] ?></option>
                 <option value = "<?php echo $response[1][1]; ?>"><?php echo $response[1][6] ?></option>
                 <option value = "<?php echo $response[2][1]; ?>"><?php echo $response[2][6] ?></option>
                 <option value = "<?php echo $response[3][1]; ?>"><?php echo $response[3][6] ?></option>
@@ -181,32 +192,7 @@ document.onload = populateList();
                 <option value = "<?php echo $response[7][1]; ?>"><?php echo $response[7][6] ?></option>
                 <option value = "<?php echo $response[8][1]; ?>"><?php echo $response[8][6] ?></option>
                 <option value = "<?php echo $response[9][1]; ?>"><?php echo $response[9][6] ?></option>
-		
-	<?php
-        foreach($response2 as $fighter)
-        {
-            echo "<option value = '$fighter[1]'>$fighter[6]</option>";  
-        }
-        ?>
-            </select>
-           
-	<select name="fighters2" id="fighters2">
-		<option value = "<?php echo $response[0][1]; ?>"><?php echo $response[0][6] ?></option>
-                <option value = "<?php echo $response[1][1]; ?>"><?php echo $response[1][6] ?></option>
-                <option value = "<?php echo $response[2][1]; ?>"><?php echo $response[2][6] ?></option>
-                <option value = "<?php echo $response[3][1]; ?>"><?php echo $response[3][6] ?></option>
-                <option value = "<?php echo $response[4][1]; ?>"><?php echo $response[4][6] ?></option>
-                <option value = "<?php echo $response[5][1]; ?>"><?php echo $response[5][6] ?></option>
-                <option value = "<?php echo $response[6][1]; ?>"><?php echo $response[6][6] ?></option>
-                <option value = "<?php echo $response[7][1]; ?>"><?php echo $response[7][6] ?></option>
-                <option value = "<?php echo $response[8][1]; ?>"><?php echo $response[8][6] ?></option>
-                <option value = "<?php echo $response[9][1]; ?>"><?php echo $response[9][6] ?></option>	
-
-	<?php
-        foreach($response2 as $fighter)
-        {
-            echo "<option value = '$fighter[1]'>$fighter[6]</option>";  
-        }
+		*/
         ?>
             </select>
               
