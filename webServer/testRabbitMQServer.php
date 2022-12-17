@@ -393,20 +393,37 @@ function requestProcessor($request)
 		print_r($fighterArray);
 		return(true);
             }
-        case "submitPurchase":
+ case "submitPurchase":
             {
                 $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
                 $userid = $request['userId'];
                 $fighter = $request['fid'];
                 $balance = $request['balance'];
 
+                $queryBalance = "select money from users where userId = '$userid'";
+                $response = $mydb->query($queryBalance);
+                print_r("User's Currency" . $response[0]);
+
+                if($response[0] >= 100)
+                {
+                $balance = $response[0] - 100;
                 $queryUser = "update users set money = '$balance' where userId = '$userid'";
-
                 $queryInventory = "insert into inventory(userId,fighter_id) values('$userid','$fighter')";
+                $response2 = $mydb->query($queryInventory);
+                $response3 = $mydb->query($queryUser);
+                $response = array();
+                print_r("Purchase Made Successfully");
+                $response["returnCode"] = '0';
+                return $response;
+                }
+                else
+                {
+                print_r("Purchase Unsuccessful");
+                $response["returnCode"] = '1';
+                return $response;
+                }
 
-                $response = $mydb->query($queryInventory);
-                $response2 = $mydb->query($queryUser);
-                return;
+
             }
     }
 
