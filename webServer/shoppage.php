@@ -35,54 +35,26 @@ echo "\n\n";
 
 echo $argv[0]." END".PHP_EOL;
 
-if(!is_null($_POST['shop']))
-{
-	$fightercheck = 0;
-	$difference = 0;
-	foreach($response as $fighter)
-    {
-        if($_POST['shop'] == $fighter[1])
-        {
-            $fightercheck = $fighter[18];
-        }
-    }
-    if($response[1][1] >= $fightercheck)
-    {
-        $difference = $response[1][1] - $fightercheck;
-	$request = array();
-        $request['type'] = "submitPurchase";
-        $request['userId'] = $_SESSION["userID"];
-	$request['balance'] = $difference;
-	$request['fid'] = $_POST['shop'];
-	$response = $client->send_request($request);
-	echo "Successfully Made Purchase!, Redirecting to Main Page".PHP_EOL;
-        header("refresh: 3, url=index.html");
-    }
-	if($response[1][1] < $fightercheck)
-    {
-        echo "Not Enough Money to Make the purchase";
-    }
-}
-
 ?>
 <html>
 <body>
 	<!--Echo User Currency Form action should Return to same page-->
-	<h1><?php echo $response[1][1]; ?></h1>
+	<h1>"Your Currency: "<?php echo $response[1][8]; ?></h1>
+	<h2>"Each Fighter is 100 Currency"</h2>
 	<form action="" id="submission" method="post">
 
 		<select name="shop" id="shop">
-			<!--Value is fighterid,then echo name, then echo price-->
-			<option value = "<?php echo $response[2][1]; ?>"><?php echo $response[2][6] ?><?php echo $response[2][18] ?></option>
-			<option value = "<?php echo $response[3][1]; ?>"><?php echo $response[3][6] ?><?php echo $response[3][18] ?></option>
-			<option value = "<?php echo $response[4][1]; ?>"><?php echo $response[4][6] ?><?php echo $response[4][18] ?></option>
-			<option value = "<?php echo $response[5][1]; ?>"><?php echo $response[5][6] ?><?php echo $response[5][18] ?></option>
-			<option value = "<?php echo $response[6][1]; ?>"><?php echo $response[6][6] ?><?php echo $response[6][18] ?></option>
+        <?php
+        foreach($response as $fighter)
+        {
+            echo "<option value = '$fighter[1]'>$fighter[6]</option>";  
+	    }
+        ?>
 		</select>
 		
 		
 		<div>
-			<input type="submit" value="Buy Item" />
+			<input type="submit" value="Buy Fighter" />
 		</div>
 
 	</form>
