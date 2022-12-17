@@ -301,12 +301,16 @@ function requestProcessor($request)
 	    $queryInventory = "select * from inventory where userId = '$userId'";
 	    $response2 = $mydb->query($queryInventory);
 	    $InventoryNum = mysqli_num_rows($response2);
-
+		print_r($response2);
 	    for ($i=10; $i<$InventoryNum+10; $i++)
                 {
-                        $fighterArray[$i] = mysqli_fetch_array($response2,MYSQLI_NUM);
-                }
+			$fighterID = mysqli_fetch_array($response2,MYSQLI_NUM);
+			$queryFighter = "select * from fighters where fighterId = '$fighterID'";
+			$responseFighter = $mydb->query($queryFighter);
 
+			$fighterArray[$i] = mysqli_fetch_array($responseFighter,MYSQLI_NUM);
+                }
+		print_r($fighterArray);
         	return($fighterArray);
 
         case "getProfile":
