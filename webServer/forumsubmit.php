@@ -14,22 +14,22 @@ if (isset($argv[1]))
 }
 else
 {
-	$msg = "Banana";
+	$msg = "Grape";
 }
 $request = array();
-$request['type'] = "submitPurchase";
+$request['type'] = "sendMessage";
 $request['userId'] = $_SESSION['userID'];
-$request['fid'] = $_POST['shop'];
+$request['msg'] = $_POST['sendmessage'];
 $response = $client->send_request($request);
 if($response["returnCode"] == '0')
 {
-        echo "Successfully Made Purchase!, Redirecting to Main Page".PHP_EOL;
-        header("refresh: 3, url=index.html");
+        echo "Sent Message".PHP_EOL;
+        header("refresh: 1, url=forumpage.php");
 }
 else
 {
-        echo "Not Enough Money to Make the purchase, returning to shop page";
-        header("refresh: 3, url=shoppage.php");
+        echo "Error Sending message, returning to forum";
+        header("refresh: 3, url=forumpage.php");
 }
 
 

@@ -26,7 +26,7 @@ else
 }
 
 $request = array();
-$request['type'] = "getForum";
+$request['type'] = "getMessages";
 $response = $client->send_request($request);
 
 echo "client received response: ".PHP_EOL;
@@ -40,6 +40,7 @@ header("refresh: 25, url=forumpage.php");
 ?>
 <html>
 <body>
+    <h5>This page refreshes every 25 seconds.</h5>
 
     <?php
     foreach($response as $message)
@@ -48,15 +49,15 @@ header("refresh: 25, url=forumpage.php");
     }
     ?>
 
-	<form action="" id="submission" method="post">
-	
-		<label for="sendmessage">Send a Message To Chat Here</label>
-		<input type="text" id="sendmessage" name="sendmessage" />
-	<div>
-			<input type="submit" value="Send Message" />
-	</div>
+    <form action="forumsubmit.php" id="submission" method="post">
 
-	</form>
+        <label for="sendmessage">Send a Message To Chat Here</label>
+        <input type="text" id="sendmessage" name="sendmessage" />
+        <div>
+            <input type="submit" value="Send Message" />
+        </div>
+
+    </form>
 
 </body>
 </html>
