@@ -18,7 +18,7 @@ else
 }
 $request = array();
 $request['type'] = "submitPurchase";
-$request['userId'] = $_SESSION["userID"];
+$request['userId'] = $_SESSION['userID'];
 $request['fid'] = $_POST['shop'];
 $response = $client->send_request($request);
 if($response["returnCode"] == '0')
