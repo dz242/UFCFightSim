@@ -305,7 +305,7 @@ function requestProcessor($request)
 	    for ($i=10; $i<$InventoryNum+10; $i++)
                 {
 			$fighterID = mysqli_fetch_array($response2,MYSQLI_NUM);
-			$queryFighter = "select * from fighters where fighterId = '$fighterID'";
+			$queryFighter = "select * from fighters where fighter_id = '$fighterID[1]'";
 			$responseFighter = $mydb->query($queryFighter);
 
 			$fighterArray[$i] = mysqli_fetch_array($responseFighter,MYSQLI_NUM);
