@@ -12,15 +12,18 @@ const io = socketio(server)
 
 var Memcached = require('memcached');
 var memcached = new Memcached('127.0.0.1:11211');
+var PHPUnserialize = require('php-unserialize');
+var cookie = require('cookie');
 
-if(memcached.get("username", function(err, data){
+
+/*if(memcached.get("username", function(err, data){
     var userName = data;
 })){
     console.log(`Received username ${data}`);
 }
 else{
     console.log('Could not receive username from memcached');
-}
+}*/
 
 app.use(express.static('gameClient/', {index: 'chooseWeight.html'}))
 
@@ -31,6 +34,19 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
     socket.currentRoom = '';
 
     var clientArr = [];
+	try {
+//		console.log(memcached.getAllKeys());
+	var PHPSESSID = "memc.sess.key." + cookie.parse(socket.request.headers.cookie).PHPSESSID;
+		console.log(PHPSESSID);
+   memcached.get(PHPSESSID, function(err, data){
+//	var o = PHPUnserialize.unserializeSession(data); // decode session data
+  //      console.log('parsed obj:',o);
+	  console.log(data);
+   });
+}
+catch (error) {
+    console.error(error);
+}
 
     socket.on('joinSW', function() {
         socket.leaveAll()
