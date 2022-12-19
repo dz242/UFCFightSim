@@ -3,7 +3,6 @@
 
 session_start();
 
-
 if (!isset($_SESSION["username"]))
 {
 	echo "Log in to view this Page";
@@ -40,15 +39,22 @@ header("refresh: 25, url=forumpage.php");
 ?>
 <html>
 <body>
+<style>
+p {
+    line-height: 1.5;
+    font-family: Arial, Helvetica, sans-serif;
+}
+</style>
     <h5>This page refreshes every 25 seconds.</h5>
-
-    <?php
+    <p>
+        <?php
     foreach($response as $message)
     {
-        echo "$message[3] "."$message[2]";
+         print_r("$message[3] "."$message[2]");
+         echo "<br>";
     }
-    ?>
-
+        ?>
+    </p>
     <form action="forumsubmit.php" id="submission" method="post">
 
         <label for="sendmessage">Send a Message To Chat Here</label>
