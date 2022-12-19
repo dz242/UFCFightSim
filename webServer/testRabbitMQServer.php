@@ -365,12 +365,12 @@ function requestProcessor($request)
                 $queryFighters = "select * from fighters limit 12,17";
                 $fighterArray = array();
                 $response = $mydb->query($queryFighters);
-                $response2 = $mydb->query($queryUsers);
-                for($i=2;$i<8;$i++)
+		$response2 = $mydb->query($queryUsers);
+		$fighterArray[0] = mysqli_fetch_array($response2,MYSQLI_NUM);
+                for($i=1;$i<6;$i++)
                 {
                     $fighterArray[$i] = mysqli_fetch_array($response,MYSQLI_NUM);
                 }
-                $fighterArray[1] = mysqli_fetch_array($response2,MYSQLI_NUM);
                 return($fighterArray);
             }
         case "getInventory":

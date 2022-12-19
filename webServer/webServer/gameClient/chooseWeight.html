@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>The Octagon</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" src="">
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="fightClient.js"></script>
+    </head>
+
+    <body>
+
+        <h3 id="ChooseHeader">Choose your weight class!</h3>
+        <br><br><br>
+        <p id="chosenWeight"></p>
+        <br><br><br>
+
+
+        <div id="LobbyButtons">
+            <button id="Strawweight" onclick="swButton()">Strawweight (115lbs)</button><br><br>
+            <button id="Flyweight" onclick="flwButton()">Flyweight (125lbs)</button><br><br>
+            <button id="Bantamweight" onclick="bwButton()">Bantamweight (135lbs)</button><br><br>
+            <button id="Featherweight" onclick="fwButton()">Featherweight (145lbs)</button><br><br>
+            <button id="Lightweight" onclick="lwButton()">Lightweight (155lbs)</button><br><br>
+            <button id="Welterweight" onclick="wwButton()">Welterweight (170lbs)</button><br><br>
+            <button id="Middleweight" onclick="mwButton()">Middleweight (185lbs)</button><br><br>
+            <button id="Light Heavyweight" onclick="lhwButton()">Light Heavyweight (205lbs)</button><br><br>
+            <button id="Heavyweight" onclick="hwButton()">Heavyweight (265lbs)</button><br><br>
+        </div>
+
+        <div id="GameHud" style="display:none;">
+
+            <div id="StatusUpdate" style="text-align:center;">
+                <strong><p></p></strong>
+            </div>
+
+            <br><br>
+
+            <div id="TurnUpdate" style="text-align:center;">
+                <strong><p></p></strong>
+            </div>
+
+
+            <div id="GoodSide" style="width:33%; float:left; padding:20px; border:2px">
+
+                <div id="Fighter01" style="text-align:right">
+                    <h3 id="FighterName01">Sample Fighter 01</h3><p id = fighter01Status> </p><br>
+                    <progress id="fighter01Health" value="200" max="200"></progress><br><br>
+                    <div id="f1_Moves">
+                        <button id="f1_Move1" onclick="move1()">Jab</button><br>
+                        <button id="f1_Move2" onclick="move2()">Single Leg</button><br>
+                        <button id="f1_Move3" onclick="move3()">Rear Naked Choke</button><br>
+                        <button id="f1_Move4" onclick="move4()">Just Bleed</button><br>
+                    </div>
+                    <button id="Gettup01" onclick="tryGettup()" style="display:none;">Try to get up!</button><br>
+                    <button id="SwitchIn01" style="display:none;" onclick="switchTo01()">Switch In!</button>
+                </div>
+
+                <div id="Fighter02" style="text-align:left">
+                    <h4 id="FighterName02">Sample Fighter 02</h3><p id = fighter02Status> </p><br>
+                    <progress id="fighter02Health" value="200" max="200"></progress><br><br>
+                    <div id="f2_Moves" style="display:none;">
+                        <button id="f2_Move1" onclick="move1()">Jab</button><br>
+                        <button id="f2_Move2" onclick="move2()">Single Leg</button><br>
+                        <button id="f2_Move3" onclick="move3()">Rear Naked Choke</button><br>
+                        <button id="f2_Move4" onclick="move4()">Just Bleed</button><br>
+                    </div>
+                    <button id="Gettup02" onclick="tryGettup()" style="display:none;">Try to get up!</button><br>
+                    <button id="SwitchIn02" style="display:block;" onclick="switchTo02()">Switch In!</button>
+                </div>
+
+                <div id="Fighter03" style="text-align:left">
+                    <h4 id="FighterName03">Sample Fighter 03</h3><p id = fighter03Status> </p><br>
+                    <progress id="fighter03Health" value="200" max="200"></progress><br><br>
+                    <div id="f3_Moves" style="display:none;">
+                        <button id="f3_Move1" onclick="move1()">Jab</button><br>
+                        <button id="f3_Move2" onclick="move2()">Single Leg</button><br>
+                        <button id="f3_Move3" onclick="move3()">Rear Naked Choke</button><br>
+                        <button id="f3_Move4" onclick="move4()">Just Bleed</button><br>
+                    </div>
+                    <button id="Gettup03" onclick="tryGettup()" style="display:none;">Try to get up!</button><br>
+                    <button id="SwitchIn03" style="display:block;" onclick="switchTo03()">Switch In!</button>
+                </div>
+
+            </div>
+
+            <div id="Emotes" style="width:27%; float:left; padding:20px; border:2px">
+
+                <div id="emoteBtns" style="text-align:center;">
+                    <p><strong>Emotes:</strong></p><br>
+                    <button id="Heheheha" onclick="heheEmote()">Heheheha!</button>
+                    <button id="Rogan" onclick="roganEmote()">The Joe</button>
+                </div><br><br><br>
+
+                <div id="ourEmote" style="text-align:left;">
+                    <img src='' id='emoteUs' class='mx-auto'/>
+                </div><br>
+                <div id="theirEmote" style="text-align:right;">
+                    <img src='' id='emoteThem' class='mx-auto'/></div>
+                
+            </div>
+
+            <div id="BadSide" style="width:33% ; float:right; padding:20px; border:2px">
+
+                <div id="Enemy01" style="text-align:left">
+                    <h3 id="EnemyName01">Sample Fighter 11<p id='enemy01Status'> </p></h3><br>
+                    <progress id="enemy01Health" value="200" max="200"></progress><br><br>
+                    <br><br><br><br><br><br><br><br>
+                </div>
+
+                <div id="Enemy02" style="text-align:right">
+                    <h4 id="EnemyName02">Sample Fighter 12</h3><p id='enemy02Status'> </p><br>
+                    <progress id="enemy02Health" value="200" max="200"></progress><br><br>
+                    <br><br>
+                </div>
+
+                <div id="Enemy03" style="text-align:right">
+                    <h4 id="EnemyName03">Sample Fighter 13</h3><p id='enemy03Status'> </p><br>
+                    <progress id="enemy03Health" value="200" max="200"></progress><br><br>
+                    <br><br>
+                </div>
+
+            </div>
+
+        </div>
+<br>
+    </body>
+</html>

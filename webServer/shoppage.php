@@ -39,13 +39,14 @@ echo $argv[0]." END".PHP_EOL;
 <html>
 <body>
 	<!--Echo User Currency Form action should Return to same page-->
-	<h1>"Your Currency: "<?php echo $response[1][8]; ?></h1>
+	<h1>"Your Currency: "<?php print_r($response[0][8]); ?></h1>
 	<h2>"Each Fighter is 100 Currency"</h2>
 	<form action="shopsubmit.php" id="submission" method="post">
 
 		<select name="shop" id="shop">
-        <?php
-        foreach($response as $fighter)
+<?php
+	$fighterList = array_slice($response, 1)
+        foreach($fighterList as $fighter)
         {
             echo "<option value = '$fighter[1]'>$fighter[6]</option>";  
 	    }
