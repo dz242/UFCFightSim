@@ -45,7 +45,7 @@ header("refresh: 25, url=forumpage.php");
     <?php
     foreach($response as $message)
     {
-        echo "$message";
+        echo "$message[3] "."$message[2]";
     }
     ?>
 
