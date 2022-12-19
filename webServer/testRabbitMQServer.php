@@ -289,28 +289,28 @@ function requestProcessor($request)
         case "getFighters":
 
 	    	$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
-		$queryFighters = "select * from fighters limit 0,11";
+            $queryFighters = "select * from fighters limit 0,11";
             $fighterArray = array();
             $response = $mydb->query($queryFighters);
             for($i=0;$i<10;$i++)
             {
                 $fighterArray[$i] = mysqli_fetch_array($response,MYSQLI_NUM);
-	    }
+            }
 
-		$userId = $request['userId'];
-	    $queryInventory = "select * from inventory where userId = '$userId'";
-	    $response2 = $mydb->query($queryInventory);
-	    $InventoryNum = mysqli_num_rows($response2);
-		print_r($response2);
-	    for ($i=10; $i<$InventoryNum+10; $i++)
-                {
-			$fighterID = mysqli_fetch_array($response2,MYSQLI_NUM);
-			$queryFighter = "select * from fighters where fighter_id = '$fighterID[1]'";
-			$responseFighter = $mydb->query($queryFighter);
+            $userId = $request['userId'];
+            $queryInventory = "select * from inventory where userId = '$userId'";
+            $response2 = $mydb->query($queryInventory);
+            $InventoryNum = mysqli_num_rows($response2);
+            print_r($response2);
+            for ($i=10; $i<$InventoryNum+10; $i++)
+            {
+                $fighterID = mysqli_fetch_array($response2,MYSQLI_NUM);
+                $queryFighter = "select * from fighters where fighter_id = '$fighterID[1]'";
+                $responseFighter = $mydb->query($queryFighter);
 
-			$fighterArray[$i] = mysqli_fetch_array($responseFighter,MYSQLI_NUM);
-                }
-		print_r($fighterArray);
+                $fighterArray[$i] = mysqli_fetch_array($responseFighter,MYSQLI_NUM);
+            }
+            print_r($fighterArray);
         	return($fighterArray);
 
         case "getProfile":
@@ -380,20 +380,20 @@ function requestProcessor($request)
                 $queryInventory = "select * from inventory where userId = '$userId'";
                 $fighterArray = array();
                 $response = $mydb->query($queryInventory);
-		$InventoryNum = mysqli_num_rows($response);
-		print_r($InventoryNum);
-		/*for ($i=0; $i<$InventoryNum; $i++)
-		{
-			$fighterArray[$i] = mysqli_fetch_array($response,MYSQLI_NUM);
-		}
-               /* do{
-                    $fighterArray[$i] = mysqli_fetch_array($response,MYSQLI_NUM);
-                    $i++;
-		}while($fighterArray[$i] != null);*/
-		print_r($fighterArray);
-		return(true);
+                $InventoryNum = mysqli_num_rows($response);
+                print_r($InventoryNum);
+                /*for ($i=0; $i<$InventoryNum; $i++)
+                {
+                $fighterArray[$i] = mysqli_fetch_array($response,MYSQLI_NUM);
+                }
+                /* do{
+                $fighterArray[$i] = mysqli_fetch_array($response,MYSQLI_NUM);
+                $i++;
+                }while($fighterArray[$i] != null);*/
+                print_r($fighterArray);
+                return(true);
             }
- case "submitPurchase":
+        case "submitPurchase":
             {
                 $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
                 $userid = $request['userId'];
@@ -402,29 +402,55 @@ function requestProcessor($request)
 
                 $queryBalance = "select money from users where userId = '$userid'";
                 $response = $mydb->query($queryBalance);
-                print_r("User's Currency" . $response[0]);
+                $userStuff = mysqli_fetch_array($response,MYSQLI_NUM);
+                print_r("User's Currency" . $userStuff[0]);
 
-                if($response[0] >= 100)
+                if($userStuff[0] >= 100)
                 {
-                $balance = $response[0] - 100;
-                $queryUser = "update users set money = '$balance' where userId = '$userid'";
-                $queryInventory = "insert into inventory(userId,fighter_id) values('$userid','$fighter')";
-                $response2 = $mydb->query($queryInventory);
-                $response3 = $mydb->query($queryUser);
-                $response = array();
-                print_r("Purchase Made Successfully");
-                $response["returnCode"] = '0';
-                return $response;
+                    $balance = $userStuff[0] - 100;
+                    $queryUser = "update users set money = '$balance' where userId = '$userid'";
+                    $queryInventory = "insert into inventory(userId,fighter_id) values('$userid','$fighter')";
+                    $response2 = $mydb->query($queryInventory);
+                    $response3 = $mydb->query($queryUser);
+                    $response = array();
+                    print_r("Purchase Made Successfully");
+                    return array("returnCode" => '0');
                 }
                 else
                 {
-                print_r("Purchase Unsuccessful");
-                $response["returnCode"] = '1';
-                return $response;
+                    print_r("Purchase Unsuccessful");
+                    return array("returnCode" => '1');
                 }
 
 
             }
+        case "getMessages":
+        {
+            $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+            $queryMessages = "select * from forum order by messageId desc limit 10";
+            $response = $mydb->query($queryMessages);
+            $fighterArray = array();
+            for($i=0;$i<10;$i++)
+            {
+                $fighterArray[$i] = mysqli_fetch_array($response,MYSQLI_NUM);
+            }
+            return $fighterArray;
+        }
+        case "sendMessage":
+        {
+            $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
+            $user = $request['userId'];
+            $message = $request['msg'];
+            $queryMessage = "insert into forum(userId,message) values('$user','$message')";
+            if($response = $mydb->query($queryMessage))
+            {
+                return array("returnCode" => '0');
+            }
+            else
+            {
+                return array("returnCode" => '1');
+            }
+        }
     }
 
     return array("returnCode" => '0', 'message'=>"Server received request and processed");
