@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  margin: 0;
+  min-width: 250px;
+}
+
+//Code Derived From: https://www.w3schools.com/howto/howto_js_todolist.asp
+
+/* Include the padding and border in an element's total width and height */
+* {
+  box-sizing: border-box;
+}
+
+/* Remove margins and padding from the list */
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the list items */
+ul li {
+  cursor: pointer;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  list-style-type: none;
+  background: #eee;
+  font-size: 18px;
+  transition: 0.2s;
+  
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Set all odd list items to a different color (zebra-stripes) */
+ul li:nth-child(odd) {
+  background: #f9f9f9;
+}
+
+/* Darker background-color on hover */
+ul li:hover {
+  background: #ddd;
+}
+
+/* When clicked on, add a background color and strike out text */
+ul li.checked {
+  background: #7CFC00;
+  color: #000;
+ font-weight: bold;
+}
+
+/* Add a "checked" mark when clicked on */
+ul li.checked::before {
+  content: '';
+  position: absolute;
+  border-color: #fff;
+  border-style: solid;
+  border-width: 0 2px 2px 0;
+  top: 10px;
+  left: 16px;
+  transform: rotate(45deg);
+  height: 15px;
+  width: 7px;
+}
+
+
+</style>
+</head>
+<body>
+
+<div id="myDIV" class="header">
+  <h2 style="margin:5px">Fighter Selection</h2>
+</div>
+
+<ul id="myUL">
+  <li>Sample Fighter 1</li>
+  <li>Joe</li>
+  <li>Meet George</li>
+  <li>Buy eggs</li>
+  <li>Read a book</li>
+  <li>Organize office</li>
+</ul>
+
+<script>
+// Create a "close" button and append it to each list item
+
+var countery = 0;
+
+// Add a "checked" symbol when clicking on a list item
+var list = document.querySelector('ul');
+list.addEventListener('click', function(ev) {
+  if (ev.target.tagName === 'LI' && countery < 3 && !ev.target.classList.contains('checked')) {
+    ev.target.classList.toggle('checked');
+    countery++;
+  }
+  else if(ev.target.classList.contains('checked'))
+  {
+  ev.target.classList.toggle('checked');
+  countery--;
+  }
+
+}, false);
+
+//IMPORANT : When new query is done, make sure to store all checked fighters before, 
+//This will allow the user to keep note of what fighters they already chosen
+
+
+for(i = 0;i < 10; i++)
+{
+var egg = "egsg";
+newElement(egg);
+}
+
+// Create a new list item when clicking on the "Add" button
+function newElement(data) {
+	
+  var ul = document.getElementById("myUL");
+  var li = document.createElement("li");
+  li.appendChild(document.createTextNode(data));
+  ul.appendChild(li);
+}
+</script>
+
+</body>
+</html>
+
+
