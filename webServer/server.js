@@ -34,12 +34,13 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
     socket.currentRoom = '';
 
     var clientArr = [];
+	var o = "";
 	try {
 //		console.log(memcached.getAllKeys());
 	var PHPSESSID = "memc.sess.key." + cookie.parse(socket.request.headers.cookie).PHPSESSID;
 		console.log(PHPSESSID);
    memcached.get(PHPSESSID, function(err, data){
-	var o = PHPUnserialize.unserializeSession(data); // decode session data
+	o = PHPUnserialize.unserializeSession(data); // decode session data
        	console.log('parsed obj:',o);
 	console.log(o["fighter1"]["fighter_id"]);
    });
