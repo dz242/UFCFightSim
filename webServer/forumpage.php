@@ -28,13 +28,13 @@ $request = array();
 $request['type'] = "getMessages";
 $response = $client->send_request($request);
 
-echo "client received response: ".PHP_EOL;
+//echo "client received response: ".PHP_EOL;
 echo "\n\n";
 
-echo $argv[0]." END".PHP_EOL;
+//echo $argv[0]." END".PHP_EOL;
 
 
-header("refresh: 25, url=forumpage.php");
+// header("refresh: 25, url=forumpage.php");
 
 ?>
 <html>
@@ -45,12 +45,11 @@ p {
     font-family: Arial, Helvetica, sans-serif;
 }
 </style>
-    <h5>This page refreshes every 25 seconds.</h5>
     <p>
         <?php
     foreach($response as $message)
     {
-         print_r("$message[3] "."$message[2]");
+         print_r($message[3]."|".$message[2]);
          echo "<br>";
     }
         ?>

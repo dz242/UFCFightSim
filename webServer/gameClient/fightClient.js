@@ -138,6 +138,16 @@ socket.on('status', (msg) => {
     document.getElementById('StatusUpdate').innerHTML = msg;
 })
 
+//Added by Brandon
+socket.on('loadFighters', (fighter1_data, fighter2_data, fighter3_data) =>{
+	document.getElementById('FighterName01').innerHTML = fighter1_data["name"];
+	document.getElementById('FighterName02').innerHTML = fighter2_data["name"];
+	document.getElementById('FighterName03').innerHTML = fighter3_data["name"];
+//	document.getElementById('EnemyName01').innerHTML =
+})
+//End of code added by Brandon
+
+
 socket.on('receiveEnemyFighters', (playerName, e1, e2, e3) =>{
     if (socket.id != playerName){
         document.getElementById('EnemyName01').innerHTML = e1;

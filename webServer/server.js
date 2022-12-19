@@ -39,14 +39,16 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
 	var PHPSESSID = "memc.sess.key." + cookie.parse(socket.request.headers.cookie).PHPSESSID;
 		console.log(PHPSESSID);
    memcached.get(PHPSESSID, function(err, data){
-//	var o = PHPUnserialize.unserializeSession(data); // decode session data
-  //      console.log('parsed obj:',o);
-	  console.log(data);
+	var o = PHPUnserialize.unserializeSession(data); // decode session data
+       	console.log('parsed obj:',o);
+	console.log(o["fighter1"]["fighter_id"]);
    });
 }
 catch (error) {
     console.error(error);
 }
+
+socket.emit('loadFighters', (o["fighter1"], o["fighter2"], o["fighter3"]));
 
     socket.on('joinSW', function() {
         socket.leaveAll()

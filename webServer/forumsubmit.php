@@ -16,10 +16,16 @@ else
 {
 	$msg = "Grape";
 }
+
+$message = $_POST['sendmessage'];
+$message2 = $_SESSION['username'].": ".$message;
+
+echo "Message sent was: $message2".PHP_EOL;
+
 $request = array();
 $request['type'] = "sendMessage";
 $request['userId'] = $_SESSION['userID'];
-$request['msg'] = $_POST['sendmessage'];
+$request['msg'] = $message2;
 $response = $client->send_request($request);
 if($response["returnCode"] == '0')
 {
