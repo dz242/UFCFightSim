@@ -14,7 +14,6 @@ var Memcached = require('memcached');
 var memcached = new Memcached('127.0.0.1:11211');
 var PHPUnserialize = require('php-unserialize');
 var cookie = require('cookie');
-var mysql = require('mysql');
 
 
 /*if(memcached.get("username", function(err, data){
@@ -54,8 +53,6 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
       	console.log('parsed obj:',o);
 //	console.log(o["fighter1"]["fighter_id"]);
 //	   console.log(o["fighter2"]);
-	
-
 
    });
 }
@@ -508,23 +505,23 @@ catch (error) {
                             if(Math.random() < (0.30 * sig_str_land_pct)){
                                 socket.to(theRoom).emit('takeDMG', 30 + dmgBuff);
                                 socket.to(theRoom).emit('takeKD');
-                                io.to(theRoom).emit('status', 'The move succeeded with a super crit and knocked them down!');
+                                io.to(theRoom).emit('status', 'Jab succeeded with a super crit and knocked them down!');
                                 io.to(theRoom).emit('changeTurn');
                             }
                             else{
                                 socket.to(theRoom).emit('takeDMG', 20 + dmgBuff);
-                                io.to(theRoom).emit('status', 'The move succeeded with a critical hit!');
+                                io.to(theRoom).emit('status', 'Jab succeeded with a critical hit!');
                                 io.to(theRoom).emit('changeTurn');
                             }
                         }
                         else{
                             socket.to(theRoom).emit('takeDMG', 10 + dmgBuff);
-                            io.to(theRoom).emit('status', 'The move succeeded');
+                            io.to(theRoom).emit('status', 'Jab succeeded');
                             io.to(theRoom).emit('changeTurn');
                         }
                     }
                     else{
-                        io.to(theRoom).emit('status', 'The move failed');
+                        io.to(theRoom).emit('status', 'Jab failed');
                         io.to(theRoom).emit('changeTurn');
                     }
                     break;
@@ -532,11 +529,11 @@ catch (error) {
                 case "Single Leg":
                     if(Math.random() < (td_land_pct + (td_avg * 0.1))){
                         socket.to(theRoom).emit('takeDWN');
-                        io.to(theRoom).emit('status', 'The move succeeded');
+                        io.to(theRoom).emit('status', 'Single Leg succeeded');
                         io.to(theRoom).emit('changeTurn');
                     }
                     else{
-                        io.to(theRoom).emit('status', 'The move failed');
+                        io.to(theRoom).emit('status', 'Single Leg failed');
                         io.to(theRoom).emit('changeTurn');
                     }
                     break;
@@ -547,12 +544,12 @@ catch (error) {
                         if(Math.random() < (sub_avg * 0.30)){
                             console.log('Sub');
                             socket.to(theRoom).emit('takeDMG', 200);
-                            io.to(theRoom).emit('status', 'The move succeeded');
+                            io.to(theRoom).emit('status', 'Rear Naked Choke succeeded');
                             io.to(theRoom).emit('changeTurn');
                         }
                         else{
                             console.log('No Sub')
-                            io.to(theRoom).emit('status', 'The move failed');
+                            io.to(theRoom).emit('status', 'Rear Naked Choke failed');
                             io.to(theRoom).emit('changeTurn');
                         }
                     }
@@ -560,12 +557,12 @@ catch (error) {
                         if(Math.random() < (sub_avg * 0.15)){
                             console.log('Sub');
                             socket.to(theRoom).emit('takeDMG', 200);
-                            io.to(theRoom).emit('status', 'The move succeeded');
+                            io.to(theRoom).emit('status', 'Rear Naked Choke succeeded');
                             io.to(theRoom).emit('changeTurn');
                         }
                         else{
                             console.log('No Sub')
-                            io.to(theRoom).emit('status', 'The move failed');
+                            io.to(theRoom).emit('status', 'Rear Naked Choke failed');
                             io.to(theRoom).emit('changeTurn');
                         }
                     }
@@ -583,8 +580,70 @@ catch (error) {
                     }
                     break;
 
+                case "Double Leg":
+                    if(Math.random() < (td_land_pct + (td_avg * 0.2))){
+                        socket.to(theRoom).emit('takeDWN');
+                        io.to(theRoom).emit('status', 'Double Leg succeeded');
+                        io.to(theRoom).emit('changeTurn');
+                    }
+                    else{
+                        io.to(theRoom).emit('status', 'Double Leg failed');
+                        io.to(theRoom).emit('changeTurn');
+                    }
+                    break;
+                
+                    case "Meteor Assault":
+                        var i = 1;
+                        var dmg = 0;
+                        if (Math.random() < (sig_str_land_pct * (sig_str_land_pM * 0.5))){
+                            for(i=1; i<=3; i++){
+                                if(Math.random() < 0.69){
+                                    dmg += 7;
+                                }
+                                else{
+                                    break;
+                                }
+                            }
+                            socket.to(theRoom).emit('takeDMG', dmg + dmgBuff);
+                            io.to(theRoom).emit('status', 'Meteor Assault hit ' + i + ' times!');
+                            io.to(theRoom).emit('changeTurn');
+                        }
+                        else{
+                            io.to(theRoom).emit('status', 'Meteor Assault failed');
+                            io.to(theRoom).emit('changeTurn');
+                        }
+                    break;
+
+                    case "Roundhouse Kick":
+                        if (Math.random() < (sig_str_land_pct * (sig_str_land_pM * 0.4))){
+                            
+                            if(Math.random() < (0.65 * sig_str_land_pct)){
+                                if(Math.random() < (0.45 * sig_str_land_pct)){
+                                    socket.to(theRoom).emit('takeDMG', 40 + dmgBuff);
+                                    socket.to(theRoom).emit('takeKD');
+                                    io.to(theRoom).emit('status', 'Roundhouse Kick succeeded with a super crit and knocked them down!');
+                                    io.to(theRoom).emit('changeTurn');
+                                }
+                                else{
+                                    socket.to(theRoom).emit('takeDMG', 24 + dmgBuff);
+                                    io.to(theRoom).emit('status', 'Roundhouse Kick succeeded with a critical hit!');
+                                    io.to(theRoom).emit('changeTurn');
+                                }
+                            }
+                            else{
+                                socket.to(theRoom).emit('takeDMG', 16 + dmgBuff);
+                                io.to(theRoom).emit('status', 'Roundhouse Kick succeeded');
+                                io.to(theRoom).emit('changeTurn');
+                            }
+                        }
+                        else{
+                            io.to(theRoom).emit('status', 'Roundhouse Kick failed');
+                            io.to(theRoom).emit('changeTurn');
+                        }
+                    break;
+
                 default:
-                    console.log('invalid move name')
+                    console.log('invalid move name');
                     
             }
         }
@@ -592,8 +651,6 @@ catch (error) {
             console.log(`Received move from ${socket.id}, but it is not their turn yet`)
         }
     })
-	
-	
 
     socket.on('sendFighterNames', (f1_name, f2_name, f3_name) => {
         var e1_name = f1_name;
