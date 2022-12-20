@@ -293,7 +293,7 @@ function requestProcessor($request)
 		$queryFighters = "select * from fighters where name = 'Bryce Mitchell' OR name = 'Dan Ige' OR name = 'Edson Barboza' OR name = 'Damon Jackson' OR name = 'Giga Chikadze'";
             $fighterArray = array();
             $response = $mydb->query($queryFighters);
-            for($i=0;$i<10;$i++)
+            for($i=0;$i<5;$i++)
             {
                 $fighterArray[$i] = mysqli_fetch_array($response,MYSQLI_NUM);
             }
@@ -303,7 +303,7 @@ function requestProcessor($request)
             $response2 = $mydb->query($queryInventory);
             $InventoryNum = mysqli_num_rows($response2);
             print_r($response2);
-            for ($i=10; $i<$InventoryNum+10; $i++)
+            for ($i=5; $i<$InventoryNum+5; $i++)
             {
                 $fighterID = mysqli_fetch_array($response2,MYSQLI_NUM);
                 $queryFighter = "select * from fighters where fighter_id = '$fighterID[1]'";
@@ -363,7 +363,7 @@ function requestProcessor($request)
                 $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
                 $userId = $request['userId'];
                 $queryUsers = "select * from users where userId = '$userId'";
-                $queryFighters = "select * from fighters where name = 'Alex Volkanovski' OR name = 'Max Holloway' OR name = 'Arnold Allen' OR name = 'Josh Emmett' OR name = 'Yair Rodriguez' OR name = 'Brain Ortega' OR name = 'Movsar' Evloev OR name = 'Ilia Topuria' OR name = 'Chan Sung Jung' OR name = 'Calvin Katter'";
+                $queryFighters = "select * from fighters where name = 'Alex Volkanovski' OR name = 'Max Holloway' OR name = 'Arnold Allen' OR name = 'Josh Emmett' OR name = 'Yair Rodriguez' OR name = 'Brain Ortega' OR name = 'Movsar Evloev' OR name = 'Ilia Topuria' OR name = 'Chan Sung Jung' OR name = 'Calvin Kattar'";
                 $fighterArray = array();
                 $response = $mydb->query($queryFighters);
 		$response2 = $mydb->query($queryUsers);
