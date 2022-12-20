@@ -146,7 +146,7 @@ socket.on('status', (msg) => {
 socket.on('loadFighters1', (fighter1_data, move) =>{
 	console.log(fighter1_data);
 	f1_name = fighter1_data["name"];
-	document.getElementById('f1_Move4').innerHTML= move;
+//	document.getElementById('f1_Move4').innerHTML= move;
 	f1_sig_str_land_pM = fighter1_data["sig_str_land_pM"];
 	f1_sig_str_land_pct = fighter1_data["sig_str_land_pct"];
 	f1_sig_str_abs_pM = fighter1_data["sig_str_abs_pM"];
@@ -160,7 +160,7 @@ socket.on('loadFighters1', (fighter1_data, move) =>{
 socket.on('loadFighters2', (fighter2_data, move) =>{
         console.log(fighter2_data);
         f2_name = fighter2_data["name"];
-	document.getElementById('f2_Move4').innerHTML= move;
+//	document.getElementById('f2_Move4').innerHTML= move;
 	f2_sig_str_land_pM = fighter2_data["sig_str_land_pM"];
         f2_sig_str_land_pct = fighter2_data["sig_str_land_pct"];
         f2_sig_str_abs_pM = fighter2_data["sig_str_abs_pM"];
@@ -175,7 +175,7 @@ socket.on('loadFighters2', (fighter2_data, move) =>{
 socket.on('loadFighters3', (fighter3_data, move) =>{
         console.log(fighter3_data);
         f3_name = fighter3_data["name"];
-	document.getElementById('f3_Move4').innerHTML= move;
+//	document.getElementById('f3_Move4').innerHTML= move;
 	f3_sig_str_land_pM = fighter3_data["sig_str_land_pM"];
         f3_sig_str_land_pct = fighter3_data["sig_str_land_pct"];
         f3_sig_str_abs_pM = fighter3_data["sig_str_abs_pM"];
@@ -186,6 +186,20 @@ socket.on('loadFighters3', (fighter3_data, move) =>{
         f3_sub_avg = fighter3_data["sub_avg"];
 
 //      document.getElementById('EnemyName01').innerHTML =
+})
+socket.on('loadMove1', (move) =>{
+    console.log(move);
+    document.getElementById('f1_Move4').innerHTML= move;
+})
+
+socket.on('loadMove2', (move) =>{
+    console.log(move);
+    document.getElementById('f2_Move4').innerHTML= move;
+})
+
+socket.on('loadMove3', (move) =>{
+    console.log(move);
+    document.getElementById('f3_Move4').innerHTML= move;
 })
 
 /*socket.on('loadFighters', (fighter1_data, fighter2_data, fighter3_data) =>{

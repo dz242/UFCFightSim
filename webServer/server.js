@@ -44,9 +44,12 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
 	var move1 = o["move1"];
 	var move2 = o["move2"];
 	var move3 = o["move3"];
-	   socket.emit('loadFighters1', (o["fighter1"], move1));
-	   socket.emit('loadFighters2', (o["fighter2"], move2));
-	   socket.emit('loadFighters3', (o["fighter3"], move3));
+	   socket.emit('loadFighters1', (o["fighter1"]));
+	   socket.emit('loadFighters2', (o["fighter2"]));
+	   socket.emit('loadFighters3', (o["fighter3"]));
+	   socket.emit('loadMove1', (move1));
+	   socket.emit('loadMove2', (move2));
+	   socket.emit('loadMove3', (move3));
       	console.log('parsed obj:',o);
 //	console.log(o["fighter1"]["fighter_id"]);
 //	   console.log(o["fighter2"]);
