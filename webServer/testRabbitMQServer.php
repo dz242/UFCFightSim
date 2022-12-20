@@ -289,7 +289,8 @@ function requestProcessor($request)
         case "getFighters":
 
 	    	$mydb = new mysqli('127.0.0.1','osama','password1','UFC');
-            $queryFighters = "select * from fighters limit 0,11";
+		//$queryFighters = "select * from fighters limit 0,11";
+		$queryFighters = "select * from fighters where name = 'Bryce Mitchell' OR name = 'Dan Ige' OR name = 'Edson Barboza' OR name = 'Damon Jackson' OR name = 'Giga Chikadze'";
             $fighterArray = array();
             $response = $mydb->query($queryFighters);
             for($i=0;$i<10;$i++)
@@ -362,7 +363,7 @@ function requestProcessor($request)
                 $mydb = new mysqli('127.0.0.1','osama','password1','UFC');
                 $userId = $request['userId'];
                 $queryUsers = "select * from users where userId = '$userId'";
-                $queryFighters = "select * from fighters limit 12,17";
+                $queryFighters = "select * from fighters where name = 'Alex Volkanovski' OR name = 'Max Holloway' OR name = 'Arnold Allen' OR name = 'Josh Emmett' OR name = 'Yair Rodriguez' OR name = 'Brain Ortega' OR name = 'Movsar' Evloev OR name = 'Ilia Topuria' OR name = 'Chan Sung Jung' OR name = 'Calvin Katter'";
                 $fighterArray = array();
                 $response = $mydb->query($queryFighters);
 		$response2 = $mydb->query($queryUsers);
