@@ -131,6 +131,10 @@ socket.on('matchFound', function() {
     if(document.getElementById('GameHud').style.display = 'block'){
         document.getElementById('chosenWeight').style.display = 'none';
     }
+	document.getElementById('FighterName01').innerHTML = f1_name;
+    document.getElementById('FighterName02').innerHTML = f2_name;
+    document.getElementById('FighterName03').innerHTML = f3_name;
+
     socket.emit('sendFighterNames', f1_name, f2_name, f3_name);
 })
 
@@ -139,12 +143,62 @@ socket.on('status', (msg) => {
 })
 
 //Added by Brandon
-socket.on('loadFighters', (fighter1_data, fighter2_data, fighter3_data) =>{
-	document.getElementById('FighterName01').innerHTML = fighter1_data["name"];
-	document.getElementById('FighterName02').innerHTML = fighter2_data["name"];
-	document.getElementById('FighterName03').innerHTML = fighter3_data["name"];
-//	document.getElementById('EnemyName01').innerHTML =
+socket.on('loadFighters1', (fighter1_data, move) =>{
+	console.log(fighter1_data);
+	f1_name = fighter1_data["name"];
+	document.getElementById('f1_Move4').innerHTML= move;
+	f1_sig_str_land_pM = fighter1_data["sig_str_land_pM"];
+	f1_sig_str_land_pct = fighter1_data["sig_str_land_pct"];
+	f1_sig_str_abs_pM = fighter1_data["sig_str_abs_pM"];
+	f1_sig_str_def_pct = fighter1_data["sig_str_def_pct"];
+	f1_td_avg = fighter1_data["td_avg"];
+	f1_td_land_pct = fighter1_data["td_land_pct"];
+	f1_td_def_pct = fighter1_data["td_def_pct"];
+	f1_sub_avg = fighter1_data["sub_avg"];
+//	document.getElementById('EnemyName01').innerHTML=
 })
+socket.on('loadFighters2', (fighter2_data, move) =>{
+        console.log(fighter2_data);
+        f2_name = fighter2_data["name"];
+	document.getElementById('f2_Move4').innerHTML= move;
+	f2_sig_str_land_pM = fighter2_data["sig_str_land_pM"];
+        f2_sig_str_land_pct = fighter2_data["sig_str_land_pct"];
+        f2_sig_str_abs_pM = fighter2_data["sig_str_abs_pM"];
+        f2_sig_str_def_pct = fighter2_data["sig_str_def_pct"];
+        f2_td_avg = fighter2_data["td_avg"];
+        f2_td_land_pct = fighter2_data["td_land_pct"];
+        f2_td_def_pct = fighter2_data["td_def_pct"];
+        f2_sub_avg = fighter2_data["sub_avg"];
+
+//      document.getElementById('EnemyName01').innerHTML =
+})
+socket.on('loadFighters3', (fighter3_data, move) =>{
+        console.log(fighter3_data);
+        f3_name = fighter3_data["name"];
+	document.getElementById('f3_Move4').innerHTML= move;
+	f3_sig_str_land_pM = fighter3_data["sig_str_land_pM"];
+        f3_sig_str_land_pct = fighter3_data["sig_str_land_pct"];
+        f3_sig_str_abs_pM = fighter3_data["sig_str_abs_pM"];
+        f3_sig_str_def_pct = fighter3_data["sig_str_def_pct"];
+        f3_td_avg = fighter3_data["td_avg"];
+        f3_td_land_pct = fighter3_data["td_land_pct"];
+        f3_td_def_pct = fighter3_data["td_def_pct"];
+        f3_sub_avg = fighter3_data["sub_avg"];
+
+//      document.getElementById('EnemyName01').innerHTML =
+})
+
+/*socket.on('loadFighters', (fighter1_data, fighter2_data, fighter3_data) =>{
+        console.log(fighter1_data);
+        console.log(fighter2_data);
+        document.getElementById('FighterName01').innerHTML = fighter1_data["name"];
+        document.getElementById('FighterName02').innerHTML = fighter2_data["name"];
+        document.getElementById('FighterName03').innerHTML = fighter3_data["name"];
+//      document.getElementById('EnemyName01').innerHTML =
+})
+*/
+
+
 //End of code added by Brandon
 
 

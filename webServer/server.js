@@ -34,22 +34,30 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
     socket.currentRoom = '';
 
     var clientArr = [];
-	var o = "";
+//	var o = [];
 	try {
 //		console.log(memcached.getAllKeys());
 	var PHPSESSID = "memc.sess.key." + cookie.parse(socket.request.headers.cookie).PHPSESSID;
-		console.log(PHPSESSID);
+	//	console.log(PHPSESSID);
    memcached.get(PHPSESSID, function(err, data){
-	o = PHPUnserialize.unserializeSession(data); // decode session data
-       	console.log('parsed obj:',o);
-	console.log(o["fighter1"]["fighter_id"]);
+	var o = PHPUnserialize.unserializeSession(data); // decode session data
+	var move1 = o["move1"];
+	var move2 = o["move2"];
+	var move3 = o["move3"];
+	   socket.emit('loadFighters1', (o["fighter1"], move1));
+	   socket.emit('loadFighters2', (o["fighter2"], move2));
+	   socket.emit('loadFighters3', (o["fighter3"], move3));
+      	console.log('parsed obj:',o);
+//	console.log(o["fighter1"]["fighter_id"]);
+//	   console.log(o["fighter2"]);
+
    });
 }
 catch (error) {
     console.error(error);
 }
-
-socket.emit('loadFighters', (o["fighter1"], o["fighter2"], o["fighter3"]));
+//console.log(o["fighter1"]);
+//socket.emit('loadFighters', (o["fighter1"], o["fighter2"], o["fighter3"]));
 
     socket.on('joinSW', function() {
         socket.leaveAll()
