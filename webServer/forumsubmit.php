@@ -19,7 +19,7 @@ else
 
 $message = $_POST['sendmessage'];
 
-$count = preg_match('/^[a-zA-Z0-9.!?,\'\"\s-]*$/i', $message, $matches);
+$count = preg_match('/^[a-zA-Z0-9.!?,\s-]*$/i', $message, $matches);
 if ($count == 0)
 {
         echo "<br>Message contains invalid characters. Please Try again";

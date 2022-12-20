@@ -527,6 +527,9 @@ catch (error) {
                     break;
 
                 case "Single Leg":
+		//	    td_land_pct = parseFloat(td_land_pct);
+		//	    td_avg = parseFloat(td_avg);
+			    console.log(td_land_pct + (td_avg * 0.1));
                     if(Math.random() < (td_land_pct + (td_avg * 0.1))){
                         socket.to(theRoom).emit('takeDWN');
                         io.to(theRoom).emit('status', 'Single Leg succeeded');
@@ -575,12 +578,14 @@ catch (error) {
                         io.to(theRoom).emit('changeTurn');
                     }
                     else{
-                        io.to(theRoom).emit('status', 'The move failed');
+                        io.to(theRoom).emit('status', 'Just Bleed failed');
                         io.to(theRoom).emit('changeTurn');
                     }
                     break;
 
                 case "Double Leg":
+		//	td_land_pct = parseFloat(td_land_pct);
+                  //      td_avg = parseFloat(td_avg);
                     if(Math.random() < (td_land_pct + (td_avg * 0.2))){
                         socket.to(theRoom).emit('takeDWN');
                         io.to(theRoom).emit('status', 'Double Leg succeeded');
@@ -592,11 +597,13 @@ catch (error) {
                     }
                     break;
                 
-                    case "Meteor Assault":
-                        var i = 1;
+                    case "Meteor Assualt":
+			    var i = 0;
                         var dmg = 0;
                         if (Math.random() < (sig_str_land_pct * (sig_str_land_pM * 0.5))){
-                            for(i=1; i<=3; i++){
+                            i++;
+                            dmg = 7;
+                            for(i; i<4; i++){
                                 if(Math.random() < 0.69){
                                     dmg += 7;
                                 }
@@ -605,7 +612,7 @@ catch (error) {
                                 }
                             }
                             socket.to(theRoom).emit('takeDMG', dmg + dmgBuff);
-                            io.to(theRoom).emit('status', 'Meteor Assault hit ' + i + ' times!');
+                            io.to(theRoom).emit('status', 'Meteor Assault hit ' + (i) + ' times!');
                             io.to(theRoom).emit('changeTurn');
                         }
                         else{
@@ -674,9 +681,9 @@ catch (error) {
         
         socket.to(`${clientArr[0]}Room`).emit('alertResults');
 
-        io.sockets.clients(`${clientArr[0]}Room`).forEach(function(s){
-            s.leave(`${clientArr[0]}Room`);
-        });
+   //     io.sockets.clients(`${clientArr[0]}Room`).forEach(function(s){
+     //       s.leave(`${clientArr[0]}Room`);
+     //   });
     })
     
     
