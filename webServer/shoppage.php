@@ -30,10 +30,10 @@ $request['type'] = "getShop";
 $request['userId'] = $_SESSION["userID"];
 $response = $client->send_request($request);
 
-echo "client received response: ".PHP_EOL;
+//echo "client received response: ".PHP_EOL;
 echo "\n\n";
 
-echo $argv[0]." END".PHP_EOL;
+//echo $argv[0]." END".PHP_EOL;
 
 ?>
 <html>

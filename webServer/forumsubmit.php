@@ -18,6 +18,14 @@ else
 }
 
 $message = $_POST['sendmessage'];
+
+$count = preg_match('/^[a-zA-Z0-9.!?,\'\"\s-]*$/i', $message, $matches);
+if ($count == 0)
+{
+        echo "<br>Message contains invalid characters. Please Try again";
+        header("refresh: 3, url=forumpage.php");
+}
+
 $message2 = $_SESSION['username'].": ".$message;
 
 echo "Message sent was: $message2".PHP_EOL;

@@ -124,8 +124,8 @@ $request['userId'] = $_SESSION["userID"];
 $response = $client->send_request($request);
 //$response = $client->publish($request);
 
-echo "client received response: ".PHP_EOL;
-print_r($response);
+//echo "client received response: ".PHP_EOL;
+//print_r($response);
 
 /*
 $request2 = array();
@@ -138,7 +138,7 @@ $response2 = $client->send_request($request2);
 //print_r($response);
 echo "\n\n";
 
-echo $argv[0]." END".PHP_EOL;
+//echo $argv[0]." END".PHP_EOL;
 
 
 
@@ -202,8 +202,8 @@ document.onload = populateList();
   <input type="radio" id="Just Bleed" name="f1sm" value="Just Bleed">
   <label for="Just Bleed">Just Bleed</label>
   
-  <input type="radio" id="Scissor Claw" name="f1sm" value="Scissor Claw">
-  <label for="Scissor Claw">Scissor Claw</label>
+  <input type="radio" id="Double Leg" name="f1sm" value="Double Leg">
+  <label for="Double Leg">Double Leg</label>
   
   <input type="radio" id="Meteor Assualt" name="f1sm" value="Meteor Assualt">
   <label for="Meteor Assualt">Meteor Assualt</label>
@@ -217,8 +217,8 @@ document.onload = populateList();
   <input type="radio" id="Just Bleed" name="f2sm" value="Just Bleed">
   <label for="Just Bleed">Just Bleed</label>
   
-  <input type="radio" id="Scissor Claw" name="f2sm" value="Scissor Claw">
-  <label for="Scissor Claw">Scissor Claw</label>
+  <input type="radio" id="Double Leg" name="f2sm" value="Double Leg">
+  <label for="Double Leg">Double Leg</label>
   
   <input type="radio" id="Meteor Assualt" name="f2sm" value="Meteor Assualt">
   <label for="Meteor Assualt">Meteor Assualt</label>
@@ -231,8 +231,8 @@ document.onload = populateList();
   <input type="radio" id="Just Bleed" name="f3sm" value="Just Bleed">
   <label for="Just Bleed">Just Bleed</label>
   
-  <input type="radio" id="Scissor Claw" name="f3sm" value="Scissor Claw">
-  <label for="Scissor Claw">Scissor Claw</label>
+  <input type="radio" id="Double Leg" name="f3sm" value="Double Leg">
+  <label for="Double Leg">Double Leg</label>
   
   <input type="radio" id="Meteor Assualt" name="f3sm" value="Meteor Assualt">
   <label for="Meteor Assualt">Meteor Assualt</label>
