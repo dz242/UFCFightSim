@@ -29,11 +29,11 @@ $request['f3sm'] = $f3sm;
 $response = $client->send_request($request);
 //$response = $client->publish($request);
 
-echo "client received response: ".PHP_EOL;
-print_r($response);
+//echo "client received response: ".PHP_EOL;
+//print_r($response);
 echo "\n\n";
 
-echo $argv[0]." END".PHP_EOL;
+//echo $argv[0]." END".PHP_EOL;
 
 if ($response["returnCode"] == '0')
 {

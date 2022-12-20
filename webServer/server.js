@@ -14,6 +14,7 @@ var Memcached = require('memcached');
 var memcached = new Memcached('127.0.0.1:11211');
 var PHPUnserialize = require('php-unserialize');
 var cookie = require('cookie');
+var mysql = require('mysql');
 
 
 /*if(memcached.get("username", function(err, data){
@@ -53,6 +54,8 @@ io.on('connection', socket => {console.log(`New connection from ${socket.id}`)
       	console.log('parsed obj:',o);
 //	console.log(o["fighter1"]["fighter_id"]);
 //	   console.log(o["fighter2"]);
+	
+
 
    });
 }
@@ -589,6 +592,8 @@ catch (error) {
             console.log(`Received move from ${socket.id}, but it is not their turn yet`)
         }
     })
+	
+	
 
     socket.on('sendFighterNames', (f1_name, f2_name, f3_name) => {
         var e1_name = f1_name;
